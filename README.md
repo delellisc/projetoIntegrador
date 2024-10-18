@@ -9,7 +9,7 @@ Esse repositório tem como objetivo documentar o desenvolvimento de um projeto d
 ## Tema sorteado
 TEMA: Saúde pública e epidemias
 
-DESCRIÇÃO: 
+DESCRIÇÃO: Aplicativos que monitorem surtos de doenças, facilitem a comunicação entre cidadãos e serviços de saúde, ou que melhorem a gestão de campanhas de vacinação e controle de epidemias em áreas urbanas.
 
 ## Idealização
 
