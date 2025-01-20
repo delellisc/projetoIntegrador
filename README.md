@@ -13,7 +13,7 @@ Este repositório documenta o desenvolvimento de uma plataforma de saúde intuit
 **TEMA:** Saúde pública e epidemias  
 **DESCRIÇÃO/SUGESTÃO:** Desenvolvimento de aplicativos que facilitem a comunicação entre cidadãos e serviços de saúde, monitorem surtos de doenças ou melhorem a gestão de campanhas de vacinação.  
 
-## Visão Geral  
+## Introdução
 
 A tecnologia desempenha um papel essencial na modernização dos serviços de saúde, especialmente quando aplicada em ambientes educacionais. Este projeto tem como objetivo melhorar a experiência de alunos e servidores do IFRN no uso de serviços de saúde, oferecendo funcionalidades inovadoras e uma interface amigável, baseada no módulo de saúde do SUAP.  
 
