@@ -1,0 +1,86 @@
+### ATENDIMENTOS
+### criar um novo atendimento
+
+POST http://localhost:3000/atendimentos
+Content-Type: application/json
+
+{
+}
+
+### retornar todos os atendimentos:
+
+GET http://localhost:3000/atendimentos
+
+### retornar um atendimento específico
+
+GET http://localhost:3000/atendimentos/1
+
+### atualizar um atendimento existente
+
+PATCH http://localhost:3000/atendimentos/1
+Content-Type: application/json
+
+{
+}
+
+### deletar um atendimento existente
+
+DELETE http://localhost:3000/atendimentos/1
+
+### PROFISSIONAIS
+### criar um novo profissional
+
+POST http://localhost:3000/profissionais
+Content-Type: application/json
+
+{
+}
+
+### retornar todos os profissionais:
+
+GET http://localhost:3000/profissionais
+
+### retornar um profissional específico
+
+GET http://localhost:3000/profissionais/1
+
+### atualizar um profissional existente
+
+PATCH http://localhost:3000/profissionais/1
+Content-Type: application/json
+
+{
+}
+
+### deletar um profissional existente
+
+DELETE http://localhost:3000/profissionais/1
+
+### PACIENTES
+### criar um novo pacientes
+
+POST http://localhost:3000/pacientes
+Content-Type: application/json
+
+{
+}
+
+### retornar todos os pacientes:
+
+GET http://localhost:3000/pacientes
+
+### retornar um paciente específico
+
+GET http://localhost:3000/pacientes/1
+
+### atualizar um paciente existente
+
+PATCH http://localhost:3000/pacientes/1
+Content-Type: application/json
+
+{
+}
+
+### deletar um paciente existente
+
+DELETE http://localhost:3000/pacientes/1
