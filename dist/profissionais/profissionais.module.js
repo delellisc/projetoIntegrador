@@ -10,13 +10,19 @@ exports.ProfissionaisModule = void 0;
 const common_1 = require("@nestjs/common");
 const profissionais_service_1 = require("./profissionais.service");
 const profissionais_controller_1 = require("./profissionais.controller");
+const database_module_1 = require("../database/database.module");
+const profissionais_providers_1 = require("./profissionais.providers");
 let ProfissionaisModule = class ProfissionaisModule {
 };
 exports.ProfissionaisModule = ProfissionaisModule;
 exports.ProfissionaisModule = ProfissionaisModule = __decorate([
     (0, common_1.Module)({
+        imports: [database_module_1.DatabaseModule],
         controllers: [profissionais_controller_1.ProfissionaisController],
-        providers: [profissionais_service_1.ProfissionaisService],
+        providers: [
+            ...profissionais_providers_1.ProfissionaisProviders,
+            profissionais_service_1.ProfissionaisService
+        ],
     })
 ], ProfissionaisModule);
 //# sourceMappingURL=profissionais.module.js.map

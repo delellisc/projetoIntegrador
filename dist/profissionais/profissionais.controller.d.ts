@@ -4,9 +4,9 @@ import { UpdateProfissionaiDto } from './dto/update-profissionai.dto';
 export declare class ProfissionaisController {
     private readonly profissionaisService;
     constructor(profissionaisService: ProfissionaisService);
-    create(createProfissionaiDto: CreateProfissionaiDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateProfissionaiDto: UpdateProfissionaiDto): string;
-    remove(id: string): string;
+    create(createProfissionaiDto: CreateProfissionaiDto): Promise<import("./entities/profissionai.entity").Profissional>;
+    findAll(): Promise<import("./entities/profissionai.entity").Profissional[]>;
+    findOne(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
+    update(id: string, updateProfissionaiDto: UpdateProfissionaiDto): Promise<import("typeorm").UpdateResult>;
+    remove(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
 }

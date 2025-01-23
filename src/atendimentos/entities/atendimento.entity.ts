@@ -13,9 +13,9 @@ export class Atendimento {
   @Column()
   status: string;
 
-  @ManyToOne(() => Paciente, (paciente) => paciente.id)
+ /*  @ManyToOne(() => Paciente, (paciente) => paciente.id)
   paciente: Paciente;
 
   @ManyToOne(() => Profissional, (profissional) => profissional.id)
-  profissional: Profissional;
+  profissional: Profissional; */
 }

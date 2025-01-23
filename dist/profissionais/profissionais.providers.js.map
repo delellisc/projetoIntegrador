@@ -1,0 +1,1 @@
+{"version":3,"file":"profissionais.providers.js","sourceRoot":"","sources":["../../src/profissionais/profissionais.providers.ts"],"names":[],"mappings":";;;AACA,wEAA8D;AAEjD,QAAA,sBAAsB,GAAG;IAClC;QACI,OAAO,EAAE,yBAAyB;QAClC,UAAU,EAAE,CAAC,UAAsB,EAAE,EAAE,CAAC,UAAU,CAAC,aAAa,CAAC,kCAAY,CAAC;QAC9E,MAAM,EAAE,CAAC,aAAa,CAAC;KAC1B;CACJ,CAAC"}

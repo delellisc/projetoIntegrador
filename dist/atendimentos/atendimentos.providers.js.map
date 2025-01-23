@@ -1,0 +1,1 @@
+{"version":3,"file":"atendimentos.providers.js","sourceRoot":"","sources":["../../src/atendimentos/atendimentos.providers.ts"],"names":[],"mappings":";;;AACA,sEAA4D;AAE/C,QAAA,qBAAqB,GAAG;IACjC;QACI,OAAO,EAAE,wBAAwB;QACjC,UAAU,EAAE,CAAC,UAAsB,EAAE,EAAE,CAAC,UAAU,CAAC,aAAa,CAAC,gCAAW,CAAC;QAC7E,MAAM,EAAE,CAAC,aAAa,CAAC;KAC1B;CACJ,CAAC"}

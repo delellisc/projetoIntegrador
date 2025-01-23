@@ -10,13 +10,19 @@ exports.AtendimentosModule = void 0;
 const common_1 = require("@nestjs/common");
 const atendimentos_service_1 = require("./atendimentos.service");
 const atendimentos_controller_1 = require("./atendimentos.controller");
+const database_module_1 = require("../database/database.module");
+const atendimentos_providers_1 = require("./atendimentos.providers");
 let AtendimentosModule = class AtendimentosModule {
 };
 exports.AtendimentosModule = AtendimentosModule;
 exports.AtendimentosModule = AtendimentosModule = __decorate([
     (0, common_1.Module)({
+        imports: [database_module_1.DatabaseModule],
         controllers: [atendimentos_controller_1.AtendimentosController],
-        providers: [atendimentos_service_1.AtendimentosService],
+        providers: [
+            ...atendimentos_providers_1.AtendimentosProviders,
+            atendimentos_service_1.AtendimentosService
+        ],
     })
 ], AtendimentosModule);
 //# sourceMappingURL=atendimentos.module.js.map
