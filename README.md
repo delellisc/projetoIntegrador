@@ -1,4 +1,4 @@
-# Plataforma de Saúde para o IFRN  
+# +SaúdeIFRN  
 
 Este repositório documenta o desenvolvimento de uma plataforma de saúde intuitiva e eficiente, criada no contexto da disciplina Projeto Integrador I do curso de Tecnologia em Sistemas para Internet do IFRN.  
 
