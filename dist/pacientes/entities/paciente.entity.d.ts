@@ -1,3 +1,4 @@
+import { Atendimento } from 'src/atendimentos/entities/atendimento.entity';
 export declare class Paciente {
     id: number;
     login: string;
@@ -6,4 +7,5 @@ export declare class Paciente {
     sexo: string;
     data_nascimento: Date;
     contato: string;
+    atendimentos: Atendimento[];
 }

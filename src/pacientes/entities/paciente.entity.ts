@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Atendimento } from 'src/atendimentos/entities/atendimento.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm';
 
 @Entity('paciente')
 export class Paciente {
@@ -22,4 +23,7 @@ export class Paciente {
 
   @Column()
   contato: string;
+
+  @ManyToMany(() => Atendimento, (atendimento) => atendimento.pacientes)
+  atendimentos: Atendimento[]
 }

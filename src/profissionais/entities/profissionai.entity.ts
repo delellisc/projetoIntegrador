@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, ManyToOne } from 'typeorm';
+import { Especializacao } from '../../especializacoes/entities/especializacoe.entity';
 
 @Entity('profissional')
 export class Profissional {
@@ -19,4 +20,7 @@ export class Profissional {
 
   @Column()
   status: string;
+
+  @ManyToOne(() => Especializacao, (especializacao) => especializacao.profissionais)
+  especializacao: Especializacao;
 }

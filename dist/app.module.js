@@ -13,12 +13,13 @@ const app_service_1 = require("./app.service");
 const pacientes_module_1 = require("./pacientes/pacientes.module");
 const profissionais_module_1 = require("./profissionais/profissionais.module");
 const atendimentos_module_1 = require("./atendimentos/atendimentos.module");
+const especializacoes_module_1 = require("./especializacoes/especializacoes.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule],
+        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule, especializacoes_module_1.EspecializacoesModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

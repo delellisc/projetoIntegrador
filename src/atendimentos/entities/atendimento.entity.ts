@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { Paciente } from '../../pacientes/entities/paciente.entity';
 import { Profissional } from '../../profissionais/entities/profissionai.entity';
 
@@ -13,9 +13,10 @@ export class Atendimento {
   @Column()
   status: string;
 
- /*  @ManyToOne(() => Paciente, (paciente) => paciente.id)
-  paciente: Paciente;
+  @ManyToMany(() => Paciente, (paciente) => paciente.atendimentos)
+  @JoinTable()
+  pacientes: Paciente[];
 
   @ManyToOne(() => Profissional, (profissional) => profissional.id)
-  profissional: Profissional; */
+  profissional: Profissional;
 }

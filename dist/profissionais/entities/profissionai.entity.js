@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profissional = void 0;
 const typeorm_1 = require("typeorm");
+const especializacoe_entity_1 = require("../../especializacoes/entities/especializacoe.entity");
 let Profissional = class Profissional {
 };
 exports.Profissional = Profissional;
@@ -38,6 +39,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Profissional.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => especializacoe_entity_1.Especializacao, (especializacao) => especializacao.profissionais),
+    __metadata("design:type", especializacoe_entity_1.Especializacao)
+], Profissional.prototype, "especializacao", void 0);
 exports.Profissional = Profissional = __decorate([
     (0, typeorm_1.Entity)('profissional')
 ], Profissional);
