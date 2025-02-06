@@ -14,12 +14,14 @@ const pacientes_module_1 = require("./pacientes/pacientes.module");
 const profissionais_module_1 = require("./profissionais/profissionais.module");
 const atendimentos_module_1 = require("./atendimentos/atendimentos.module");
 const especializacoes_module_1 = require("./especializacoes/especializacoes.module");
+const auth_module_1 = require("./auth/auth.module");
+const axios_1 = require("@nestjs/axios");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule, especializacoes_module_1.EspecializacoesModule],
+        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule, especializacoes_module_1.EspecializacoesModule, auth_module_1.AuthModule, axios_1.HttpModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
