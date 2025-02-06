@@ -9,39 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Paciente = void 0;
-const atendimento_entity_1 = require("../../atendimentos/entities/atendimento.entity");
-const usuario_entity_1 = require("../../usuarios/entities/usuario.entity");
+exports.Usuario = void 0;
 const typeorm_1 = require("typeorm");
-let Paciente = class Paciente {
+let Usuario = class Usuario {
 };
-exports.Paciente = Paciente;
-__decorate([
-    (0, typeorm_1.OneToOne)(() => usuario_entity_1.Usuario),
-    (0, typeorm_1.JoinColumn)({ name: 'id' }),
-    __metadata("design:type", usuario_entity_1.Usuario)
-], Paciente.prototype, "usuario", void 0);
+exports.Usuario = Usuario;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Paciente.prototype, "id", void 0);
+], Usuario.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Paciente.prototype, "sexo", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
-    __metadata("design:type", Date)
-], Paciente.prototype, "data_nascimento", void 0);
+], Usuario.prototype, "login", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Paciente.prototype, "contato", void 0);
+], Usuario.prototype, "senha", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => atendimento_entity_1.Atendimento, (atendimento) => atendimento.pacientes),
-    __metadata("design:type", Array)
-], Paciente.prototype, "atendimentos", void 0);
-exports.Paciente = Paciente = __decorate([
-    (0, typeorm_1.Entity)('paciente')
-], Paciente);
-//# sourceMappingURL=paciente.entity.js.map
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Usuario.prototype, "nome", void 0);
+exports.Usuario = Usuario = __decorate([
+    (0, typeorm_1.Entity)('usuario')
+], Usuario);
+//# sourceMappingURL=usuario.entity.js.map

@@ -1,19 +1,15 @@
 import { Atendimento } from 'src/atendimentos/entities/atendimento.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { Entity, Column, ManyToMany, OneToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('paciente')
 export class Paciente {
+  @OneToOne(() => Usuario)
+  @JoinColumn({ name: 'id' })
+  usuario: Usuario;
+
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  login: string;
-
-  @Column()
-  senha: string;
-
-  @Column()
-  nome: string;
 
   @Column()
   sexo: string;

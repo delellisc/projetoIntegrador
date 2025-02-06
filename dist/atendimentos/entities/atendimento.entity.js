@@ -30,7 +30,7 @@ __decorate([
 ], Atendimento.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => paciente_entity_1.Paciente, (paciente) => paciente.atendimentos),
-    (0, typeorm_1.JoinTable)(),
+    (0, typeorm_1.JoinTable)({ name: "consultas" }),
     __metadata("design:type", Array)
 ], Atendimento.prototype, "pacientes", void 0);
 __decorate([

@@ -12,25 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profissional = void 0;
 const typeorm_1 = require("typeorm");
 const especializacoe_entity_1 = require("../../especializacoes/entities/especializacoe.entity");
+const usuario_entity_1 = require("../../usuarios/entities/usuario.entity");
 let Profissional = class Profissional {
 };
 exports.Profissional = Profissional;
 __decorate([
+    (0, typeorm_1.OneToOne)(() => usuario_entity_1.Usuario),
+    (0, typeorm_1.JoinColumn)({ name: 'id' }),
+    __metadata("design:type", usuario_entity_1.Usuario)
+], Profissional.prototype, "usuario", void 0);
+__decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Profissional.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Profissional.prototype, "login", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Profissional.prototype, "senha", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Profissional.prototype, "nome", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

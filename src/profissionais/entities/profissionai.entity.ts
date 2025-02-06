@@ -1,19 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Especializacao } from '../../especializacoes/entities/especializacoe.entity';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Entity('profissional')
 export class Profissional {
+  @OneToOne(() => Usuario)
+  @JoinColumn({ name: 'id' })
+  usuario: Usuario;
+
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  login: string;
-
-  @Column()
-  senha: string;
-
-  @Column()
-  nome: string;
 
   @Column()
   registro_profissional: string;

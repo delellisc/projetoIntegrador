@@ -14,7 +14,7 @@ export class Atendimento {
   status: string;
 
   @ManyToMany(() => Paciente, (paciente) => paciente.atendimentos)
-  @JoinTable()
+  @JoinTable({name: "consultas"})
   pacientes: Paciente[];
 
   @ManyToOne(() => Profissional, (profissional) => profissional.id)
