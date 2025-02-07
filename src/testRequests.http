@@ -5,8 +5,7 @@ POST http://localhost:3000/profissionais
 Content-Type: application/json
 
 {
-    "login": "lhf44",
-    "senha": "silverstone24",
+    "id": 99,
     "nome": "Lewis Hamilton",
     "registro_profissional": "CRP-202544",
     "status": "ativo"
@@ -43,7 +42,7 @@ Content-Type: application/json
 {
   "horario": "2025-01-23T10:00:00.000Z",
   "status": "confirmado",
-  "profissional": 2
+  "profissional": 1
 }
 
 ### retornar todos os atendimentos:
@@ -74,8 +73,7 @@ POST http://localhost:3000/pacientes
 Content-Type: application/json
 
 {
-    "login": "cl16",
-    "senha": "ilovemonaco",
+    "id": 66,
     "nome": "Charles Leclerc",
     "sexo": "M",
     "data_nascimento": "1997-10-16",

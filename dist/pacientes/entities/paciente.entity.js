@@ -11,20 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Paciente = void 0;
 const atendimento_entity_1 = require("../../atendimentos/entities/atendimento.entity");
-const usuario_entity_1 = require("../../usuarios/entities/usuario.entity");
 const typeorm_1 = require("typeorm");
 let Paciente = class Paciente {
 };
 exports.Paciente = Paciente;
 __decorate([
-    (0, typeorm_1.OneToOne)(() => usuario_entity_1.Usuario),
-    (0, typeorm_1.JoinColumn)({ name: 'id' }),
-    __metadata("design:type", usuario_entity_1.Usuario)
-], Paciente.prototype, "usuario", void 0);
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
 ], Paciente.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Paciente.prototype, "nome", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

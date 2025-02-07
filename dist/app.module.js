@@ -16,13 +16,12 @@ const atendimentos_module_1 = require("./atendimentos/atendimentos.module");
 const especializacoes_module_1 = require("./especializacoes/especializacoes.module");
 const auth_module_1 = require("./auth/auth.module");
 const axios_1 = require("@nestjs/axios");
-const usuarios_module_1 = require("./usuarios/usuarios.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule, especializacoes_module_1.EspecializacoesModule, auth_module_1.AuthModule, axios_1.HttpModule, usuarios_module_1.UsuariosModule],
+        imports: [pacientes_module_1.PacientesModule, profissionais_module_1.ProfissionaisModule, atendimentos_module_1.AtendimentosModule, especializacoes_module_1.EspecializacoesModule, auth_module_1.AuthModule, axios_1.HttpModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
