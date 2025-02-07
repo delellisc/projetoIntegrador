@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* *************************** */
+/* container principal */
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* *************************** */
+/* cabeçalho */
+.header {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.nav-right, .nav-left {
+    display: flex;
+    gap: 20px;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+/* *************************** */
+/* footer */
+.footer {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer img {
+    width: 100px;
+}
+
+.whatsapp {
+    display: inline-block;
+    margin: 0 10px;
+}
