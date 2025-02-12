@@ -42,3 +42,5 @@ Desenvolver uma plataforma de saúde intuitiva que permita a visualização e o 
 
 ## Desenvolvimento  
 O desenvolvimento deste projeto, documentado no [GitHub Projects](https://github.com/users/delellisc/projects/3), se dá por meio da metodologia ágil Scrum, que permite uma abordagem iterativa e incremental, favorecendo a colaboração da equipe e a adaptação contínua às mudanças de requisitos do projeto.
+
+.
