@@ -10,4 +10,5 @@ export declare class ProfissionaisService {
     findOne(id: number): Promise<Profissional>;
     update(id: number, updateProfissionaiDto: UpdateProfissionaiDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<Profissional>;
+    findAtendimentos(id: number): Promise<any[]>;
 }

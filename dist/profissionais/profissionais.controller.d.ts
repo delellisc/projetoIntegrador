@@ -9,4 +9,5 @@ export declare class ProfissionaisController {
     findOne(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
     update(id: string, updateProfissionaiDto: UpdateProfissionaiDto): Promise<import("typeorm").UpdateResult>;
     remove(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
+    findAtendimentos(id: string): Promise<any[]>;
 }

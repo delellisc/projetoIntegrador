@@ -31,4 +31,9 @@ export class ProfissionaisController {
   remove(@Param('id') id: string) {
     return this.profissionaisService.remove(+id);
   }
+
+  @Get('/atendimentos/:id')
+  findAtendimentos(@Param('id') id: string){
+    return this.profissionaisService.findAtendimentos(+id);
+  }
 }

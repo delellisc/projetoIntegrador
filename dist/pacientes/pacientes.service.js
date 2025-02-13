@@ -39,6 +39,26 @@ let PacientesService = class PacientesService {
         }
         return null;
     }
+    findAtendimentos(id) {
+        return this.pacienteRepository
+            .createQueryBuilder('paciente')
+            .select([
+            'paciente.id AS paciente_id',
+            'paciente.nome AS paciente_nome',
+            'paciente.data_nascimento AS paciente_data_nascimento',
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'atendimento.status AS atendimento_status',
+            'profissional.id AS profissional_id',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'profissional.status AS profissional_status',
+        ])
+            .innerJoin('paciente.atendimentos', 'atendimento')
+            .innerJoin('atendimento.profissional', 'profissional')
+            .where('paciente.id = :id', { id })
+            .getRawMany();
+    }
 };
 exports.PacientesService = PacientesService;
 exports.PacientesService = PacientesService = __decorate([

@@ -39,6 +39,26 @@ let ProfissionaisService = class ProfissionaisService {
         }
         return null;
     }
+    findAtendimentos(id) {
+        return this.profissionalRepository
+            .createQueryBuilder('profissional')
+            .select([
+            'profissional.id AS profissional_id',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'profissional.status AS profissional_status',
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'atendimento.status AS atendimento_status',
+            'paciente.id AS paciente_id',
+            'paciente.nome AS paciente_nome',
+            'paciente.data_nascimento AS paciente_data_nascimento',
+        ])
+            .innerJoin('atendimento', 'atendimento', 'atendimento."profissionalId" = profissional.id')
+            .innerJoin('atendimento.pacientes', 'paciente')
+            .where('profissional.id = :id', { id })
+            .getRawMany();
+    }
 };
 exports.ProfissionaisService = ProfissionaisService;
 exports.ProfissionaisService = ProfissionaisService = __decorate([
