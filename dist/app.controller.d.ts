@@ -5,4 +5,10 @@ export declare class AppController {
     root(): {
         message: string;
     };
+    getAgendamentos(): {
+        message: string;
+    };
+    getPerfil(): {
+        message: string;
+    };
 }

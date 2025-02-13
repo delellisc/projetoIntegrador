@@ -19,6 +19,12 @@ let AppController = class AppController {
     root() {
         return { message: 'saude123' };
     }
+    getAgendamentos() {
+        return { message: 'atendimento é bom' };
+    }
+    getPerfil() {
+        return { message: 'perfil visualizado' };
+    }
 };
 exports.AppController = AppController;
 __decorate([
@@ -28,6 +34,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "root", null);
+__decorate([
+    (0, common_1.Get)('agendamentos'),
+    (0, common_1.Render)('pagina_agendamentos'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getAgendamentos", null);
+__decorate([
+    (0, common_1.Get)('perfil'),
+    (0, common_1.Render)('pagina_perfil'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getPerfil", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

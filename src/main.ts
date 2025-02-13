@@ -8,7 +8,7 @@ async function bootstrap() {
     AppModule,
   );
 
-  app.useStaticAssets(join(__dirname, '../front', 'styles'));
+  app.useStaticAssets(join(__dirname, '../front', 'public'));
   app.setBaseViewsDir(join(__dirname, '../front', 'paginas'));
   app.setViewEngine('hbs');
   

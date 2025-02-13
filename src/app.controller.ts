@@ -10,4 +10,16 @@ export class AppController {
   root() {
     return { message: 'saude123' };
   }
+
+  @Get('agendamentos')
+  @Render('pagina_agendamentos')
+  getAgendamentos() {
+    return { message: 'atendimento é bom'}
+  }
+
+  @Get('perfil')
+  @Render('pagina_perfil')
+  getPerfil() {
+    return { message: 'perfil visualizado'}
+  }
 }
