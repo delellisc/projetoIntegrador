@@ -16,7 +16,7 @@ let Paciente = class Paciente {
 };
 exports.Paciente = Paciente;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryColumn)({ type: 'bigint' }),
     __metadata("design:type", Number)
 ], Paciente.prototype, "id", void 0);
 __decorate([

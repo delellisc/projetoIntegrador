@@ -67,6 +67,67 @@ body {
     color: white;
 }
 
+/* histórico */
+.user-id-input {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.user-id-input input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+}
+
+#fetch-atendimentos-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3BE799;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#atendimentos-table {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    background-color: #00000000;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+#atendimentos-table th,
+#atendimentos-table td {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #00000000;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+#atendimentos-table th {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 18px;
+}
+
+#atendimentos-table td {
+    background-color: #ffffff;
+}
+
+#atendimentos-table tr:hover td {
+    background-color: #d1f7e3;
+}
+
 /* *************************** */
 /* cabeçalho */
 .header {

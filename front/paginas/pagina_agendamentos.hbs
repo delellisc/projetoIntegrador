@@ -29,6 +29,32 @@
             </div>
             <div class="calendar" id="calendar"></div>
         </div>
+        
+        <!-- Histórico -->
+        <h2>Histórico de Atendimentos</h2>
+        
+        <!-- Formulário inserir matrícula -->
+        <div class="user-id-input">
+            <label for="user-id">Digite sua matrícula:</label>
+            <input type="text" id="user-id" placeholder="Insira sua matrícula">
+        </div>
+        
+        <button id="fetch-atendimentos-btn" style="border-radius: 10px; background-color: #3BE799; color: white;">Carregar Atendimentos</button>
+        
+        <!-- Tabela Histórico -->
+        <table id="atendimentos-table" hidden>
+            <thead>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Data de Nascimento</th>
+                    <th>Atendimento ID</th>
+                    <th>Horário</th>
+                    <th>Profissional</th>
+                    <th>Registro</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <footer class="footer">

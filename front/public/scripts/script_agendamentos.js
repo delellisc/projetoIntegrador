@@ -63,3 +63,62 @@ nextMonthBtn.addEventListener("click", () => {
 });
 
 generateCalendar(currentDate);
+
+/* script histórico de atendimentos */
+const atendimentosTable = document.getElementById("atendimentos-table");
+const atendimentosTableBody = document.querySelector("#atendimentos-table tbody");
+document.getElementById("fetch-atendimentos-btn").addEventListener("click", () => {
+    const matriculaPaciente = document.getElementById("user-id").value;
+    fetchAtendimentos(matriculaPaciente);
+});
+
+async function fetchAtendimentos(pacienteId) {
+    try {
+        const response = await fetch(`http://localhost:3000/pacientes/atendimentos/${pacienteId}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        const atendimentos = await response.json();
+        renderAtendimentosTable(atendimentos);
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
+}
+
+function renderAtendimentosTable(atendimentos) {
+    atendimentosTableBody.innerHTML = "";
+
+    if (atendimentos.length === 0) {
+        atendimentosTable.hidden = true;
+    } else {
+        atendimentos.forEach(atendimento => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${atendimento.paciente_nome}</td>
+                <td>${new Date(atendimento.paciente_data_nascimento).toLocaleDateString()}</td>
+                <td>${atendimento.atendimento_id}</td>
+                <td>${formatDate(atendimento.atendimento_horario)}</td>
+                <td>${atendimento.profissional_nome}</td>
+                <td>${atendimento.profissional_registro}</td>
+            `;
+
+            atendimentosTableBody.appendChild(row);
+        });
+        
+        atendimentosTable.hidden = false;
+    }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2 digits for day
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits for month
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0'); // Ensure 2 digits for hour
+    const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensure 2 digits for minutes
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}`;
+}

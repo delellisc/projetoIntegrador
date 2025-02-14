@@ -16,7 +16,7 @@ let Profissional = class Profissional {
 };
 exports.Profissional = Profissional;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryColumn)({ type: 'bigint' }),
     __metadata("design:type", Number)
 ], Profissional.prototype, "id", void 0);
 __decorate([
