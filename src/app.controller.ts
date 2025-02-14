@@ -8,7 +8,9 @@ export class AppController {
   @Get()
   @Render('pagina_inicial_logado')
   root() {
-    return { message: 'saude123' };
+    return { msg1: 'Campanha de vacinação do dia 08/06 ao dia 18/06!!', 
+      msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!' 
+    };
   }
 
   @Get('agendamentos')
@@ -21,5 +23,10 @@ export class AppController {
   @Render('pagina_perfil')
   getPerfil() {
     return { message: 'perfil visualizado'}
+  }
+  @Get('historico')
+  @Render('pagina_historico')
+  getHistorico() {
+    return { message: 'aqui está o historico'}
   }
 }

@@ -17,13 +17,18 @@ let AppController = class AppController {
         this.appService = appService;
     }
     root() {
-        return { message: 'saude123' };
+        return { msg1: 'Campanha de vacinação do dia 08/06 ao dia 18/06!!',
+            msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!'
+        };
     }
     getAgendamentos() {
         return { message: 'atendimento é bom' };
     }
     getPerfil() {
         return { message: 'perfil visualizado' };
+    }
+    getHistorico() {
+        return { message: 'aqui está o historico' };
     }
 };
 exports.AppController = AppController;
@@ -48,6 +53,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getPerfil", null);
+__decorate([
+    (0, common_1.Get)('historico'),
+    (0, common_1.Render)('pagina_historico'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getHistorico", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

@@ -3,12 +3,16 @@ export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
     root(): {
-        message: string;
+        msg1: string;
+        msg2: string;
     };
     getAgendamentos(): {
         message: string;
     };
     getPerfil(): {
+        message: string;
+    };
+    getHistorico(): {
         message: string;
     };
 }
