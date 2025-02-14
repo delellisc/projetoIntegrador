@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>+Saúde IFRN</title>
-    <!-- ".." vira alias para ../public -->
+    <title>+Saúde IFRN - Agendamentos</title>
     <link rel="stylesheet" href="../styles/style_agendamentos.css">
+    <script src="../scripts/script_agendamentos.js" defer></script>
 </head>
 <body>
     <header class="header">
-        <div class="class nav-left">
+        <div class="nav-left">
             <a href="#">+Saúde IFRN</a>
             <a href="/">Início</a>
-            <a href="#"style="color:#3BE799">Agendamentos</a>
+            <a href="#" style="color:#3BE799">Agendamentos</a>
         </div>
-        <div class="class nav-right">
+        <div class="nav-right">
             <a href="./pagina_historico.html">Histórico</a>
             <a href="/perfil">Perfil</a>
         </div>
     </header>
 
-    <div class="class container">
-
+    <div class="container">
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <span id="prev-month" style="cursor:pointer;">⬅</span>
+                <span id="month-year"></span>
+                <span id="next-month" style="cursor:pointer;">➡</span>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
     </div>
 
     <footer class="footer">
