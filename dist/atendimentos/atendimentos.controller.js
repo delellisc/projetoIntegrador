@@ -36,6 +36,9 @@ let AtendimentosController = class AtendimentosController {
     remove(id) {
         return this.atendimentosService.remove(+id);
     }
+    findAtendimentoByDate(date) {
+        return this.atendimentosService.findAtendimentoByDate(date);
+    }
 };
 exports.AtendimentosController = AtendimentosController;
 __decorate([
@@ -73,6 +76,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('/data/:date'),
+    __param(0, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findAtendimentoByDate", null);
 exports.AtendimentosController = AtendimentosController = __decorate([
     (0, common_1.Controller)('atendimentos'),
     __metadata("design:paramtypes", [atendimentos_service_1.AtendimentosService])

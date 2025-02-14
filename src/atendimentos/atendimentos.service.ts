@@ -41,4 +41,10 @@ export class AtendimentosService {
     return null;
     // return `This action removes a #${id} atendimento`;
   }
+
+  findAtendimentoByDate(data: string){
+    return this.atendimentoRepository.createQueryBuilder("atendimento")
+    .where("DATE(atendimento.horario) = :horario", { horario: data })
+    .getMany();
+  }
 }

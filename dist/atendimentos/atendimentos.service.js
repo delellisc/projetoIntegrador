@@ -39,6 +39,11 @@ let AtendimentosService = class AtendimentosService {
         }
         return null;
     }
+    findAtendimentoByDate(data) {
+        return this.atendimentoRepository.createQueryBuilder("atendimento")
+            .where("DATE(atendimento.horario) = :horario", { horario: data })
+            .getMany();
+    }
 };
 exports.AtendimentosService = AtendimentosService;
 exports.AtendimentosService = AtendimentosService = __decorate([

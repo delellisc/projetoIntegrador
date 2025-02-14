@@ -31,4 +31,10 @@ export class AtendimentosController {
   remove(@Param('id') id: string) {
     return this.atendimentosService.remove(+id);
   }
+
+  @Get('/data/:date')
+  findAtendimentoByDate(@Param('date') date: string){
+    return this.atendimentosService.findAtendimentoByDate(date);
+  }
+
 }

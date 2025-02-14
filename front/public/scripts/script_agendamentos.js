@@ -113,12 +113,22 @@ function renderAtendimentosTable(atendimentos) {
 function formatDate(dateString) {
     const date = new Date(dateString);
 
-    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2 digits for day
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits for month
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
 
-    const hours = String(date.getHours()).padStart(2, '0'); // Ensure 2 digits for hour
-    const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensure 2 digits for minutes
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
+}
+
+function removeTimeFromDate(dateString) {
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
 }
