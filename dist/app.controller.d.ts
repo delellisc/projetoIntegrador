@@ -8,6 +8,10 @@ export declare class AppController {
         msg1: string;
         msg2: string;
     };
+    getPaciente(id: number): Promise<{
+        paciente: import("./pacientes/entities/paciente.entity").Paciente;
+        atendimentos: any[];
+    }>;
     getAgendamentos(): {
         message: string;
     };

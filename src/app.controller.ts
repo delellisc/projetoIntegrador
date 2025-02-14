@@ -1,5 +1,5 @@
 import { PacientesService } from './pacientes/pacientes.service';
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -18,6 +18,14 @@ export class AppController {
     };
   }
 
+  // função pra exibir ultimas consutlas do paciente
+  @Get('paciente/:id')
+  @Render('pagina_inicial_logado')
+  async getPaciente(@Param('id') id: number) {
+    const paciente = await this.pacientesService.findOne(id);
+    const atendimentos = await this.pacientesService.findAtendimentos(id);
+    return { paciente, atendimentos };
+  }
 
   @Get('agendamentos')
   @Render('pagina_agendamentos')
