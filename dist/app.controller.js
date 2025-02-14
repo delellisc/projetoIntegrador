@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
+const pacientes_service_1 = require("./pacientes/pacientes.service");
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 let AppController = class AppController {
-    constructor(appService) {
+    constructor(appService, pacientesService) {
         this.appService = appService;
+        this.pacientesService = pacientesService;
     }
     root() {
         return { msg1: 'Campanha de vacinação do dia 08/06 ao dia 18/06!!',
@@ -62,6 +64,7 @@ __decorate([
 ], AppController.prototype, "getHistorico", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __metadata("design:paramtypes", [app_service_1.AppService,
+        pacientes_service_1.PacientesService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

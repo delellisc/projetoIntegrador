@@ -1,10 +1,15 @@
+import { PacientesService } from './pacientes/pacientes.service';
 import { Controller, Get, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly pacientesService: PacientesService
+  ) {}
 
+  //rotapara avisos da pag inicial 
   @Get()
   @Render('pagina_inicial_logado')
   root() {
@@ -12,6 +17,7 @@ export class AppController {
       msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!' 
     };
   }
+
 
   @Get('agendamentos')
   @Render('pagina_agendamentos')

@@ -23,6 +23,7 @@ exports.PacientesModule = PacientesModule = __decorate([
             ...pacientes_providers_1.PacientesProviders,
             pacientes_service_1.PacientesService
         ],
+        exports: [pacientes_service_1.PacientesService]
     })
 ], PacientesModule);
 //# sourceMappingURL=pacientes.module.js.map

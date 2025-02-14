@@ -38,7 +38,9 @@
         <div class="section-avisos">
             <h3>Avisos</h3>
             <div class="avisos">
-                <p>{{msg1}}<br>{{msg2}}</p>
+                <p>{{#if msg1}}{{msg1}}<br>
+                {{/if}}
+                {{#if msg2}}{{msg2}}{{/if}}</p>
             </div>
             <div class="avisos">
                 <p>Você não tem novas notificações.</p>
