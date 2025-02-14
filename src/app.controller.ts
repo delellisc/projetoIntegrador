@@ -18,7 +18,7 @@ export class AppController {
     };
   }
 
-  // função pra exibir ultimas consutlas do paciente
+  //função pra exibir ultimas consutlas do paciente
   @Get('paciente/:id')
   @Render('pagina_inicial_logado')
   async getPaciente(@Param('id') id: number) {
