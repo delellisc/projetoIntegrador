@@ -1,5 +1,5 @@
 import { PacientesService } from './pacientes/pacientes.service';
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Param, Req, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -37,6 +37,7 @@ export class AppController {
   getPerfil() {
     return { message: 'perfil visualizado'}
   }
+  
   @Get('historico')
   @Render('pagina_historico')
   getHistorico() {

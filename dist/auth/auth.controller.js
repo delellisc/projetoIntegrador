@@ -22,17 +22,34 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
-    async callback(code, res) {
+    async callback(code, res, session) {
         if (!code) {
             return res.status(400).json({ error: 'Código de autorização ausente' });
         }
+        if (!session) {
+            console.error("Erro: sessão não foi inicializada!");
+            return res.status(500).json({ error: 'Sessão não inicializada' });
+        }
         try {
-            const tokenData = await this.authService.exchangeCodeForToken(code);
-            return res.json(tokenData);
+            const token = await this.authService.exchangeCodeForToken(code);
+            const user = await this.authService.getUserData(token.access_token);
+            session.token = token;
+            session.user = user;
+            console.log("token recebido:", token);
+            const userData = await this.authService.getUserData(token);
+            session.user = userData;
+            return res.render('pagina_inicial_logado', { usuario: userData });
         }
         catch (error) {
+            console.log("erro:", error);
             return res.status(401).json({ error: 'Falha ao autenticar' });
         }
+    }
+    getUser(session) {
+        if (!session.user) {
+            throw new common_1.UnauthorizedException('Usuário não autenticado');
+        }
+        return session.user;
     }
 };
 exports.AuthController = AuthController;
@@ -47,10 +64,18 @@ __decorate([
     (0, common_1.Get)('callback'),
     __param(0, (0, common_1.Query)('code')),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "callback", null);
+__decorate([
+    (0, common_1.Get)('user'),
+    __param(0, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getUser", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

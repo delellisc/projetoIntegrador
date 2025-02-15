@@ -29,13 +29,26 @@ export class AuthService {
           redirect_uri: this.redirectUri,
           client_id: this.clientId,
           client_secret: this.clientSecret,
-        }),
+        }).toString(),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       );
+      console.log('Token recebido:', response.data)
       //retorna o token
-      return response.data;  
+      return response.data.access_token;  
     } catch (error) {
       throw new UnauthorizedException('Erro ao trocar código por token');
     }
   }
+
+  async getUserData(token: string): Promise<any> {
+    try {
+      const response = await axios.get('https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-dados/', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      throw new UnauthorizedException('Erro ao obter dados do usuário');
+    }
+  }
+  
 }
