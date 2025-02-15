@@ -31,9 +31,18 @@
             <div class="section-ultimas">
                 <h3>Última(s) Consulta(s)</h3>
                 <div class="consulta-ultimas">
-                    <p>{{#if atendimentos}}{{atendimentos}}{{/if}}</p>
-                    <p>Nenhuma consulta.</p>
+                    {{#if atendimentos}}
+                        {{#each atendimentos}}
+                            <p>Status: {{status}}</p><br>
+                            <p>Horário: {{horario}}</p><br>
+                            <p>Profissional: {{profissional}}</p><br>
+                            <hr>
+                        {{/each}}
+                    {{else}}
+                        <p>Nenhuma consulta.</p>
+                    {{/if}}
                 </div>
+
             </div>
         </div>
         <div class="section-avisos">
@@ -56,7 +65,7 @@
         <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
         <p>Entre em contato:</p>
         <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
-        <img src="logo.png" alt="Logo">
+        <img src="#" alt="Logo">
     </footer>
 </body>
 </html>

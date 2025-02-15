@@ -24,7 +24,12 @@ export class AppController {
   async getPaciente(@Param('id') id: number) {
     const paciente = await this.pacientesService.findOne(id);
     const atendimentos = await this.pacientesService.findAtendimentos(id);
-    return { paciente, atendimentos };
+    const atendimentosFormatted = atendimentos.map(atendimento => ({
+      status: atendimento.status,
+      horario: new Date(atendimento.horario).toLocaleString(), 
+      profissional: atendimento.profissional ? atendimento.profissional.nome : '', 
+    }));
+    return { paciente, atendimentos: atendimentosFormatted };
   }
 
   @Get('agendamentos')
