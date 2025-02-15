@@ -17,7 +17,15 @@ export class AppController {
       msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!' 
     };
   }
+  //funcao para paciente logado
+  @Get('paciente/:id')
+  @Render('pagina_inicial_logado')
+  async getPaciente(@Param('id') id: number) {
+    const paciente = await this.pacientesService.findOne(id);
+    return { paciente };
+  }
 
+  
   @Get('agendamentos')
   @Render('pagina_agendamentos')
   getAgendamentos() {

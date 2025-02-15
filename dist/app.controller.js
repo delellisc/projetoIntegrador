@@ -28,13 +28,7 @@ let AppController = class AppController {
     }
     async getPaciente(id) {
         const paciente = await this.pacientesService.findOne(id);
-        const atendimentos = await this.pacientesService.findAtendimentos(id);
-        const atendimentosFormatted = atendimentos.map(atendimento => ({
-            status: atendimento.status,
-            horario: new Date(atendimento.horario).toLocaleString(),
-            profissional: atendimento.profissional ? atendimento.profissional.nome : '',
-        }));
-        return { paciente, atendimentos: atendimentosFormatted };
+        return { paciente };
     }
     getAgendamentos() {
         return { message: 'atendimento é bom' };

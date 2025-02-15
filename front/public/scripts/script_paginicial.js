@@ -1,54 +1,73 @@
-const ultimasConsultas = document.getElementById("consulta-ultimas");
+//pegar id da url
+function getPacienteIdFromUrl() {
+    const pathSegments = window.location.pathname.split('/');  
+    const pacienteId = pathSegments[pathSegments.length - 1];
+    return pacienteId;
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const pacienteId = getPacienteIdFromUrl();
+
+    if (pacienteId) {
+        //chamando função quando pegar o id
+        fetchAtendimentos(pacienteId);
+    } else {
+        console.error("ID do paciente não encontrado.");
+    }
+});
+
+
+
 async function fetchAtendimentos(pacienteId) {
     try {
         const response = await fetch(`http://localhost:3000/pacientes/atendimentos/${pacienteId}`);
         
-        // Verificando se a resposta foi bem-sucedida
         if (!response.ok) {
             throw new Error("Erro ao buscar atendimentos.");
         }
         
-        // Parse da resposta como JSON
         const atendimentos = await response.json();
+        
+        //renderizar os resultados na tela
         renderAtendimentos(atendimentos);
     } catch (error) {
         console.error("Erro ao buscar atendimentos:", error);
     }
 }
 
-// Iterar sobre os atendimentos e exibir os dados diretamente na div
 function renderAtendimentos(atendimentos) {
+    const ultimasConsultas = document.getElementById("consulta-ultimas");
     ultimasConsultas.innerHTML = '';
 
-    // Filtrando os atendimentos para pegar apenas os com status 'confirmado'
+    //pega so os com status 'confirmado' (não sei exatamente qual o status para as consultas já realizadas)
     const atendimentosConfirmados = atendimentos.filter(atendimento => atendimento.atendimento_status === 'confirmado');
-
-    // Pegando os 3 últimos atendimentos
+    
+    //pega os 3 ultimos (numero tirado do ânus)
     const ultimosAtendimentos = atendimentosConfirmados.slice(0, 3);
-
 
     if (ultimosAtendimentos.length === 0) {
         ultimasConsultas.innerHTML = "<p>Nenhuma consulta confirmada encontrada.</p>";
         return;
     }
 
+    //percorre o resultado e - deveria - mostra atendimentos
     ultimosAtendimentos.forEach(atendimento => {
         const atendimentoDiv = document.createElement('div');
-        atendimentoDiv.classList.add('atendimento-item');
+        atendimentoDiv.classList.add('atendimento-item'); 
 
         atendimentoDiv.innerHTML = `
-        <p><strong>Profissional:</strong> ${atendimento.profissional_nome}</p>
-        <p><strong>Horário:</strong> ${formatDate(atendimento.atendimento_horario)}</p>
-        <p><strong>Status:</strong> ${atendimento.atendimento_status}</p>
-        <hr>
+            <p><strong>Profissional:</strong> ${atendimento.profissional_nome}</p>
+            <p><strong>Horário:</strong> ${formatDate(atendimento.atendimento_horario)}</p>
+            <p><strong>Status:</strong> ${atendimento.atendimento_status}</p>
+            <hr>
         `;
-        
-        // Adicionar cada atendimento na div principal
+
         ultimasConsultas.appendChild(atendimentoDiv);
-    })
+    });
 }
 
-// Função para formatar a data
+//fromatar data
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleString();

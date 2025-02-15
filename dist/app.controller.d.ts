@@ -10,11 +10,6 @@ export declare class AppController {
     };
     getPaciente(id: number): Promise<{
         paciente: import("./pacientes/entities/paciente.entity").Paciente;
-        atendimentos: {
-            status: any;
-            horario: string;
-            profissional: any;
-        }[];
     }>;
     getAgendamentos(): {
         message: string;
