@@ -18,20 +18,6 @@ export class AppController {
     };
   }
 
-  //função pra exibir ultimas consutlas do paciente
-  @Get('paciente/:id')
-  @Render('pagina_inicial_logado')
-  async getPaciente(@Param('id') id: number) {
-    const paciente = await this.pacientesService.findOne(id);
-    const atendimentos = await this.pacientesService.findAtendimentos(id);
-    const atendimentosFormatted = atendimentos.map(atendimento => ({
-      status: atendimento.status,
-      horario: new Date(atendimento.horario).toLocaleString(), 
-      profissional: atendimento.profissional ? atendimento.profissional.nome : '', 
-    }));
-    return { paciente, atendimentos: atendimentosFormatted };
-  }
-
   @Get('agendamentos')
   @Render('pagina_agendamentos')
   getAgendamentos() {

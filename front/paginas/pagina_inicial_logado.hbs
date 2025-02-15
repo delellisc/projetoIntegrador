@@ -30,17 +30,7 @@
             </div>
             <div class="section-ultimas">
                 <h3>Última(s) Consulta(s)</h3>
-                <div class="consulta-ultimas">
-                    {{#if atendimentos}}
-                        {{#each atendimentos}}
-                            <p>Status: {{status}}</p><br>
-                            <p>Horário: {{horario}}</p><br>
-                            <p>Profissional: {{profissional}}</p><br>
-                            <hr>
-                        {{/each}}
-                    {{else}}
-                        <p>Nenhuma consulta.</p>
-                    {{/if}}
+                <div id="consulta-ultimas">
                 </div>
 
             </div>
