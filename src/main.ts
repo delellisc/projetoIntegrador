@@ -18,7 +18,9 @@ async function bootstrap() {
     }),
   );
 
-  app.useStaticAssets(join(__dirname, '../front', 'public'));
+  app.useStaticAssets(join(__dirname, '../front', 'public'), {
+    prefix: '/public/'
+  });
   app.setBaseViewsDir(join(__dirname, '../front', 'paginas'));
   app.setViewEngine('hbs');
   

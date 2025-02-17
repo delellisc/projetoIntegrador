@@ -12,7 +12,9 @@ async function bootstrap() {
         saveUninitialized: false,
         cookie: { secure: false }
     }));
-    app.useStaticAssets((0, path_1.join)(__dirname, '../front', 'public'));
+    app.useStaticAssets((0, path_1.join)(__dirname, '../front', 'public'), {
+        prefix: '/public/'
+    });
     app.setBaseViewsDir((0, path_1.join)(__dirname, '../front', 'paginas'));
     app.setViewEngine('hbs');
     await app.listen(process.env.PORT ?? 3000);
