@@ -22,7 +22,13 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
-    async callback(code, client_id, res, session) {
+    renderHome(res, session) {
+        if (!session || !session.user) {
+            return res.redirect('/auth/login');
+        }
+        return res.render('pagina_inicial_logado', { user: session.user });
+    }
+    async callback(code, res, session) {
         if (!code) {
             return res.status(400).json({ error: 'Código de autorização ausente' });
         }
@@ -36,7 +42,7 @@ let AuthController = class AuthController {
             const userData = await this.authService.getUserData(token);
             console.log(userData);
             session.user = userData;
-            return res.render('pagina_inicial_logado', { usuario: userData });
+            return res.redirect('/auth/pagina_inicial_logado');
         }
         catch (error) {
             console.log("erro:", error);
@@ -59,13 +65,21 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 __decorate([
-    (0, common_1.Get)('callback'),
-    __param(0, (0, common_1.Query)('code')),
-    __param(1, (0, common_1.Query)('client_id')),
-    __param(2, (0, common_1.Res)()),
-    __param(3, (0, common_1.Session)()),
+    (0, common_1.Get)('pagina_inicial_logado'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "renderHome", null);
+__decorate([
+    (0, common_1.Get)('callback'),
+    (0, common_1.Redirect)('http://localhost:3000/pagina_inicial_logado', 302),
+    __param(0, (0, common_1.Query)('code')),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "callback", null);
 __decorate([
