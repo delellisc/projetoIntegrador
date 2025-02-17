@@ -22,7 +22,7 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
-    async callback(code, res, session) {
+    async callback(code, client_id, res, session) {
         if (!code) {
             return res.status(400).json({ error: 'Código de autorização ausente' });
         }
@@ -32,11 +32,9 @@ let AuthController = class AuthController {
         }
         try {
             const token = await this.authService.exchangeCodeForToken(code);
-            const user = await this.authService.getUserData(token.access_token);
             session.token = token;
-            session.user = user;
-            console.log("token recebido:", token);
             const userData = await this.authService.getUserData(token);
+            console.log(userData);
             session.user = userData;
             return res.render('pagina_inicial_logado', { usuario: userData });
         }
@@ -63,10 +61,11 @@ __decorate([
 __decorate([
     (0, common_1.Get)('callback'),
     __param(0, (0, common_1.Query)('code')),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Session)()),
+    __param(1, (0, common_1.Query)('client_id')),
+    __param(2, (0, common_1.Res)()),
+    __param(3, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:paramtypes", [String, String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "callback", null);
 __decorate([

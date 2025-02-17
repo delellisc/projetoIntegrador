@@ -31,10 +31,11 @@ let AuthService = class AuthService {
                 client_id: this.clientId,
                 client_secret: this.clientSecret,
             }).toString(), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-            console.log('Token recebido:', response.data);
-            return response.data.access_token;
+            console.log(response);
+            return response.data['access_token'];
         }
         catch (error) {
+            console.log(error);
             throw new common_1.UnauthorizedException('Erro ao trocar código por token');
         }
     }
@@ -46,6 +47,7 @@ let AuthService = class AuthService {
             return response.data;
         }
         catch (error) {
+            console.log(error);
             throw new common_1.UnauthorizedException('Erro ao obter dados do usuário');
         }
     }

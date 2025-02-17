@@ -6,6 +6,6 @@ export declare class AuthController {
     login(): {
         url: string;
     };
-    callback(code: string, res: Response, session?: Record<string, any>): Promise<void | Response<any, Record<string, any>>>;
+    callback(code: string, client_id: string, res: Response, session?: Record<string, any>): Promise<void | Response<any, Record<string, any>>>;
     getUser(session: Record<string, any>): any;
 }

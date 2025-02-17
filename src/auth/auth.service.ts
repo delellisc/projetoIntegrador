@@ -18,7 +18,7 @@ export class AuthService {
     return `${this.suapAuthUrl}?response_type=code&client_id=${this.clientId}&redirect_uri=${encodeURIComponent(this.redirectUri)}`;
   }
 
-  //troca o código pelo token de acesso
+  // troca o código pelo token de acesso
   async exchangeCodeForToken(code: string): Promise<any> {
     try {
       const response = await axios.post(
@@ -32,10 +32,12 @@ export class AuthService {
         }).toString(),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       );
-      console.log('Token recebido:', response.data)
+      console.log(response)
+      // console.log('TESTE:', response.data)
       //retorna o token
-      return response.data.access_token;  
+      return response.data['access_token'];  
     } catch (error) {
+      console.log(error)
       throw new UnauthorizedException('Erro ao trocar código por token');
     }
   }
@@ -47,8 +49,12 @@ export class AuthService {
       });
       return response.data;
     } catch (error) {
+      console.log(error)
       throw new UnauthorizedException('Erro ao obter dados do usuário');
     }
   }
   
 }
+
+
+// http://localhost:3000/auth/callback?code=lSekkzIqnowDa7hDHUsjbADalgx47G
