@@ -9,14 +9,6 @@ export class AppController {
     private readonly pacientesService: PacientesService
   ) {}
 
-  //rotapara avisos da pag inicial 
-  @Get()
-  @Render('pagina_inicial_logado')
-  root() {
-    return { msg1: 'Campanha de vacinação do dia 08/06 ao dia 18/06!!', 
-      msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!' 
-    };
-  }
   //funcao para paciente logado
   @Get('paciente/:id')
   @Render('pagina_inicial_logado')

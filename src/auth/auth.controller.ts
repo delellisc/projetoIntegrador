@@ -27,8 +27,10 @@ export class AuthController {
 
     const pacienteId = session.user.id
     const atendimentos = await this.pacienteService.findAtendimentos(pacienteId)
+    const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!' 
+    const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!' 
 
-    return res.render('pagina_inicial_logado', {user: session.user, atendimentos})
+    return res.render('pagina_inicial_logado', {user: session.user, atendimentos, msg1: msg1, msg2: msg2})
   }
 
   //troca o codigo pego token 

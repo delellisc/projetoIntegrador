@@ -4,10 +4,6 @@ export declare class AppController {
     private readonly appService;
     private readonly pacientesService;
     constructor(appService: AppService, pacientesService: PacientesService);
-    root(): {
-        msg1: string;
-        msg2: string;
-    };
     getPaciente(id: number): Promise<{
         paciente: import("./pacientes/entities/paciente.entity").Paciente;
     }>;

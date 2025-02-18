@@ -28,7 +28,11 @@ let AuthController = class AuthController {
         if (!session || !session.user) {
             return res.redirect('/auth/login');
         }
-        return res.render('pagina_inicial_logado', { user: session.user });
+        const pacienteId = session.user.id;
+        const atendimentos = await this.pacienteService.findAtendimentos(pacienteId);
+        const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!';
+        const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!';
+        return res.render('pagina_inicial_logado', { user: session.user, atendimentos, msg1: msg1, msg2: msg2 });
     }
     async callback(code, res, session) {
         if (!code) {
@@ -50,6 +54,7 @@ let AuthController = class AuthController {
                 data_nascimento: userData.data_nascimento,
                 contato: userData.email
             };
+            const paciente = await this.pacienteService.findOrCreate(pacienteDto);
         }
         catch (error) {
             console.log("erro:", error);

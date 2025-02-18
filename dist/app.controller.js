@@ -21,11 +21,6 @@ let AppController = class AppController {
         this.appService = appService;
         this.pacientesService = pacientesService;
     }
-    root() {
-        return { msg1: 'Campanha de vacinação do dia 08/06 ao dia 18/06!!',
-            msg2: 'Procure a unidade de saúde do seu bairro para se vacinar!'
-        };
-    }
     async getPaciente(id) {
         const paciente = await this.pacientesService.findOne(id);
         return { paciente };
@@ -41,13 +36,6 @@ let AppController = class AppController {
     }
 };
 exports.AppController = AppController;
-__decorate([
-    (0, common_1.Get)(),
-    (0, common_1.Render)('pagina_inicial_logado'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "root", null);
 __decorate([
     (0, common_1.Get)('paciente/:id'),
     (0, common_1.Render)('pagina_inicial_logado'),
