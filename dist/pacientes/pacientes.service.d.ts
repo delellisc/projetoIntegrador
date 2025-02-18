@@ -5,8 +5,8 @@ import { Paciente } from './entities/paciente.entity';
 export declare class PacientesService {
     private pacienteRepository;
     constructor(pacienteRepository: Repository<Paciente>);
+    findOrCreate(createPacienteDto: CreatePacienteDto): Promise<Paciente>;
     create(createPacienteDto: CreatePacienteDto): Promise<Paciente>;
-    criarPaciente(nome: string): Promise<void>;
     findAll(): Promise<Paciente[]>;
     findOne(id: number): Promise<Paciente>;
     update(id: number, updatePacienteDto: UpdatePacienteDto): Promise<import("typeorm").UpdateResult>;

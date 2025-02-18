@@ -1,11 +1,15 @@
-import { Controller, Get, Query, Redirect, Res, Req, Session, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Query, Redirect, Res, Req, Post, Session, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response, Request } from 'express';
 import { session } from 'passport';
+import { PacientesService } from 'src/pacientes/pacientes.service';
+import { CreatePacienteDto } from 'src/pacientes/dto/create-paciente.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly pacienteService: PacientesService) {}
 
   //rota para o login do 
   @Get('login')
@@ -50,6 +54,15 @@ export class AuthController {
       const userData = await this.authService.getUserData(token);
       console.log(userData)
       session.user = userData; //armazena os dados do usuário na sessão
+
+      const pacienteDto: CreatePacienteDto = {
+        id: userData.matricula,
+        nome: userData.nome_usual,
+        data_nascimento: userData.data_nascimento,
+        contato: userData.email
+      }
+
+      const paciente = await this.pacienteService.findOrCreate(pacienteDto)
        
 
       return res.redirect('/auth/pagina_inicial_logado');

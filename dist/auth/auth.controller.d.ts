@@ -1,8 +1,10 @@
 import { AuthService } from './auth.service';
 import { Response } from 'express';
+import { PacientesService } from 'src/pacientes/pacientes.service';
 export declare class AuthController {
     private readonly authService;
-    constructor(authService: AuthService);
+    private readonly pacienteService;
+    constructor(authService: AuthService, pacienteService: PacientesService);
     login(): {
         url: string;
     };

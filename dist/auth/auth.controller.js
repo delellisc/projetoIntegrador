@@ -15,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const pacientes_service_1 = require("../pacientes/pacientes.service");
 let AuthController = class AuthController {
-    constructor(authService) {
+    constructor(authService, pacienteService) {
         this.authService = authService;
+        this.pacienteService = pacienteService;
     }
     login() {
         return { url: this.authService.getAuthUrl() };
@@ -42,6 +44,13 @@ let AuthController = class AuthController {
             const userData = await this.authService.getUserData(token);
             console.log(userData);
             session.user = userData;
+            const pacienteDto = {
+                id: userData.matricula,
+                nome: userData.nome_usual,
+                data_nascimento: userData.data_nascimento,
+                contato: userData.email
+            };
+            const paciente = await this.pacienteService.findOrCreate(pacienteDto);
             return res.redirect('/auth/pagina_inicial_logado');
         }
         catch (error) {
@@ -91,6 +100,7 @@ __decorate([
 ], AuthController.prototype, "getUser", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        pacientes_service_1.PacientesService])
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map
