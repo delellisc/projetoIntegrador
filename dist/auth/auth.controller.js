@@ -24,7 +24,7 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
-    renderHome(res, session) {
+    async renderHome(res, session) {
         if (!session || !session.user) {
             return res.redirect('/auth/login');
         }
@@ -50,8 +50,6 @@ let AuthController = class AuthController {
                 data_nascimento: userData.data_nascimento,
                 contato: userData.email
             };
-            const paciente = await this.pacienteService.findOrCreate(pacienteDto);
-            return res.redirect('/auth/pagina_inicial_logado');
         }
         catch (error) {
             console.log("erro:", error);
@@ -79,11 +77,11 @@ __decorate([
     __param(1, (0, common_1.Session)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "renderHome", null);
 __decorate([
     (0, common_1.Get)('callback'),
-    (0, common_1.Redirect)('http://localhost:3000/pagina_inicial_logado', 302),
+    (0, common_1.Redirect)('http://localhost:3000/auth/pagina_inicial_logado', 302),
     __param(0, (0, common_1.Query)('code')),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Session)()),

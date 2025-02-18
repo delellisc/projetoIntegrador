@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("Dados do usuário:", userData);
         
         // Exibir os dados do usuário na interface
-        document.getElementById("user-name").textContent = userData.vinculo.nome;
+        document.getElementById("user-name").textContent = userData.nome_usual;
     } catch (error) {
         console.error(error);
     }
