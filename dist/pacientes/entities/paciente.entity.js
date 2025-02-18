@@ -16,17 +16,13 @@ let Paciente = class Paciente {
 };
 exports.Paciente = Paciente;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryColumn)({ type: 'bigint' }),
     __metadata("design:type", Number)
 ], Paciente.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Paciente.prototype, "nome", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Paciente.prototype, "sexo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'date' }),
     __metadata("design:type", Date)

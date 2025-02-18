@@ -18,6 +18,11 @@ export class PacientesService {
     // return 'This action adds a new paciente';
   }
 
+  //tentativa de função pra adicionar no banco de dados ao login
+  async criarPaciente(nome: string,){
+
+  }
+
   findAll() {
     return this.pacienteRepository.find();
     // return `This action returns all pacientes`;

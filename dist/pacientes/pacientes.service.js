@@ -23,6 +23,8 @@ let PacientesService = class PacientesService {
         const paciente = this.pacienteRepository.create(createPacienteDto);
         return this.pacienteRepository.save(paciente);
     }
+    async criarPaciente(nome) {
+    }
     findAll() {
         return this.pacienteRepository.find();
     }

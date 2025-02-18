@@ -6,6 +6,7 @@ export declare class PacientesService {
     private pacienteRepository;
     constructor(pacienteRepository: Repository<Paciente>);
     create(createPacienteDto: CreatePacienteDto): Promise<Paciente>;
+    criarPaciente(nome: string): Promise<void>;
     findAll(): Promise<Paciente[]>;
     findOne(id: number): Promise<Paciente>;
     update(id: number, updatePacienteDto: UpdatePacienteDto): Promise<import("typeorm").UpdateResult>;
