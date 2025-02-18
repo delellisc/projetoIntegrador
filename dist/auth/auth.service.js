@@ -30,11 +30,25 @@ let AuthService = class AuthService {
                 redirect_uri: this.redirectUri,
                 client_id: this.clientId,
                 client_secret: this.clientSecret,
-            }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            }).toString(), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+            console.log(response);
+            return response.data['access_token'];
+        }
+        catch (error) {
+            console.log(error);
+            throw new common_1.UnauthorizedException('Erro ao trocar código por token');
+        }
+    }
+    async getUserData(token) {
+        try {
+            const response = await axios_1.default.get('https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-dados/', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
             return response.data;
         }
         catch (error) {
-            throw new common_1.UnauthorizedException('Erro ao trocar código por token');
+            console.log(error);
+            throw new common_1.UnauthorizedException('Erro ao obter dados do usuário');
         }
     }
 };

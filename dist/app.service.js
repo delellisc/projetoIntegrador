@@ -35,7 +35,6 @@ let AppService = class AppService {
     }
     async getTokenFromAuthCode(code) {
         try {
-            return await this.authService.exchangeCodeForToken(code);
         }
         catch (error) {
             throw new Error('Erro ao obter token');

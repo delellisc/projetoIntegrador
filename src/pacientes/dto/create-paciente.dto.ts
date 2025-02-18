@@ -2,10 +2,13 @@ import { IsNotEmpty } from "class-validator";
 
 export class CreatePacienteDto {
     @IsNotEmpty()
-    nome: string;
+    id: number;
 
     @IsNotEmpty()
-    sexo: string;
+    nome: string;
+
+    // @IsNotEmpty()
+    // sexo: string;
 
     @IsNotEmpty()
     data_nascimento: Date;
