@@ -39,10 +39,23 @@ let AtendimentosService = class AtendimentosService {
         }
         return null;
     }
-    findAtendimentoByDate(data) {
-        return this.atendimentoRepository.createQueryBuilder("atendimento")
-            .where("DATE(atendimento.horario) = :horario", { horario: data })
-            .getMany();
+    async findAtendimentoByDate(data) {
+        return this.atendimentoRepository
+            .createQueryBuilder('atendimento')
+            .leftJoinAndSelect('atendimento.profissional', 'profissional')
+            .leftJoinAndSelect('profissional.especializacao', 'especializacao')
+            .select([
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'atendimento.status AS atendimento_status',
+            'profissional.id AS profissional_id',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'profissional.status AS profissional_status',
+            'especializacao.nome AS especializacao_nome',
+        ])
+            .where('DATE(atendimento.horario) = :data', { data })
+            .getRawMany();
     }
 };
 exports.AtendimentosService = AtendimentosService;

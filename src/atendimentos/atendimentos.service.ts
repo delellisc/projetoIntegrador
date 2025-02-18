@@ -42,9 +42,26 @@ export class AtendimentosService {
     // return `This action removes a #${id} atendimento`;
   }
 
-  findAtendimentoByDate(data: string){
-    return this.atendimentoRepository.createQueryBuilder("atendimento")
-    .where("DATE(atendimento.horario) = :horario", { horario: data })
-    .getMany();
-  }
+  async findAtendimentoByDate(data: string): Promise<any[]> {
+      return this.atendimentoRepository
+        .createQueryBuilder('atendimento')
+        .leftJoinAndSelect('atendimento.profissional', 'profissional') // Join with Profissional
+        .leftJoinAndSelect('profissional.especializacao', 'especializacao') // Join with Especializacao
+        /* .leftJoinAndSelect('atendimento.pacientes', 'paciente') // Join with Paciente (Many-to-Many) */
+        .select([
+          'atendimento.id AS atendimento_id',
+          'atendimento.horario AS atendimento_horario',
+          'atendimento.status AS atendimento_status',
+          'profissional.id AS profissional_id',
+          'profissional.nome AS profissional_nome',
+          'profissional.registro_profissional AS profissional_registro',
+          'profissional.status AS profissional_status',
+          'especializacao.nome AS especializacao_nome',
+          /* 'paciente.id AS paciente_id', */
+          /* 'paciente.nome AS paciente_nome', */
+          /* 'paciente.data_nascimento AS paciente_data_nascimento', */
+        ])
+        .where('DATE(atendimento.horario) = :data', { data }) // Filter by date
+        .getMany(); // Use getRawMany() to return raw results
+    }
 }

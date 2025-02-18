@@ -1,3 +1,16 @@
+/* script fetch atendimentos por data */
+async function fetchAtendimentosData(data) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
+}
+
 /* script para gerar calendário */
 
 const calendar = document.getElementById("calendar");
@@ -7,7 +20,7 @@ const nextMonthBtn = document.getElementById("next-month");
 
 let currentDate = new Date();
 
-function generateCalendar(date) {
+async function generateCalendar(date) {
     calendar.innerHTML = "";
     const month = date.getMonth();
     const year = date.getFullYear();
@@ -35,7 +48,13 @@ function generateCalendar(date) {
         const dayElement = document.createElement("div");
         dayElement.classList.add("calendar-day");
         dayElement.textContent = i;
-
+        let atendimentosHoje = await fetchAtendimentosData(`${year}-${month+1}-${i}`);
+        if (atendimentosHoje[0]) {
+            dayElement.classList.add("has-atendimento");
+            dayElement.addEventListener("click", () => {
+                openModal(atendimentosHoje);
+            });
+        }
         const today = new Date();
         if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
             dayElement.classList.add("today");
@@ -43,6 +62,87 @@ function generateCalendar(date) {
         calendar.appendChild(dayElement);
     }
 }
+
+/* function openModal(atendimentos) {
+    const modal = document.getElementById("atendimento-modal");
+    const atendimentoList = document.getElementById("atendimento-list");
+
+    atendimentoList.innerHTML = "";
+
+    atendimentos.forEach(atendimento => {
+        const listItem = document.createElement("li");
+        listItem.textContent = 
+        `
+        Horário: ${atendimento.atendimento_horario} - 
+        Profissonal: ${atendimento.profissional_nome} -
+        Especialização: ${atendimento.especializacao_nome}
+        `;
+        atendimentoList.appendChild(listItem);
+    });
+
+    modal.style.display = "block";
+} */
+
+function openModal(atendimentos) {
+    const modal = document.getElementById("atendimento-modal");
+    const atendimentoList = document.getElementById("atendimento-list");
+
+    atendimentoList.innerHTML = "";
+
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Horário</th>
+                <th>Profissional</th>
+                <th>Registro</th>
+                <th>Especialização</th>
+            </tr>
+        </thead>
+        <tbody id="atendimento-body">
+        </tbody>
+    `;
+
+    const tbody = table.querySelector("#atendimento-body");
+
+    atendimentos.forEach(atendimento => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${atendimento.atendimento_horario}</td>
+            <td>${atendimento.profissional_nome}</td>
+            <td>${atendimento.profissional_registro}</td>
+            <td>${atendimento.especializacao_nome}</td>
+        `;
+
+        row.style.borderBottom = "1px solid #ddd";
+        row.style.textAlign = "left";
+        row.style.padding = "8px";
+
+        tbody.appendChild(row);
+    });
+
+    atendimentoList.appendChild(table);
+    modal.style.display = "block";
+}
+    
+
+function closeModal() {
+    const modal = document.getElementById("atendimento-modal");
+    modal.style.display = "none";
+}
+
+document.querySelector(".close-modal").addEventListener("click", closeModal);
+
+window.addEventListener("click", (event) => {
+    const modal = document.getElementById("atendimento-modal");
+    if (event.target === modal) {
+        closeModal();
+    }
+});
 
 function getMonthName(monthIndex) {
     const monthNames = [
