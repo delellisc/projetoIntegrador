@@ -39,11 +39,9 @@ let AtendimentosService = class AtendimentosService {
         }
         return null;
     }
-    async findAtendimentoByDate(data) {
+    findAtendimentoByDate(data) {
         return this.atendimentoRepository
             .createQueryBuilder('atendimento')
-            .leftJoinAndSelect('atendimento.profissional', 'profissional')
-            .leftJoinAndSelect('profissional.especializacao', 'especializacao')
             .select([
             'atendimento.id AS atendimento_id',
             'atendimento.horario AS atendimento_horario',
@@ -54,6 +52,8 @@ let AtendimentosService = class AtendimentosService {
             'profissional.status AS profissional_status',
             'especializacao.nome AS especializacao_nome',
         ])
+            .innerJoin('atendimento.profissional', 'profissional')
+            .innerJoin('profissional.especializacao', 'especializacao')
             .where('DATE(atendimento.horario) = :data', { data })
             .getRawMany();
     }

@@ -61,5 +61,25 @@ export class ProfissionaisService {
       .innerJoin('atendimento.pacientes', 'paciente')
       .where('profissional.id = :id', { id })
       .getRawMany();
-  }  
+  }
+
+  findAtendimentoByDate(id:number, data: string) {
+    return this.profissionalRepository
+      .createQueryBuilder('profissional')
+      .select([
+        'atendimento.id AS atendimento_id',
+        'atendimento.horario AS atendimento_horario',
+        'atendimento.status AS atendimento_status',
+        'profissional.id AS profissional_id',
+        'profissional.nome AS profissional_nome',
+        'profissional.registro_profissional AS profissional_registro',
+        'profissional.status AS profissional_status',
+        'especializacao.nome AS especializacao_nome',
+      ])
+      .innerJoin('profissional.atendimentos', 'atendimento')
+      .innerJoin('profissional.especializacao', 'especializacao')
+      .where('DATE(atendimento.horario) = :data', { data })
+      .andWhere('profissional.id = :id', { id })
+      .getRawMany();
+  }
 }

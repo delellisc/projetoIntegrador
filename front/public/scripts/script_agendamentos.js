@@ -1,4 +1,6 @@
-/* script fetch atendimentos por data */
+/* *********************************************** */
+/* SCRIPTS FETCH */
+/* script fetch atendimentos do usuário por data */
 async function fetchAtendimentosData(data) {
     try {
         const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
@@ -11,6 +13,21 @@ async function fetchAtendimentosData(data) {
     }
 }
 
+/* script fetch atendimentos do profissional por data */
+async function fetchAtendimentosProfissionalData(data, id) {
+    try {
+        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos do profissional.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos do profissional:", error);
+    }
+}
+
+/* *********************************************** */
+/* SCRIPTS CALENDÁRIO */
 /* script para gerar calendário */
 
 const calendar = document.getElementById("calendar");
@@ -18,8 +35,11 @@ const monthYear = document.getElementById("month-year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
 
+const id = 20231038060018;
+
 let currentDate = new Date();
 
+// gera calendário do profissional
 async function generateCalendar(date) {
     calendar.innerHTML = "";
     const month = date.getMonth();
@@ -48,7 +68,51 @@ async function generateCalendar(date) {
         const dayElement = document.createElement("div");
         dayElement.classList.add("calendar-day");
         dayElement.textContent = i;
+        dayElement.addEventListener("click", () => {
+            openModal();
+        });
         let atendimentosHoje = await fetchAtendimentosData(`${year}-${month+1}-${i}`);
+        if (atendimentosHoje[0]) {
+            dayElement.classList.add("has-atendimento");
+        }
+        const today = new Date();
+        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+            dayElement.classList.add("today");
+        }
+        calendar.appendChild(dayElement);
+    }
+}
+
+// gera calendário do usuário
+async function generateCalendar(date) {
+    calendar.innerHTML = "";
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    monthYear.textContent = `${getMonthName(month)} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const weekdays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+    weekdays.forEach(day => {
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("calendar-day-name");
+        dayElement.textContent = day;
+        calendar.appendChild(dayElement);
+    });
+
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement("div");
+        emptyDay.classList.add("calendar-day");
+        emptyDay.style.background = "transparent";
+        calendar.appendChild(emptyDay);
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("calendar-day");
+        dayElement.textContent = i;
+        let atendimentosHoje = await fetchAtendimentosProfissionalData(`${year}-${month+1}-${i}`, id);
         if (atendimentosHoje[0]) {
             dayElement.classList.add("has-atendimento");
             dayElement.addEventListener("click", () => {
@@ -63,25 +127,8 @@ async function generateCalendar(date) {
     }
 }
 
-/* function openModal(atendimentos) {
-    const modal = document.getElementById("atendimento-modal");
-    const atendimentoList = document.getElementById("atendimento-list");
-
-    atendimentoList.innerHTML = "";
-
-    atendimentos.forEach(atendimento => {
-        const listItem = document.createElement("li");
-        listItem.textContent = 
-        `
-        Horário: ${atendimento.atendimento_horario} - 
-        Profissonal: ${atendimento.profissional_nome} -
-        Especialização: ${atendimento.especializacao_nome}
-        `;
-        atendimentoList.appendChild(listItem);
-    });
-
-    modal.style.display = "block";
-} */
+/* *********************************************** */
+/* SCRIPTS MODAL */
 
 function openModal(atendimentos) {
     const modal = document.getElementById("atendimento-modal");
@@ -128,7 +175,53 @@ function openModal(atendimentos) {
     atendimentoList.appendChild(table);
     modal.style.display = "block";
 }
-    
+
+/* modais de cadastro para profissionais */
+function openModal(atendimentos) {
+    const modal = document.getElementById("atendimento-modal");
+    const atendimentoList = document.getElementById("atendimento-list");
+
+    atendimentoList.innerHTML = "";
+
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Horário</th>
+                <th>Profissional</th>
+                <th>Registro</th>
+                <th>Especialização</th>
+            </tr>
+        </thead>
+        <tbody id="atendimento-body">
+        </tbody>
+    `;
+
+    const tbody = table.querySelector("#atendimento-body");
+
+    atendimentos.forEach(atendimento => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${atendimento.atendimento_horario}</td>
+            <td>${atendimento.profissional_nome}</td>
+            <td>${atendimento.profissional_registro}</td>
+            <td>${atendimento.especializacao_nome}</td>
+        `;
+
+        row.style.borderBottom = "1px solid #ddd";
+        row.style.textAlign = "left";
+        row.style.padding = "8px";
+
+        tbody.appendChild(row);
+    });
+
+    atendimentoList.appendChild(table);
+    modal.style.display = "block";
+}
 
 function closeModal() {
     const modal = document.getElementById("atendimento-modal");
@@ -163,6 +256,9 @@ nextMonthBtn.addEventListener("click", () => {
 });
 
 generateCalendar(currentDate);
+
+/* *********************************************** */
+/* SCRIPTS HISTÓRICO DE ATENDIMENTOS */
 
 /* script histórico de atendimentos */
 const atendimentosTable = document.getElementById("atendimentos-table");
