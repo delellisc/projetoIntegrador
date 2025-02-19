@@ -6,7 +6,7 @@ export class Especializacao {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({nullable: false})
     nome: string;
 
     @OneToMany(() => Profissional, (profissional) => profissional.especializacao)

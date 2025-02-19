@@ -8,16 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
+const pacientes_service_1 = require("./pacientes/pacientes.service");
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 let AppController = class AppController {
-    constructor(appService) {
+    constructor(appService, pacientesService) {
         this.appService = appService;
+        this.pacientesService = pacientesService;
     }
-    root() {
-        return { message: 'saude123' };
+    async getPaciente(id) {
+        const paciente = await this.pacientesService.findOne(id);
+        return { paciente };
     }
     getAgendamentos() {
         return { message: 'atendimento é bom' };
@@ -25,15 +31,19 @@ let AppController = class AppController {
     getPerfil() {
         return { message: 'perfil visualizado' };
     }
+    getHistorico() {
+        return { message: 'aqui está o historico' };
+    }
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('paciente/:id'),
     (0, common_1.Render)('pagina_inicial_logado'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "root", null);
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getPaciente", null);
 __decorate([
     (0, common_1.Get)('agendamentos'),
     (0, common_1.Render)('pagina_agendamentos'),
@@ -48,8 +58,16 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getPerfil", null);
+__decorate([
+    (0, common_1.Get)('historico'),
+    (0, common_1.Render)('pagina_historico'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getHistorico", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __metadata("design:paramtypes", [app_service_1.AppService,
+        pacientes_service_1.PacientesService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

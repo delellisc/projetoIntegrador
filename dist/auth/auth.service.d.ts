@@ -6,4 +6,5 @@ export declare class AuthService {
     private readonly redirectUri;
     getAuthUrl(): string;
     exchangeCodeForToken(code: string): Promise<any>;
+    getUserData(token: string): Promise<any>;
 }

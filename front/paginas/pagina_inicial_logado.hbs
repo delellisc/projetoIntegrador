@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ".." vira alias para ../public -->
-    <link rel="stylesheet" href="../styles/style_pagina_inicial_logado.css">
-    <script src="../scriptTeste.js" defer></script>
+    <link rel="stylesheet" href="/public/styles/style_pagina_inicial_logado.css">
+    
     <title>Saúde IFRN</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
             <a href="/agendamentos">Agendamentos</a>
         </div>
         <div class="class nav-right">
-            <a href="./pagina_historico.html">Histórico</a>
+            <a href="/historico">Histórico</a>
             <a href="/perfil">Perfil</a>
         </div>
     </header>
@@ -30,15 +30,32 @@
             </div>
             <div class="section-ultimas">
                 <h3>Última(s) Consulta(s)</h3>
-                <div class="consulta-ultimas">
-                    <p>Nenhuma consulta.</p>
+                <div id="consulta-ultimas">
+                    <span id="user-name"><br>
+                    {{#if atendimentos.length}}
+                        <ul>
+                        {{#each atendimentos}}
+                            <li>
+                            <strong>Atendimento:</strong> {{this.id}}<br>
+                            <strong>Profissional:</strong> {{this.profissional}}<br>
+                            <strong>Horário:</strong> {{this.horario}}<br>
+                            </li>
+                        {{/each}}
+                        </ul>
+                    {{else}}
+                        <p>Não há atendimentos recentes.</p>
+                    {{/if}}
+                    </span>
                 </div>
+
             </div>
         </div>
         <div class="section-avisos">
             <h3>Avisos</h3>
             <div class="avisos">
-                <p>Você não tem novas notificações.</p>
+                <p>{{#if msg1}}{{msg1}}<br>
+                {{/if}}
+                {{#if msg2}}{{msg2}}{{/if}}</p>
             </div>
             <div class="avisos">
                 <p>Você não tem novas notificações.</p>
@@ -53,7 +70,8 @@
         <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
         <p>Entre em contato:</p>
         <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
-        <img src="logo.png" alt="Logo">
+        <img src="#" alt="Logo">
     </footer>
+    <script src="/public/scripts/script_paginicial.js"></script>
 </body>
 </html>

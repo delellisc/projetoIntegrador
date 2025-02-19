@@ -12,10 +12,18 @@ export class PacientesService {
      private pacienteRepository: Repository<Paciente>
   ){}
 
+  async findOrCreate(createPacienteDto: CreatePacienteDto): Promise<Paciente> {
+    let paciente = await this.pacienteRepository.findOne({where: {id:createPacienteDto.id}})
+    if (!paciente) {
+      paciente = this.pacienteRepository.create(createPacienteDto)
+      await this.pacienteRepository.save(paciente)
+    }
+    return paciente
+  }
+
   create(createPacienteDto: CreatePacienteDto) {
     const paciente = this.pacienteRepository.create(createPacienteDto);
     return this.pacienteRepository.save(paciente);
-    // return 'This action adds a new paciente';
   }
 
   findAll() {
