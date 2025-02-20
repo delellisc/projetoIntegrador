@@ -8,9 +8,6 @@ export class Paciente {
 
   @Column()
   nome: string;
-  
-  @Column()
-  sexo: string;
 
   @Column({ type: 'date' })
   data_nascimento: Date;

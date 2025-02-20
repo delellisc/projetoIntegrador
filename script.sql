@@ -10,20 +10,20 @@ INSERT INTO public.especializacao (nome) VALUES
 ('Urologia'),
 ('Psicologia');
 
-INSERT INTO public.paciente (id, nome, sexo, data_nascimento, contato) VALUES
-(20231038060001, 'Charles Leclerc', 'M', '1997-10-16', '@charlesleclerc'),
-(20231038060002, 'Max Verstappen', 'M', '1997-09-30', '@maxverstappen1'),
-(20231038060003, 'Sebastian Vettel', 'M', '1987-07-03', '@sebastianvettel'),
-(20231038060004, 'Alain Prost', 'M', '1955-02-24', '@alainprost'),
-(20231038060005, 'Stirling Moss', 'M', '1929-09-17', '@stirlingmoss'),
-(20231038060006, 'Fernando Alonso', 'M', '1981-07-29', '@fernandoalo_oficial'),
-(20231038060007, 'Juan Manuel Fangio', 'M', '1911-06-24', '@juanmanuelfangio'),
-(20231038060008, 'Kimi Räikkönen', 'M', '1979-10-17', '@kimiraikkonen'),
-(20231038060009, 'Jim Clark', 'M', '1936-03-04', '@jimclark'),
-(20231038060010, 'Niki Lauda', 'M', '1949-02-22', '@nikilauda'),
-(20231038060011, 'Damon Hill', 'M', '1960-09-17', '@damonhill'),
-(20231038060012, 'Jenson Button', 'M', '1980-01-19', '@jensonbutton'),
-(20231038060013, 'Graham Hill', 'M', '1929-02-15', '@grahamhill');
+INSERT INTO public.paciente (id, nome, data_nascimento, contato) VALUES
+(20231038060001, 'Charles Leclerc', '1997-10-16', '@charlesleclerc'),
+(20231038060002, 'Max Verstappen', '1997-09-30', '@maxverstappen1'),
+(20231038060003, 'Sebastian Vettel', '1987-07-03', '@sebastianvettel'),
+(20231038060004, 'Alain Prost', '1955-02-24', '@alainprost'),
+(20231038060005, 'Stirling Moss', '1929-09-17', '@stirlingmoss'),
+(20231038060006, 'Fernando Alonso', '1981-07-29', '@fernandoalo_oficial'),
+(20231038060007, 'Juan Manuel Fangio', '1911-06-24', '@juanmanuelfangio'),
+(20231038060008, 'Kimi Räikkönen', '1979-10-17', '@kimiraikkonen'),
+(20231038060009, 'Jim Clark', '1936-03-04', '@jimclark'),
+(20231038060010, 'Niki Lauda', '1949-02-22', '@nikilauda'),
+(20231038060011, 'Damon Hill', '1960-09-17', '@damonhill'),
+(20231038060012, 'Jenson Button', '1980-01-19', '@jensonbutton'),
+(20231038060013, 'Graham Hill', '1929-02-15', '@grahamhill');
 
 INSERT INTO public.profissional (id, nome, registro_profissional, status, "especializacaoId") VALUES
 (20231038060014, 'Lewis Hamilton', 'CRP-202544', 'ativo', 1),
@@ -48,16 +48,16 @@ INSERT INTO public.profissional (id, nome, registro_profissional, status, "espec
 
 
 INSERT INTO public.atendimento (horario, status, "profissionalId") VALUES
-('2025-01-23 07:00:00', 'confirmado', 20231038060014),
-('2025-01-24 08:00:00', 'confirmado', 20231038060015),
-('2025-01-25 09:00:00', 'confirmado', 20231038060016),
-('2025-01-26 10:00:00', 'confirmado', 20231038060017),
-('2025-01-27 11:00:00', 'confirmado', 20231038060018),
-('2025-01-28 12:00:00', 'confirmado', 20231038060019),
-('2025-01-29 13:00:00', 'confirmado', 20231038060020),
-('2025-01-30 14:00:00', 'confirmado', 20231038060021),
-('2025-01-31 15:00:00', 'confirmado', 20231038060022),
-('2025-02-01 16:00:00', 'confirmado', 20231038060023);
+('2025-02-24 08:00:00', 'confirmado', 20231038060015),
+('2025-02-25 09:00:00', 'confirmado', 20231038060016),
+('2025-02-26 10:00:00', 'confirmado', 20231038060017),
+('2025-02-28 12:00:00', 'confirmado', 20231038060019),
+('2025-03-03 15:00:00', 'confirmado', 20231038060022),
+('2025-03-04 16:00:00', 'confirmado', 20231038060023),
+('2025-03-05 07:00:00', 'confirmado', 20231038060014),
+('2025-03-07 14:00:00', 'confirmado', 20231038060021),
+('2025-03-10 13:00:00', 'confirmado', 20231038060020),
+('2025-03-11 11:00:00', 'confirmado', 20231038060018);
 
 INSERT INTO public.consultas ("atendimentoId", "pacienteId") VALUES
 (1, 20231038060001),
