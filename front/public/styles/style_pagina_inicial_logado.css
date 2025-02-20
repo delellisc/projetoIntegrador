@@ -52,6 +52,7 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 0.1vh;
+    padding-bottom: 2.5vh;
     width: 60vh;
     margin-bottom: 20px;
     height: 25%;
@@ -76,6 +77,7 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 0.1vh;
+    padding-bottom: 1.5vh;
     width: 60vh;
     margin-bottom: 20px;
     height: 25%;
@@ -98,6 +100,7 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 0.1vh;
+    padding-bottom: 3vh;
     width: 30%;
     margin-bottom: 20px;
     height: auto;
@@ -136,7 +139,29 @@ body {
     margin: 0 10px;
 }
 
-/* responsividade */
+/* tentativa de responsividade */
+
+@media (max-width: 1629px) and (min-width: 1200px) {
+
+    #consulta-ultimas, .consulta-pendente {
+        margin: 2vh;
+        
+    }
+
+    .section-consultas {
+        padding-bottom: 2.5vh;
+    }
+
+    .section-ultimas {
+        padding-bottom: 1.5vh;
+    }
+
+   
+    .section-avisos {
+        padding-bottom: 3vh;
+    }
+}
+
 
 @media (max-width: 1199px) and (min-width: 768px) {
     .container {
@@ -149,14 +174,29 @@ body {
         flex-direction: row;
         justify-content: space-between;
         padding: 15px;
+        width: 103.5vw;
     }
 
     .nav-left, .nav-right {
         gap: 15px;
     }
 
-    .section-consultas, .section-ultimas, .section-avisos {
+    /* .section-consultas,*/ .section-avisos { 
         width: 100%; 
+        padding-bottom: 3vh;
+    }
+
+    .section-ultimas, .section-consultas {
+        padding-bottom: 1vh;
+    }
+
+    .section-consultas,.section-ultimas {
+        width: 96%;
+    }
+
+    #consulta-ultimas, .consulta-pendente {
+        margin: 2vh;
+        
     }
 
     .footer img {
@@ -186,16 +226,18 @@ body {
         padding-bottom: 1vh; 
 
     .section-avisos {
-        width: 90%;
+        width: 80%;
         padding-bottom: 1vh; 
     }
 
-
     .consulta-pendente,
-    #consulta-ultimas,
-    .avisos {
+    #consulta-ultimas {
         height: auto; 
-        /* padding: 10px; */
+        padding: 10px;
+    }
+
+    .avisos {
+        width: 80%;
     }
 
     .footer img {
