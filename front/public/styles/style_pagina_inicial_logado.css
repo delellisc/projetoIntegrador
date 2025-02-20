@@ -174,7 +174,7 @@ body {
         flex-direction: row;
         justify-content: space-between;
         padding: 15px;
-        width: 103.5vw;
+        width: 100vw;
     }
 
     .nav-left, .nav-right {
