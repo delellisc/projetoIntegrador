@@ -77,7 +77,7 @@ async function generateCalendarProfissional(date) {
         }
         else {
             dayElement.addEventListener("click", () => {
-                openModalCadastro();
+                openModalCadastro(`${year}-${month+1}-${i}`);
             });
             dayElement.style.cursor = "pointer";
         }
@@ -227,18 +227,48 @@ function openModalProfissional(atendimentos){
     modal.style.display = "block";
 }
 
-function openModalCadastro(){
+function openModalCadastro(data){
     const modal = document.getElementById("cadastro-modal");
-    /*
-    const form = document.getElementById("form-cadastro");
 
-    form.innerHTML = "";
-    form.appendChild(document.createElement("input"));
-    form.appendChild(document.createElement("button"));
-    
-    */
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Tabela de Atendimentos - ${data}`;
+    tabelaAtendimentos = document.getElementById("tabela-atendimentos");
+    tabelaAtendimentos.innerHTML = ''+
+        '<thead>'+
+        '<tr>'+
+        '    <th>Horário</th>'+
+        '    <th>Status</th>'+
+        '    <th></th>'+
+        '</tr>'+
+        '</thead>'+
+        '<tbody id="atendimento-body">'+
+        '</tbody>';
+    tabelaAtendimentosBody = document.getElementById("atendimento-body");
+    listaHorarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+    listaHorarios.forEach((horario) => {
+        /* se a data estiver indisponivel, criar uma linha informando sobre
+        if(fetchAtendimentosData()){
+            tabelaAtendimentosBody.innerHTML +=        
+            '<tr>'+
+            `    <td>${horario}</td>`+
+            '    <td>Indisponível</td>'+
+            `    <td></td>`+
+            '</tr>';   
+        }
+        else{ */
+            tabelaAtendimentosBody.innerHTML +=        
+            '<tr>'+
+            `    <td>${horario}</td>`+
+            '    <td>Disponível</td>'+
+            `    <td><button onclick="cadastrarAtendimento('${horario}')">Cadastrar Atendimento</button></td>`+
+            '</tr>';   
+        //}
+    })
 
     modal.style.display = "block";
+}
+
+function cadastrarAtendimento(horario) {
+    alert(`Cadastrando atendimento para ${horario}`);
 }
 
 function closeModalCadastro() {
