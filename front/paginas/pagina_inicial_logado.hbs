@@ -31,7 +31,18 @@
             <div class="section-ultimas">
                 <h3>Última(s) Consulta(s)</h3>
                 <div id="consulta-ultimas">
-
+                    {{#if atendimentos.length}}
+                        {{#each atendimentos}}
+                        <div class="atendimento">
+                            <p><strong>Paciente:</strong> {{paciente_nome}}</p>
+                            <p><strong>Horário:</strong> {{atendimento_horario}}</p>
+                            <p><strong>Status:</strong> {{atendimento_status}}</p>
+                            <p><strong>Profissional:</strong> {{profissional_nome}}</p>
+                        </div>
+                        {{/each}}
+                    {{else}}
+                        <p class="sem-atendimentos">Não há últimas consultas.</p>
+                    {{/if}}
                 </div>
 
             </div>

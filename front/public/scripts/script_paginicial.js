@@ -19,32 +19,34 @@ async function getUserData() {
 //     }
 // // }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const dados = await getUserData()
-    if (!dados || !dados.matricula){
-        document.getElementById("consulta-ultimas").textContent = "SEM MATRICULA";
-    }
-    const matricula = dados.matricula
-    const response = await fetch(`/pacientes/atendimentos/${matricula}`)
-    const atendimentos = await response.json()
-    // document.getElementById("consulta-ultimas").textContent = atendimentos;
-    const consultaElement = document.getElementById("consulta-ultimas");
+//tentativa de mostrar ultimas consultas
 
-    if (Array.isArray(atendimentos) && atendimentos.length > 0) {
-        //estrutura de exibição
-        consultaElement.innerHTML = `
-            <ul>
-                ${atendimentos.map(atendimento => `
-                    <li>
-                        <strong>Data:</strong> ${atendimento.horario || 'Não informada'}<br>
-                        <strong>Profissional:</strong> ${atendimento.profissional || 'Não informado'}<br>
-                        <strong>Status:</strong> ${atendimento.status || 'Sem descrição'}<br>
-                    </li>
-                `).join('')}
-            </ul>
-        `;
-    } else {
-        consultaElement.textContent = "Nenhum atendimento encontrado.";
-    }
+// document.addEventListener("DOMContentLoaded", async () => {
+//     const dados = await getUserData()
+//     if (!dados || !dados.matricula){
+//         document.getElementById("consulta-ultimas").textContent = "SEM MATRICULA";
+//     }
+//     const matricula = dados.matricula
+//     const response = await fetch(`/pacientes/atendimentos/${matricula}`)
+//     const atendimentos = await response.json()
+//     // document.getElementById("consulta-ultimas").textContent = atendimentos;
+//     const consultaElement = document.getElementById("consulta-ultimas");
 
-})
+//     if (Array.isArray(atendimentos) && atendimentos.length > 0) {
+//         //estrutura de exibição
+//         consultaElement.innerHTML = `
+//             <ul>
+//                 ${atendimentos.map(atendimento => `
+//                     <li>
+//                         <strong>Data:</strong> ${atendimento.horario || 'Não informada'}<br>
+//                         <strong>Profissional:</strong> ${atendimento.profissional || 'Não informado'}<br>
+//                         <strong>Status:</strong> ${atendimento.status || 'Sem descrição'}<br>
+//                     </li>
+//                 `).join('')}
+//             </ul>
+//         `;
+//     } else {
+//         consultaElement.textContent = "Nenhum atendimento encontrado.";
+//     }
+
+// })

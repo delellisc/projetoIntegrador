@@ -37,7 +37,7 @@ let PacientesController = class PacientesController {
         return this.pacientesService.remove(+id);
     }
     findAtendimentos(id) {
-        return this.pacientesService.findAtendimentos(+id);
+        return this.pacientesService.findAtendimentos(id);
     }
 };
 exports.PacientesController = PacientesController;

@@ -24,7 +24,7 @@ export class AtendimentosService {
   }
 
   findOne(id: number) {
-    return this.atendimentoRepository.findOne({where: {id: id}});
+    return this.atendimentoRepository.findOne({where: { id : id}});
     // return `This action returns a #${id} atendimento`;
   }
 
