@@ -35,7 +35,7 @@ const monthYear = document.getElementById("month-year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
 
-const id = 20231038060018;
+const id = 20231038060014;
 
 let currentDate = new Date();
 
@@ -211,7 +211,7 @@ function openModalProfissional(atendimentos){
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${atendimento.atendimento_horario}</td>
+            <td>${extractTimeFromDate(atendimento.atendimento_horario)}</td>
             <td>${atendimento.atendimento_id}</td>
             <td>${atendimento.profissional_nome}</td>
         `;
@@ -352,4 +352,32 @@ function removeTimeFromDate(dateString) {
     const year = date.getFullYear();
 
     return `${year}-${month}-${day}`;
+}
+
+function extractTimeFromDate(dateString) {
+    const date = new Date(dateString);
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}
+
+
+// CRIAR NOVO ATENDIMENTO
+async function registerAtendimento(horario, profissionalId){
+    await fetch("http://localhost:3000/atendimentos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "horario": horario,
+          "status": "confirmado",
+          "profissional": profissionalId
+        })
+      })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Erro:", error));
 }
