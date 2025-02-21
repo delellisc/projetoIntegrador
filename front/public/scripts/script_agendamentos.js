@@ -85,22 +85,37 @@ async function generateCalendarProfissional(date) {
         const dayElement = document.createElement("div");
         dayElement.classList.add("calendar-day");
         dayElement.textContent = i;
+
+        let currentDate = new Date(year, month, i);
+        let dayOfWeek = currentDate.getDay();
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         let atendimentosHoje = await fetchAtendimentosProfissionalData(`${year}-${month+1}-${i}`, id);
         if (atendimentosHoje[0]) {
             dayElement.classList.add("has-atendimento");
-            dayElement.addEventListener("click", () => {
-                openModalProfissional(atendimentosHoje);
-            });
+        }
+        if (dayOfWeek === 0 || dayOfWeek === 6 || currentDate < today) {
+            if (dayElement.classList.contains("has-atendimento")){
+                dayElement.addEventListener("click", () => {
+                    alert(`Abrir modal do dia ${year}-${month+1}-${i}`);
+                });
+            }
+            else{
+                dayElement.style.cursor = "not-allowed";
+            }
+            dayElement.style.opacity = "0.5";
+        }
+        else if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()){
+            dayElement.classList.add("today");
+            dayElement.style.cursor = "not-allowed";
         }
         else {
             dayElement.addEventListener("click", () => {
                 openModalCadastro(`${year}-${month+1}-${i}`);
             });
             dayElement.style.cursor = "pointer";
-        }
-        const today = new Date();
-        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-            dayElement.classList.add("today");
         }
         calendar.appendChild(dayElement);
     }
@@ -323,13 +338,6 @@ function closeModal() {
 document.querySelector(".close-modal").addEventListener("click", closeModal);
 document.getElementById("modal-cadastro").addEventListener("click", closeModalCadastro);
 
-/* window.addEventListener("click", (event) => {
-    const modal = document.getElementById("atendimento-modal");
-    if (event.target === modal) {
-        closeModal();
-    }
-}); */
-
 function getMonthName(monthIndex) {
     const monthNames = [
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto",
@@ -357,13 +365,12 @@ generateCalendarProfissional(currentDate);
 const atendimentosTable = document.getElementById("atendimentos-table");
 const atendimentosTableBody = document.querySelector("#atendimentos-table tbody");
 document.getElementById("fetch-atendimentos-btn").addEventListener("click", () => {
-    const matriculaPaciente = document.getElementById("user-id").value;
-    fetchAtendimentos(matriculaPaciente);
+    fetchAtendimentos(id);
 });
 
-async function fetchAtendimentos(pacienteId) {
+async function fetchAtendimentos(id) {
     try {
-        const response = await fetch(`http://localhost:3000/pacientes/atendimentos/${pacienteId}`);
+        const response = await fetch(`http://localhost:3000/profissionais/atendimentos/${id}`);
         if (!response.ok) {
             throw new Error("Erro ao buscar atendimentos.");
         }
