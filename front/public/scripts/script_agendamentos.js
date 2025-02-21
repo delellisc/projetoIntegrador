@@ -263,29 +263,51 @@ async function openModalCadastro(data){
     listaHorarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
     for (const horario of listaHorarios) { 
         let disponibilidade = await fetchAtendimentosHora(`${data} ${horario}`);
+        
+        let row = document.createElement("tr");
+        let hora = document.createElement("td");
+        hora.innerText = horario;
+        let status = document.createElement("td");
+        let botao = document.createElement("td");
+
         if(disponibilidade.id){
-            tabelaAtendimentosBody.innerHTML +=        
-            '<tr>'+
-            `    <td>${horario}</td>`+
-            '    <td>Indisponível</td>'+
-            `    <td></td>`+
-            '</tr>';
+            status.innerText = "Indisponível";
         }
         else{
-            tabelaAtendimentosBody.innerHTML +=        
-            '<tr>'+
-            `    <td>${horario}</td>`+
-            '    <td>Disponível</td>'+
-            `    <td><button onclick="cadastrarAtendimento('${horario}')">Cadastrar Atendimento</button></td>`+
-            '</tr>';   
+            status.innerText = "Disponível";
+            let btn = document.createElement("button");
+            btn.innerText = "Cadastrar Atendimento";
+            btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, id))
+            botao.appendChild(btn);
         }
+
+        row.appendChild(hora);
+        row.appendChild(status);
+        row.appendChild(botao);
+
+        tabelaAtendimentosBody.appendChild(row);
     }
 
     modal.style.display = "block";
 }
 
-function cadastrarAtendimento(horario) {
-    alert(`Cadastrando atendimento para ${horario}`);
+// CRIAR NOVO ATENDIMENTO
+async function cadastrarAtendimento(horario, profissionalId) {
+    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${profissionalId}`);
+    await fetch("http://localhost:3000/atendimentos", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+        "horario": horario,
+        "status": "confirmado",
+        "profissional": profissionalId
+        })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Erro:", error));
 }
 
 function closeModalCadastro() {
@@ -408,23 +430,4 @@ function extractTimeFromDate(dateString) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${hours}:${minutes}`;
-}
-
-
-// CRIAR NOVO ATENDIMENTO
-async function registerAtendimento(horario, profissionalId){
-    await fetch("http://localhost:3000/atendimentos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          "horario": horario,
-          "status": "confirmado",
-          "profissional": profissionalId
-        })
-      })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error("Erro:", error));
 }
