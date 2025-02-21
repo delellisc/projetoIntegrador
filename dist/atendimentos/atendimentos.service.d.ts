@@ -11,5 +11,5 @@ export declare class AtendimentosService {
     update(id: number, updateAtendimentoDto: UpdateAtendimentoDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<Atendimento>;
     findAtendimentoByDate(data: string): Promise<any[]>;
-    findAtendimentoByHour(data: string): Promise<Atendimento>;
+    findAtendimentoByHour(data: string): Promise<any>;
 }

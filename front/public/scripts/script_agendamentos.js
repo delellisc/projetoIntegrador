@@ -341,10 +341,23 @@ async function openModalCadastro(data){
         let status = document.createElement("td");
         let botao = document.createElement("td");
 
-        if(disponibilidade.id){
-            status.innerText = "Indisponível";
-            row.style.backgroundColor = "red";
-            row.style.color = "white";
+        if(disponibilidade.atendimento_id){
+            console.log(disponibilidade.profissional_id === id)
+            if(disponibilidade.profissional_id == id){
+                status.innerText = "Confirmado";
+                row.style.color = "green";
+                let btn = document.createElement("button");
+                btn.innerText = "Cancelar Atendimento";
+                btn.addEventListener("click", () => alert(`Cancelando atendimento no horário ${data} ${horario} para matrícula ${id}`))
+                btn.style.borderRadius = "10px";
+                btn.style.backgroundColor = "red";
+                btn.style.color = "white";
+                botao.appendChild(btn);
+            }
+            else{
+                status.innerText = "Indisponível";
+                row.style.color = "red";
+            }
         }
         else{
             status.innerText = "Disponível";
@@ -354,7 +367,6 @@ async function openModalCadastro(data){
             btn.style.borderRadius = "10px";
             btn.style.backgroundColor = "#3BE799";
             btn.style.color = "white";
-            /* style="border-radius: 10px; background-color: ; color: white;" */
             botao.appendChild(btn);
         }
 

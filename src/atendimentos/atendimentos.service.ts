@@ -64,8 +64,12 @@ export class AtendimentosService {
   findAtendimentoByHour(data: string) {
     return this.atendimentoRepository
       .createQueryBuilder('atendimento')
-      .select()
+      .select([
+        'atendimento.id AS atendimento_id',
+        'profissional.id AS profissional_id'
+      ])
+      .innerJoin('atendimento.profissional', 'profissional')
       .where('atendimento.horario = :data', { data })
-      .getOne();
+      .getRawOne();
   }
 }

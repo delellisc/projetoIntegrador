@@ -10,5 +10,5 @@ export declare class AtendimentosController {
     update(id: string, updateAtendimentoDto: UpdateAtendimentoDto): Promise<import("typeorm").UpdateResult>;
     remove(id: string): Promise<import("./entities/atendimento.entity").Atendimento>;
     findAtendimentoByDate(date: string): Promise<any[]>;
-    findAtendimentoByHour(horario: string): Promise<import("./entities/atendimento.entity").Atendimento>;
+    findAtendimentoByHour(horario: string): Promise<any>;
 }
