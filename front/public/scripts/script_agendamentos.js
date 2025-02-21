@@ -244,7 +244,7 @@ function openModalProfissional(atendimentos){
     modal.style.display = "block";
 }
 
-function openModalCadastro(data){
+async function openModalCadastro(data){
     const modal = document.getElementById("cadastro-modal");
 
     document.getElementById("titulo-tabela-atendimentos").innerText = `Tabela de Atendimentos - ${data}`;
@@ -261,7 +261,7 @@ function openModalCadastro(data){
         '</tbody>';
     tabelaAtendimentosBody = document.getElementById("atendimento-body");
     listaHorarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-    listaHorarios.forEach(async (horario) => {
+    for (const horario of listaHorarios) { 
         let disponibilidade = await fetchAtendimentosHora(`${data} ${horario}`);
         if(disponibilidade.id){
             tabelaAtendimentosBody.innerHTML +=        
@@ -279,7 +279,7 @@ function openModalCadastro(data){
             `    <td><button onclick="cadastrarAtendimento('${horario}')">Cadastrar Atendimento</button></td>`+
             '</tr>';   
         }
-    })
+    }
 
     modal.style.display = "block";
 }
