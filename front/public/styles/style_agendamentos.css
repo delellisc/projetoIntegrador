@@ -99,6 +99,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
+#tabela-atendimentos,
 #atendimentos-table {
     width: 100%;
     max-width: 800px;
@@ -109,9 +110,11 @@ body {
     border-spacing: 0 10px;
 }
 
+#tabela-atendimentos th,
+#tabela-atendimentos td,
 #atendimentos-table th,
 #atendimentos-table td {
-    padding: 12px 20px;
+    /*     padding: 12px 20px; */
     text-align: center;
     font-size: 16px;
     font-weight: bold;
@@ -120,16 +123,18 @@ body {
     background-color: #ffffff;
 }
 
+#tabela-atendimentos th,
 #atendimentos-table th {
     background-color: #ffffff;
     color: #000000;
     font-size: 18px;
 }
 
+#tabela-atendimentos td,
 #atendimentos-table td {
     background-color: #ffffff;
 }
-
+#tabela-atendimentos tr:hover td,
 #atendimentos-table tr:hover td {
     background-color: #d1f7e3;
 }

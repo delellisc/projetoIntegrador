@@ -340,18 +340,19 @@ async function openModalCadastro(data){
         hora.innerText = horario;
         let status = document.createElement("td");
         let botao = document.createElement("td");
+        let btn = document.createElement("button");
+        btn.style.borderRadius = "5px";
+        btn.style.color = "white";
+        btn.style.padding = "5px";
 
         if(disponibilidade.atendimento_id){
             console.log(disponibilidade.profissional_id === id)
             if(disponibilidade.profissional_id == id){
                 status.innerText = "Confirmado";
-                row.style.color = "green";
-                let btn = document.createElement("button");
+                row.style.color = "#31615F";
                 btn.innerText = "Cancelar Atendimento";
                 btn.addEventListener("click", () => alert(`Cancelando atendimento no horário ${data} ${horario} para matrícula ${id}`))
-                btn.style.borderRadius = "10px";
                 btn.style.backgroundColor = "red";
-                btn.style.color = "white";
                 botao.appendChild(btn);
             }
             else{
@@ -361,12 +362,9 @@ async function openModalCadastro(data){
         }
         else{
             status.innerText = "Disponível";
-            let btn = document.createElement("button");
             btn.innerText = "Cadastrar Atendimento";
             btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, id))
-            btn.style.borderRadius = "10px";
             btn.style.backgroundColor = "#3BE799";
-            btn.style.color = "white";
             botao.appendChild(btn);
         }
 
@@ -494,9 +492,6 @@ function formatDateWithoutTime(dateString) {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${day}/${month}/${year}`;
 }
