@@ -230,48 +230,6 @@ function openModalPaciente(atendimentos) {
     modal.style.display = "block";
 }
 
-/* // modal de cadastro para profissionais
-function openModalProfissional(atendimentos){
-    const modal = document.getElementById("atendimento-modal");
-    const atendimentoList = document.getElementById("atendimento-list");
-
-    atendimentoList.innerHTML = "";
-
-    const table = document.createElement("table");
-    table.style.width = "100%";
-    table.style.borderCollapse = "collapse";
-
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Horário</th>
-                <th>Atendimento ID</th>
-                <th>Nome profissional</th>
-            </tr>
-        </thead>
-        <tbody id="atendimento-body">
-        </tbody>
-    `;
-
-    const tbody = table.querySelector("#atendimento-body");
-
-    atendimentos.forEach(atendimento => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${extractTimeFromDate(atendimento.atendimento_horario)}</td>
-            <td>${atendimento.atendimento_id}</td>
-            <td>${atendimento.profissional_nome}</td>
-        `;
-        row.id = "linha-tabela-atendimento";
-
-        tbody.appendChild(row);
-    });
-
-    atendimentoList.appendChild(table);
-    modal.style.display = "block";
-} */
-
 async function openModalPacientesAtendidos(data){
     const modal = document.getElementById("modal");
 
@@ -346,12 +304,11 @@ async function openModalCadastro(data){
         btn.style.padding = "5px";
 
         if(disponibilidade.atendimento_id){
-            console.log(disponibilidade.profissional_id === id)
             if(disponibilidade.profissional_id == id){
                 status.innerText = "Confirmado";
                 row.style.color = "#31615F";
                 btn.innerText = "Cancelar Atendimento";
-                btn.addEventListener("click", () => alert(`Cancelando atendimento no horário ${data} ${horario} para matrícula ${id}`))
+                btn.addEventListener("click", () => fetchRemoverAtendimento(`${data} ${horario}`, id));
                 btn.style.backgroundColor = "red";
                 botao.appendChild(btn);
             }
@@ -376,6 +333,20 @@ async function openModalCadastro(data){
     }
 
     modal.style.display = "block";
+}
+
+// REMOVER ATENDIMENTO
+async function fetchRemoverAtendimento(horario) {
+    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
+    await fetch(`http://localhost:3000/atendimentos/data/${horario}`, {
+        method: "DELETE",
+        headers: {
+        "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Erro:", error));
 }
 
 // CRIAR NOVO ATENDIMENTO

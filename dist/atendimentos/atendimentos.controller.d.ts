@@ -9,6 +9,7 @@ export declare class AtendimentosController {
     findOne(id: string): Promise<import("./entities/atendimento.entity").Atendimento>;
     update(id: string, updateAtendimentoDto: UpdateAtendimentoDto): Promise<import("typeorm").UpdateResult>;
     remove(id: string): Promise<import("./entities/atendimento.entity").Atendimento>;
+    removeAtendimentoByDate(horario: string): Promise<import("./entities/atendimento.entity").Atendimento>;
     findAtendimentoByDate(date: string): Promise<any[]>;
     findAtendimentoByHour(horario: string): Promise<any>;
 }

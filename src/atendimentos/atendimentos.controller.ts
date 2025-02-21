@@ -32,6 +32,13 @@ export class AtendimentosController {
     return this.atendimentosService.remove(+id);
   }
 
+
+  @Delete('/data/:horario')
+  removeAtendimentoByDate(@Param('horario') horario: string) {
+    return this.atendimentosService.removeByDate(horario);
+  }
+
+
   @Get('/data/:date')
   findAtendimentoByDate(@Param('date') date: string){
     return this.atendimentosService.findAtendimentoByDate(date);

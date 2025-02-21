@@ -39,6 +39,14 @@ let AtendimentosService = class AtendimentosService {
         }
         return null;
     }
+    async removeByDate(data) {
+        let dataConvertida = new Date(data);
+        const atendimento = await this.atendimentoRepository.findOne({ where: { horario: dataConvertida } });
+        if (atendimento) {
+            return this.atendimentoRepository.remove(atendimento);
+        }
+        return null;
+    }
     findAtendimentoByDate(data) {
         return this.atendimentoRepository
             .createQueryBuilder('atendimento')

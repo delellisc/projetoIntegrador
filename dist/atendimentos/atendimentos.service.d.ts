@@ -10,6 +10,7 @@ export declare class AtendimentosService {
     findOne(id: number): Promise<Atendimento>;
     update(id: number, updateAtendimentoDto: UpdateAtendimentoDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<Atendimento>;
+    removeByDate(data: string): Promise<Atendimento>;
     findAtendimentoByDate(data: string): Promise<any[]>;
     findAtendimentoByHour(data: string): Promise<any>;
 }

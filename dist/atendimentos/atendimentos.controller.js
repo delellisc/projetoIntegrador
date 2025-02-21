@@ -36,6 +36,9 @@ let AtendimentosController = class AtendimentosController {
     remove(id) {
         return this.atendimentosService.remove(+id);
     }
+    removeAtendimentoByDate(horario) {
+        return this.atendimentosService.removeByDate(horario);
+    }
     findAtendimentoByDate(date) {
         return this.atendimentosService.findAtendimentoByDate(date);
     }
@@ -79,6 +82,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Delete)('/data/:horario'),
+    __param(0, (0, common_1.Param)('horario')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "removeAtendimentoByDate", null);
 __decorate([
     (0, common_1.Get)('/data/:date'),
     __param(0, (0, common_1.Param)('date')),
