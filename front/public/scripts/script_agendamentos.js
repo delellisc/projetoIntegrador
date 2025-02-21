@@ -221,9 +221,7 @@ function openModalPaciente(atendimentos) {
             <td>${atendimento.especializacao_nome}</td>
         `;
 
-        row.style.borderBottom = "1px solid #ddd";
-        row.style.textAlign = "left";
-        row.style.padding = "8px";
+        row.id = "linha-tabela-atendimento";
 
         tbody.appendChild(row);
     });
@@ -232,7 +230,7 @@ function openModalPaciente(atendimentos) {
     modal.style.display = "block";
 }
 
-// modal de cadastro para profissionais
+/* // modal de cadastro para profissionais
 function openModalProfissional(atendimentos){
     const modal = document.getElementById("atendimento-modal");
     const atendimentoList = document.getElementById("atendimento-list");
@@ -265,24 +263,23 @@ function openModalProfissional(atendimentos){
             <td>${atendimento.atendimento_id}</td>
             <td>${atendimento.profissional_nome}</td>
         `;
-
-        row.style.borderBottom = "1px solid #ddd";
-        row.style.textAlign = "left";
-        row.style.padding = "8px";
+        row.id = "linha-tabela-atendimento";
 
         tbody.appendChild(row);
     });
 
     atendimentoList.appendChild(table);
     modal.style.display = "block";
-}
+} */
 
 async function openModalPacientesAtendidos(data){
-    const modal = document.getElementById("cadastro-modal");
+    const modal = document.getElementById("modal");
 
-    document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes atendidos - ${data}`;
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes atendidos - ${formatDateWithoutTime(data)}`;
     tabelaAtendimentos = document.getElementById("tabela-atendimentos");
-    tabelaAtendimentos.innerHTML = ''+
+    let pacientes = await fetchPacientesAtendidos(data, id);
+    if(pacientes.length > 0){
+        tabelaAtendimentos.innerHTML = ''+
         '<thead>'+
         '<tr>'+
         '    <th>Nome</th>'+
@@ -292,31 +289,36 @@ async function openModalPacientesAtendidos(data){
         '</thead>'+
         '<tbody id="atendimento-body">'+
         '</tbody>';
-    tabelaAtendimentosBody = document.getElementById("atendimento-body");
-    let pacientes = await fetchPacientesAtendidos(data, id);
-    for (const paciente of pacientes) { 
-        let row = document.createElement("tr");
-        let nome = document.createElement("td");
-        let matricula = document.createElement("td");
-        let atendimento = document.createElement("td");
-        nome.innerText = paciente.paciente_nome;
-        matricula.innerText = paciente.paciente_id;
-        atendimento.innerText = paciente.atendimento_id;
+        tabelaAtendimentosBody = document.getElementById("atendimento-body");
+        for (const paciente of pacientes) { 
+            let row = document.createElement("tr");
+            let nome = document.createElement("td");
+            let matricula = document.createElement("td");
+            let atendimento = document.createElement("td");
+            nome.innerText = paciente.paciente_nome;
+            matricula.innerText = paciente.paciente_id;
+            atendimento.innerText = paciente.atendimento_id;
+    
+            row.appendChild(nome);
+            row.appendChild(matricula);
+            row.appendChild(atendimento);
 
-        row.appendChild(nome);
-        row.appendChild(matricula);
-        row.appendChild(atendimento);
-
-        tabelaAtendimentosBody.appendChild(row);
+            row.classList.add("table-row-atendimento");
+    
+            tabelaAtendimentosBody.appendChild(row);
+        }
+    }
+    else{
+        tabelaAtendimentos.innerHTML = '<p>Nenhum paciente foi atendido.</p>';
     }
 
     modal.style.display = "block";
 }
 
 async function openModalCadastro(data){
-    const modal = document.getElementById("cadastro-modal");
+    const modal = document.getElementById("modal");
 
-    document.getElementById("titulo-tabela-atendimentos").innerText = `Tabela de Atendimentos - ${data}`;
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Tabela de Atendimentos - ${formatDateWithoutTime(data)}`;
     tabelaAtendimentos = document.getElementById("tabela-atendimentos");
     tabelaAtendimentos.innerHTML = ''+
         '<thead>'+
@@ -341,12 +343,18 @@ async function openModalCadastro(data){
 
         if(disponibilidade.id){
             status.innerText = "Indisponível";
+            row.style.backgroundColor = "red";
+            row.style.color = "white";
         }
         else{
             status.innerText = "Disponível";
             let btn = document.createElement("button");
             btn.innerText = "Cadastrar Atendimento";
             btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, id))
+            btn.style.borderRadius = "10px";
+            btn.style.backgroundColor = "#3BE799";
+            btn.style.color = "white";
+            /* style="border-radius: 10px; background-color: ; color: white;" */
             botao.appendChild(btn);
         }
 
@@ -379,18 +387,12 @@ async function cadastrarAtendimento(horario, profissionalId) {
     .catch(error => console.error("Erro:", error));
 }
 
-function closeModalCadastro() {
-    const modal = document.getElementById("cadastro-modal");
-    modal.style.display = "none";
-}
-
 function closeModal() {
-    const modal = document.getElementById("atendimento-modal");
+    const modal = document.getElementById("modal");
     modal.style.display = "none";
 }
 
 document.querySelector(".close-modal").addEventListener("click", closeModal);
-document.getElementById("modal-cadastro").addEventListener("click", closeModalCadastro);
 
 function getMonthName(monthIndex) {
     const monthNames = [
@@ -472,6 +474,19 @@ function formatDate(dateString) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
+}
+
+function formatDateWithoutTime(dateString) {
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${day}/${month}/${year}`;
 }
 
 function removeTimeFromDate(dateString) {
