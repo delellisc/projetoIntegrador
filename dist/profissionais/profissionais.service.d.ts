@@ -12,4 +12,5 @@ export declare class ProfissionaisService {
     remove(id: number): Promise<Profissional>;
     findAtendimentos(id: number): Promise<any[]>;
     findAtendimentoByDate(id: number, data: string): Promise<any[]>;
+    findAtendimentoPacientesByDate(id: number, data: string): Promise<any[]>;
 }

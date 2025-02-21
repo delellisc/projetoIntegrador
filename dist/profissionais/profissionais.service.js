@@ -78,6 +78,28 @@ let ProfissionaisService = class ProfissionaisService {
             .andWhere('profissional.id = :id', { id })
             .getRawMany();
     }
+    findAtendimentoPacientesByDate(id, data) {
+        return this.profissionalRepository
+            .createQueryBuilder('profissional')
+            .select([
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'atendimento.status AS atendimento_status',
+            'profissional.id AS profissional_id',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'profissional.status AS profissional_status',
+            'especializacao.nome AS especializacao_nome',
+            'paciente.nome AS paciente_nome',
+            'paciente.id AS paciente_id'
+        ])
+            .innerJoin('profissional.atendimentos', 'atendimento')
+            .innerJoin('profissional.especializacao', 'especializacao')
+            .innerJoin('atendimento.pacientes', 'paciente')
+            .where('DATE(atendimento.horario) = :data', { data })
+            .andWhere('profissional.id = :id', { id })
+            .getRawMany();
+    }
 };
 exports.ProfissionaisService = ProfissionaisService;
 exports.ProfissionaisService = ProfissionaisService = __decorate([

@@ -37,7 +37,24 @@ async function fetchAtendimentosHora(horario) {
         const text = await response.text();
         // console.log(`Resposta recebida para ${horario}:`, text);
 
-        return text ? JSON.parse(text) : {};  // Garante que não tentamos parsear uma string vazia
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
+        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
+    }
+}
+
+/* script fetch pacientes atendidos no dia por um profissional */
+async function fetchPacientesAtendidos(data, profissionalid) {
+    try {
+        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${profissionalid}/pacientes`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
+        }
+
+        const text = await response.text();
+        // console.log(`Resposta recebida para ${horario}:`, text);
+
+        return text ? JSON.parse(text) : {};
     } catch (error) {
         console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
     }
@@ -99,7 +116,8 @@ async function generateCalendarProfissional(date) {
         if (dayOfWeek === 0 || dayOfWeek === 6 || currentDate < today) {
             if (dayElement.classList.contains("has-atendimento")){
                 dayElement.addEventListener("click", () => {
-                    alert(`Abrir modal do dia ${year}-${month+1}-${i}`);
+                    openModalPacientesAtendidos(`${year}-${month+1}-${i}`);
+                    /* alert(`Abrir modal do dia ${year}-${month+1}-${i}`); */
                 });
             }
             else{
@@ -256,6 +274,42 @@ function openModalProfissional(atendimentos){
     });
 
     atendimentoList.appendChild(table);
+    modal.style.display = "block";
+}
+
+async function openModalPacientesAtendidos(data){
+    const modal = document.getElementById("cadastro-modal");
+
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes atendidos - ${data}`;
+    tabelaAtendimentos = document.getElementById("tabela-atendimentos");
+    tabelaAtendimentos.innerHTML = ''+
+        '<thead>'+
+        '<tr>'+
+        '    <th>Nome</th>'+
+        '    <th>Matrícula</th>'+
+        '    <th>Atendimento ID</th>'+
+        '</tr>'+
+        '</thead>'+
+        '<tbody id="atendimento-body">'+
+        '</tbody>';
+    tabelaAtendimentosBody = document.getElementById("atendimento-body");
+    let pacientes = await fetchPacientesAtendidos(data, id);
+    for (const paciente of pacientes) { 
+        let row = document.createElement("tr");
+        let nome = document.createElement("td");
+        let matricula = document.createElement("td");
+        let atendimento = document.createElement("td");
+        nome.innerText = paciente.paciente_nome;
+        matricula.innerText = paciente.paciente_id;
+        atendimento.innerText = paciente.atendimento_id;
+
+        row.appendChild(nome);
+        row.appendChild(matricula);
+        row.appendChild(atendimento);
+
+        tabelaAtendimentosBody.appendChild(row);
+    }
+
     modal.style.display = "block";
 }
 

@@ -11,4 +11,5 @@ export declare class ProfissionaisController {
     remove(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
     findAtendimentos(id: string): Promise<any[]>;
     findAtendimentosByDate(data: string, id: string): Promise<any[]>;
+    findAtendimentosPacientesByDate(data: string, id: string): Promise<any[]>;
 }
