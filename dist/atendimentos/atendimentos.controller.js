@@ -39,6 +39,9 @@ let AtendimentosController = class AtendimentosController {
     findAtendimentoByDate(date) {
         return this.atendimentosService.findAtendimentoByDate(date);
     }
+    findAtendimentoByHour(horario) {
+        return this.atendimentosService.findAtendimentoByHour(horario);
+    }
 };
 exports.AtendimentosController = AtendimentosController;
 __decorate([
@@ -83,6 +86,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "findAtendimentoByDate", null);
+__decorate([
+    (0, common_1.Get)('/horario/:horario'),
+    __param(0, (0, common_1.Param)('horario')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findAtendimentoByHour", null);
 exports.AtendimentosController = AtendimentosController = __decorate([
     (0, common_1.Controller)('atendimentos'),
     __metadata("design:paramtypes", [atendimentos_service_1.AtendimentosService])

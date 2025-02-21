@@ -60,4 +60,12 @@ export class AtendimentosService {
         .where('DATE(atendimento.horario) = :data', { data })
         .getRawMany();
     }
+
+  findAtendimentoByHour(data: string) {
+    return this.atendimentoRepository
+      .createQueryBuilder('atendimento')
+      .select()
+      .where('atendimento.horario = :data', { data })
+      .getOne();
+  }
 }

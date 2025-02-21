@@ -57,6 +57,13 @@ let AtendimentosService = class AtendimentosService {
             .where('DATE(atendimento.horario) = :data', { data })
             .getRawMany();
     }
+    findAtendimentoByHour(data) {
+        return this.atendimentoRepository
+            .createQueryBuilder('atendimento')
+            .select()
+            .where('atendimento.horario = :data', { data })
+            .getOne();
+    }
 };
 exports.AtendimentosService = AtendimentosService;
 exports.AtendimentosService = AtendimentosService = __decorate([

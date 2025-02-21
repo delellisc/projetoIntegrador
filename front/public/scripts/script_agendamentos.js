@@ -26,6 +26,23 @@ async function fetchAtendimentosProfissionalData(data, id) {
     }
 }
 
+/* script fetch atendimentos do paciente por data */
+async function fetchAtendimentosHora(horario) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
+        }
+
+        const text = await response.text();
+        // console.log(`Resposta recebida para ${horario}:`, text);
+
+        return text ? JSON.parse(text) : {};  // Garante que não tentamos parsear uma string vazia
+    } catch (error) {
+        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
+    }
+}
+
 /* *********************************************** */
 /* SCRIPTS CALENDÁRIO */
 /* script para gerar calendário */
@@ -244,24 +261,24 @@ function openModalCadastro(data){
         '</tbody>';
     tabelaAtendimentosBody = document.getElementById("atendimento-body");
     listaHorarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-    listaHorarios.forEach((horario) => {
-        /* se a data estiver indisponivel, criar uma linha informando sobre
-        if(fetchAtendimentosData()){
+    listaHorarios.forEach(async (horario) => {
+        let disponibilidade = await fetchAtendimentosHora(`${data} ${horario}`);
+        if(disponibilidade.id){
             tabelaAtendimentosBody.innerHTML +=        
             '<tr>'+
             `    <td>${horario}</td>`+
             '    <td>Indisponível</td>'+
             `    <td></td>`+
-            '</tr>';   
+            '</tr>';
         }
-        else{ */
+        else{
             tabelaAtendimentosBody.innerHTML +=        
             '<tr>'+
             `    <td>${horario}</td>`+
             '    <td>Disponível</td>'+
             `    <td><button onclick="cadastrarAtendimento('${horario}')">Cadastrar Atendimento</button></td>`+
             '</tr>';   
-        //}
+        }
     })
 
     modal.style.display = "block";

@@ -37,4 +37,8 @@ export class AtendimentosController {
     return this.atendimentosService.findAtendimentoByDate(date);
   }
 
+  @Get('/horario/:horario')
+  findAtendimentoByHour(@Param('horario') horario: string){
+    return this.atendimentosService.findAtendimentoByHour(horario);
+  }
 }
