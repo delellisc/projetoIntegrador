@@ -16,10 +16,12 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const pacientes_service_1 = require("../pacientes/pacientes.service");
+const profissionais_service_1 = require("../profissionais/profissionais.service");
 let AuthController = class AuthController {
-    constructor(authService, pacienteService) {
+    constructor(authService, pacienteService, profissionalService) {
         this.authService = authService;
         this.pacienteService = pacienteService;
+        this.profissionalService = profissionalService;
     }
     login() {
         return { url: this.authService.getAuthUrl() };
@@ -48,13 +50,25 @@ let AuthController = class AuthController {
             const userData = await this.authService.getUserData(token);
             console.log(userData);
             session.user = userData;
-            const pacienteDto = {
-                id: userData.matricula,
-                nome: userData.nome_usual,
-                data_nascimento: userData.data_nascimento,
-                contato: userData.email
-            };
-            const paciente = await this.pacienteService.findOrCreate(pacienteDto);
+            let redirectURL;
+            if (userData.matricula.length > 10) {
+                const pacienteDto = {
+                    id: userData.matricula,
+                    nome: userData.nome_usual,
+                    data_nascimento: userData.data_nascimento,
+                    contato: userData.email
+                };
+                const paciente = await this.pacienteService.findOrCreate(pacienteDto);
+                redirectURL = "http://localhost:3000/auth/pagina_inicial_logado";
+            }
+            else {
+                const isProfissional = await this.profissionalService.isRegistered(userData.matricula);
+                if (!isProfissional) {
+                    return res.status(403).json({ error: 'Acesso negado: professor não cadastrado' });
+                }
+                redirectURL = "http://localhost:3000/auth/pagina_agendamentos";
+            }
+            return res.redirect(302, redirectURL);
         }
         catch (error) {
             console.log("erro:", error);
@@ -86,7 +100,6 @@ __decorate([
 ], AuthController.prototype, "renderHome", null);
 __decorate([
     (0, common_1.Get)('callback'),
-    (0, common_1.Redirect)('http://localhost:3000/auth/pagina_inicial_logado', 302),
     __param(0, (0, common_1.Query)('code')),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Session)()),
@@ -104,6 +117,7 @@ __decorate([
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
-        pacientes_service_1.PacientesService])
+        pacientes_service_1.PacientesService,
+        profissionais_service_1.ProfissionaisService])
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map

@@ -61,5 +61,10 @@ export class ProfissionaisService {
       .innerJoin('atendimento.pacientes', 'paciente')
       .where('profissional.id = :id', { id })
       .getRawMany();
-  }  
+  }
+  
+  async isRegistered(id: string): Promise<boolean> {
+    const profissional = await this.profissionalRepository.findOne({where: {id: Number(id)}})
+    return !!profissional
+  }
 }

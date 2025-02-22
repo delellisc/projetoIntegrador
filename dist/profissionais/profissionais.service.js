@@ -59,6 +59,10 @@ let ProfissionaisService = class ProfissionaisService {
             .where('profissional.id = :id', { id })
             .getRawMany();
     }
+    async isRegistered(id) {
+        const profissional = await this.profissionalRepository.findOne({ where: { id: Number(id) } });
+        return !!profissional;
+    }
 };
 exports.ProfissionaisService = ProfissionaisService;
 exports.ProfissionaisService = ProfissionaisService = __decorate([
