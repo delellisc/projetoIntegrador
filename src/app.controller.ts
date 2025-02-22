@@ -35,4 +35,10 @@ export class AppController {
   getHistorico() {
     return { message: 'aqui está o historico'}
   }
+
+  @Get('home')
+  @Render('index')
+  getIndex(){
+    return {}
+  }
 }

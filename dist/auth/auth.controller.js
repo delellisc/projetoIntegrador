@@ -32,6 +32,7 @@ let AuthController = class AuthController {
         }
         const pacienteId = session.user.id;
         const atendimentos = await this.pacienteService.findAtendimentos(pacienteId);
+        console.log("Atendimentos encontrados:", atendimentos);
         const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!';
         const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!';
         return res.render('pagina_inicial_logado', { user: session.user, atendimentos, msg1: msg1, msg2: msg2 });
@@ -51,7 +52,7 @@ let AuthController = class AuthController {
             console.log(userData);
             session.user = userData;
             let redirectURL;
-            if (userData.matricula.length > 10) {
+            if (userData.matricula.tipo_vinculo == 'Aluno') {
                 const pacienteDto = {
                     id: userData.matricula,
                     nome: userData.nome_usual,
