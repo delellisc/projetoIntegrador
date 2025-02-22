@@ -4,6 +4,9 @@ body {
     margin: 50px;
     background-color: #31615F;
 }
+.h1 {
+    color: wheat;
+}
 
 button { 
     padding: 10px 20px; 
