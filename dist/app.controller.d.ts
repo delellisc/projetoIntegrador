@@ -17,4 +17,5 @@ export declare class AppController {
         message: string;
     };
     getIndex(): {};
+    getAdmin(): {};
 }

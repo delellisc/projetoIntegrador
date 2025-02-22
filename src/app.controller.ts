@@ -41,4 +41,10 @@ export class AppController {
   getIndex(){
     return {}
   }
+  
+  @Get('admin')
+  @Render('pagina_admin')
+  getAdmin(){
+    return {}
+  }
 }

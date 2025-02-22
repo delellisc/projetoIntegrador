@@ -37,6 +37,9 @@ let AppController = class AppController {
     getIndex() {
         return {};
     }
+    getAdmin() {
+        return {};
+    }
 };
 exports.AppController = AppController;
 __decorate([
@@ -75,6 +78,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getIndex", null);
+__decorate([
+    (0, common_1.Get)('admin'),
+    (0, common_1.Render)('pagina_admin'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getAdmin", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,
