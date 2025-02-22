@@ -67,8 +67,9 @@ export class AuthController {
       session.user = userData; //armazena os dados do usuário na sessão
 
       let redirectURL: string;
+      
       // verificação para paciente/profissional
-      if (userData.matricula.length > 10) {
+      if (userData.matricula.tipo_vinculo == 'Aluno') {
 
       const pacienteDto: CreatePacienteDto = {
         id: userData.matricula,
