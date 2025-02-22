@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>+Saúde IFRN</title>
+    <link rel="stylesheet" href="/public/styles/style_index.css">
 </head>
 <body>
+  <h1>Seja Bem-vindo!</h1>
     
+    <button onclick="abrirModal()">Login Admin</button>
+    <button onclick="window.location.href='/auth/login'">Login SUAP</button>
+
+    <div id="modal">
+        <h2>Login Admin</h2>
+        {{!-- aqui vai redirecionar pra parte de gerenciamento de profissionais --}}
+        <form action="/agendamentos" method="POST"> 
+            <label for="login">Usuário:</label>
+            <input type="text" id="login" name="login" required>
+            <br>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+            <br><br>
+            <button type="submit">Entrar</button>
+            <button type="button" onclick="fecharModal()">Fechar</button>
+        </form>
+    </div>
+
+    <script src="/public/scripts/script.index.js"></script>
 </body>
 </html>
