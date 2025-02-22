@@ -19,8 +19,11 @@ let AppController = class AppController {
     root() {
         return { message: 'saude123' };
     }
-    getAgendamentos() {
-        return { message: 'atendimento é bom' };
+    getAgendamentosProfisisonal() {
+        return { message: 'Página de agendamentos na visão do paciente' };
+    }
+    getAgendamentosPaciente() {
+        return { message: 'Página de agendamentos na visão do paciente' };
     }
     getPerfil() {
         return { message: 'perfil visualizado' };
@@ -35,12 +38,19 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "root", null);
 __decorate([
-    (0, common_1.Get)('agendamentos'),
-    (0, common_1.Render)('pagina_agendamentos'),
+    (0, common_1.Get)('agendamentos/profissional'),
+    (0, common_1.Render)('pagina_agendamentos_profissional'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "getAgendamentos", null);
+], AppController.prototype, "getAgendamentosProfisisonal", null);
+__decorate([
+    (0, common_1.Get)('agendamentos/paciente'),
+    (0, common_1.Render)('pagina_agendamentos_paciente'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getAgendamentosPaciente", null);
 __decorate([
     (0, common_1.Get)('perfil'),
     (0, common_1.Render)('pagina_perfil'),

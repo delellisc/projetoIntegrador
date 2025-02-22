@@ -11,10 +11,16 @@ export class AppController {
     return { message: 'saude123' };
   }
 
-  @Get('agendamentos')
-  @Render('pagina_agendamentos')
-  getAgendamentos() {
-    return { message: 'atendimento é bom'}
+  @Get('agendamentos/profissional')
+  @Render('pagina_agendamentos_profissional')
+  getAgendamentosProfisisonal() {
+    return { message: 'Página de agendamentos na visão do paciente'}
+  }
+
+  @Get('agendamentos/paciente')
+  @Render('pagina_agendamentos_paciente')
+  getAgendamentosPaciente() {
+    return { message: 'Página de agendamentos na visão do paciente'}
   }
 
   @Get('perfil')

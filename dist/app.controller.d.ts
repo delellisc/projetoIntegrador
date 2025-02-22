@@ -5,7 +5,10 @@ export declare class AppController {
     root(): {
         message: string;
     };
-    getAgendamentos(): {
+    getAgendamentosProfisisonal(): {
+        message: string;
+    };
+    getAgendamentosPaciente(): {
         message: string;
     };
     getPerfil(): {
