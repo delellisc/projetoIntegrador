@@ -32,6 +32,7 @@ export class AuthController {
 
     const pacienteId = session.user.id
     const atendimentos = await this.pacienteService.findAtendimentos(pacienteId)
+    console.log("Atendimentos encontrados:", atendimentos); //debug
     const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!' 
     const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!' 
 
@@ -67,7 +68,7 @@ export class AuthController {
       session.user = userData; //armazena os dados do usuário na sessão
 
       let redirectURL: string;
-      
+
       // verificação para paciente/profissional
       if (userData.matricula.tipo_vinculo == 'Aluno') {
 
