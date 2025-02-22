@@ -70,7 +70,7 @@ export class AuthController {
       let redirectURL: string;
 
       // verificação para paciente/profissional
-      if (userData.matricula.tipo_vinculo == 'Aluno') {
+      if (userData.matricula.length > 10) {
 
       const pacienteDto: CreatePacienteDto = {
         id: userData.matricula,

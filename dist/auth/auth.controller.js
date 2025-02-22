@@ -52,7 +52,7 @@ let AuthController = class AuthController {
             console.log(userData);
             session.user = userData;
             let redirectURL;
-            if (userData.matricula.tipo_vinculo == 'Aluno') {
+            if (userData.matricula.length > 10) {
                 const pacienteDto = {
                     id: userData.matricula,
                     nome: userData.nome_usual,
