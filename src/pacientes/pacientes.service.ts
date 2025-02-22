@@ -50,7 +50,7 @@ export class PacientesService {
     // return `This action removes a #${id} paciente`;
   }
 
-  findAtendimentos(id: number) {
+  findAtendimentos(id: string) {
     return this.pacienteRepository
       .createQueryBuilder('paciente')
       .select([
