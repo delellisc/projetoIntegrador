@@ -31,6 +31,7 @@ let AuthController = class AuthController {
             return res.redirect('/auth/login');
         }
         const pacienteId = session.user.id;
+        console.log('usuario:', session.user);
         const atendimentos = await this.pacienteService.findAtendimentos(pacienteId);
         console.log("Atendimentos encontrados:", atendimentos);
         const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!';

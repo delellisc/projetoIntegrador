@@ -31,6 +31,7 @@ export class AuthController {
     }
 
     const pacienteId = session.user.id
+    console.log('usuario:', session.user) //debug
     const atendimentos = await this.pacienteService.findAtendimentos(pacienteId)
     console.log("Atendimentos encontrados:", atendimentos); //debug
     const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!' 
@@ -39,7 +40,7 @@ export class AuthController {
     return res.render('pagina_inicial_logado', {user: session.user, atendimentos, msg1: msg1, msg2: msg2})
   }
 
-  //troca o codigo pego token 
+  //função callback
   @Get('callback')
 
   async callback(
