@@ -53,4 +53,19 @@ export class AtendimentosController {
   createConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {
     return this.atendimentosService.createConsulta(body.atendimentoId, body.pacienteId);
   }  
+
+  @Get('/consultas/:atendimentoId/:pacienteId')
+  findConsulta(@Param('atendimentoId') atendimentoId: number, @Param('pacienteId') pacienteId: number){
+    return this.atendimentosService.findConsulta(atendimentoId, pacienteId);
+  }
+
+  @Delete('/removerConsulta/:atendimentoId/:pacienteId')
+  removeConsulta(@Param('atendimentoId') atendimentoId: number, @Param('pacienteId') pacienteId: number) {
+    return this.atendimentosService.removeConsulta(atendimentoId, pacienteId);
+  }  
+  
+/*   @Delete('/consultas')
+  removeConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {
+    return this.atendimentosService.removeConsulta(body.atendimentoId, body.pacienteId);
+  }   */
 }

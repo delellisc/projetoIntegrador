@@ -16,4 +16,6 @@ export declare class AtendimentosService {
     findAtendimentoByDate(data: string): Promise<any[]>;
     findAtendimentoByHour(data: string): Promise<any>;
     createConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
+    findConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
+    removeConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
 }

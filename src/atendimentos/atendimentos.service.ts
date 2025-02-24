@@ -109,4 +109,46 @@ export class AtendimentosService {
   
     return atendimento;
   }  
+
+  async findConsulta(atendimentoId: number, pacienteId: number) {
+    const atendimento = await this.atendimentoRepository.findOne({
+      where: { id: atendimentoId },
+      relations: ['pacientes'],
+    });
+  
+    if (!atendimento) {
+      throw new Error('Atendimento not found');
+    }
+  
+    const paciente = await this.pacienteRepository.findOne({ where: { id: pacienteId } });
+  
+    if (!paciente) {
+      throw new Error('Paciente not found');
+    }
+  
+    if (atendimento.pacientes.some(p => p.id === pacienteId)) {
+      return atendimento;
+    }
+    return;
+  }
+
+  async removeConsulta(atendimentoId: number, pacienteId: number) {
+    const atendimento = await this.atendimentoRepository.findOne({
+      where: { id: atendimentoId },
+      relations: ['pacientes'],
+    });
+  
+    if (!atendimento) {
+      throw new Error('Atendimento not found');
+    }
+  
+    const paciente = await this.pacienteRepository.findOne({ where: { id: pacienteId } });
+
+    if (!paciente) {
+      throw new Error('Paciente not found');
+    }
+    
+    atendimento.pacientes = atendimento.pacientes.filter(p => p.id !== pacienteId);
+    return await this.atendimentoRepository.save(atendimento);
+  }    
 }
