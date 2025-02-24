@@ -117,7 +117,6 @@ async function generateCalendarProfissional(date) {
             if (dayElement.classList.contains("has-atendimento")){
                 dayElement.addEventListener("click", () => {
                     openModalPacientesAtendidos(`${year}-${month+1}-${i}`);
-                    /* alert(`Abrir modal do dia ${year}-${month+1}-${i}`); */
                 });
             }
             else{

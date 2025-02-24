@@ -102,17 +102,29 @@ async function generateCalendarPaciente(date) {
         const dayElement = document.createElement("div");
         dayElement.classList.add("calendar-day");
         dayElement.textContent = i;
-        let atendimentosHoje = await fetchAtendimentosData(`${year}-${month+1}-${i}`, id);
+
+        let currentDate = new Date(year, month, i);
+        let dayOfWeek = currentDate.getDay();
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        let atendimentosHoje = await fetchAtendimentosProfissionalData(`${year}-${month+1}-${i}`, id);
         if (atendimentosHoje[0]) {
             dayElement.classList.add("has-atendimento");
+        }
+        if (dayOfWeek === 0 || dayOfWeek === 6 || currentDate < today) {
+            dayElement.style.cursor = "not-allowed";
+            dayElement.style.opacity = "0.5";
+        }
+        else if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()){
+            dayElement.classList.add("today");
+            dayElement.style.cursor = "not-allowed";
+        }
+        else {
             dayElement.addEventListener("click", () => {
                 openModalPaciente(atendimentosHoje);
-                console.log(atendimentosHoje);
             });
-        }
-        const today = new Date();
-        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-            dayElement.classList.add("today");
         }
         calendar.appendChild(dayElement);
     }
@@ -124,12 +136,7 @@ async function generateCalendarPaciente(date) {
 function openModalPaciente(atendimentos) {
     const modal = document.getElementById("modal");
     const atendimentoTable = document.getElementById("tabela-atendimentos");
-
-/*     atendimentoList.innerHTML = "";
-
-    const table = document.createElement("table");
-    table.style.width = "100%";
-    table.style.borderCollapse = "collapse"; */
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Atendimentos - ${formatDateWithoutTime(atendimentos[0].atendimento_horario)}`;
 
     atendimentoTable.innerHTML = `
         <thead>
@@ -149,21 +156,34 @@ function openModalPaciente(atendimentos) {
 
     atendimentos.forEach(atendimento => {
         const row = document.createElement("tr");
+        const hora = document.createElement("td");
+        const nome = document.createElement("td");
+        const registro = document.createElement("td");
+        const especializacao = document.createElement("td");
+        const botao = document.createElement("td");
+        const btn = document.createElement("button");
+        hora.innerText = `${extractTimeFromDate(atendimento.atendimento_horario)}`;
+        nome.innerText = `${atendimento.profissional_nome}`;
+        registro.innerText = `${atendimento.profissional_registro}`;
+        especializacao.innerText = `${atendimento.especializacao_nome}`;
+        btn.innerText = `Marcar Consulta`;
+        btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id, 20231038060019));
+        botao.appendChild(btn);
 
-        row.innerHTML = `
-            <td>${atendimento.atendimento_horario}</td>
-            <td>${atendimento.profissional_nome}</td>
-            <td>${atendimento.profissional_registro}</td>
-            <td>${atendimento.especializacao_nome}</td>
-            <td>Marcar Consulta</td>
-        `;
-
-        row.id = "linha-tabela-atendimento";
+        row.appendChild(hora);
+        row.appendChild(nome);
+        row.appendChild(registro);
+        row.appendChild(especializacao);
+        row.appendChild(botao);
 
         atendimentoTable.appendChild(row);
     });
 
     modal.style.display = "block";
+}
+
+function cadastrarConsulta(atendimentoId, pacienteId){
+    alert(`Cadastrando consulta do paciente ${pacienteId} em atendimento ${atendimentoId}`);
 }
 
 async function openModalPacientesAtendidos(data){
@@ -279,6 +299,24 @@ async function fetchRemoverAtendimento(horario) {
         headers: {
         "Content-Type": "application/json"
         }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Erro:", error));
+}
+
+// CRIAR NOVA CONSULTA
+async function cadastrarAtendimento(atendimentoId) {
+    alert(`Cadastrando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
+    await fetch("http://localhost:3000/atendimentos/consultas", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "pacienteId": id,
+            "atendimentoId": atendimentoId
+        })
     })
     .then(response => response.json())
     .then(data => console.log(data))

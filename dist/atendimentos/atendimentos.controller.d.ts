@@ -12,4 +12,8 @@ export declare class AtendimentosController {
     removeAtendimentoByDate(horario: string): Promise<import("./entities/atendimento.entity").Atendimento>;
     findAtendimentoByDate(date: string): Promise<any[]>;
     findAtendimentoByHour(horario: string): Promise<any>;
+    createConsulta(body: {
+        atendimentoId: number;
+        pacienteId: number;
+    }): Promise<import("./entities/atendimento.entity").Atendimento>;
 }

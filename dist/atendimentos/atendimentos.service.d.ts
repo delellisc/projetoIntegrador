@@ -2,9 +2,11 @@ import { CreateAtendimentoDto } from './dto/create-atendimento.dto';
 import { UpdateAtendimentoDto } from './dto/update-atendimento.dto';
 import { Repository } from 'typeorm';
 import { Atendimento } from './entities/atendimento.entity';
+import { Paciente } from 'src/pacientes/entities/paciente.entity';
 export declare class AtendimentosService {
     private atendimentoRepository;
-    constructor(atendimentoRepository: Repository<Atendimento>);
+    private pacienteRepository;
+    constructor(atendimentoRepository: Repository<Atendimento>, pacienteRepository: Repository<Paciente>);
     create(createAtendimentoDto: CreateAtendimentoDto): Promise<Atendimento>;
     findAll(): Promise<Atendimento[]>;
     findOne(id: number): Promise<Atendimento>;
@@ -13,4 +15,5 @@ export declare class AtendimentosService {
     removeByDate(data: string): Promise<Atendimento>;
     findAtendimentoByDate(data: string): Promise<any[]>;
     findAtendimentoByHour(data: string): Promise<any>;
+    createConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
 }

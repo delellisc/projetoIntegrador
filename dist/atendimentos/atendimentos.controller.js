@@ -45,6 +45,9 @@ let AtendimentosController = class AtendimentosController {
     findAtendimentoByHour(horario) {
         return this.atendimentosService.findAtendimentoByHour(horario);
     }
+    createConsulta(body) {
+        return this.atendimentosService.createConsulta(body.atendimentoId, body.pacienteId);
+    }
 };
 exports.AtendimentosController = AtendimentosController;
 __decorate([
@@ -103,6 +106,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "findAtendimentoByHour", null);
+__decorate([
+    (0, common_1.Post)('/consultas'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "createConsulta", null);
 exports.AtendimentosController = AtendimentosController = __decorate([
     (0, common_1.Controller)('atendimentos'),
     __metadata("design:paramtypes", [atendimentos_service_1.AtendimentosService])

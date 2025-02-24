@@ -16,8 +16,9 @@ exports.AtendimentosService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 let AtendimentosService = class AtendimentosService {
-    constructor(atendimentoRepository) {
+    constructor(atendimentoRepository, pacienteRepository) {
         this.atendimentoRepository = atendimentoRepository;
+        this.pacienteRepository = pacienteRepository;
     }
     create(createAtendimentoDto) {
         const atendimento = this.atendimentoRepository.create(createAtendimentoDto);
@@ -76,11 +77,31 @@ let AtendimentosService = class AtendimentosService {
             .where('atendimento.horario = :data', { data })
             .getRawOne();
     }
+    async createConsulta(atendimentoId, pacienteId) {
+        const atendimento = await this.atendimentoRepository.findOne({
+            where: { id: atendimentoId },
+            relations: ['pacientes'],
+        });
+        if (!atendimento) {
+            throw new Error('Atendimento not found');
+        }
+        const paciente = await this.pacienteRepository.findOne({ where: { id: pacienteId } });
+        if (!paciente) {
+            throw new Error('Paciente not found');
+        }
+        if (!atendimento.pacientes.some(p => p.id === pacienteId)) {
+            atendimento.pacientes.push(paciente);
+            await this.atendimentoRepository.save(atendimento);
+        }
+        return atendimento;
+    }
 };
 exports.AtendimentosService = AtendimentosService;
 exports.AtendimentosService = AtendimentosService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)('ATENDIMENTO_REPOSITORY')),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __param(1, (0, common_1.Inject)('PACIENTE_REPOSITORY')),
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        typeorm_1.Repository])
 ], AtendimentosService);
 //# sourceMappingURL=atendimentos.service.js.map

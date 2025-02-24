@@ -48,4 +48,9 @@ export class AtendimentosController {
   findAtendimentoByHour(@Param('horario') horario: string){
     return this.atendimentosService.findAtendimentoByHour(horario);
   }
+
+  @Post('/consultas')
+  createConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {
+    return this.atendimentosService.createConsulta(body.atendimentoId, body.pacienteId);
+  }  
 }

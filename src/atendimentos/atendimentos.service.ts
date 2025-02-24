@@ -3,13 +3,17 @@ import { CreateAtendimentoDto } from './dto/create-atendimento.dto';
 import { UpdateAtendimentoDto } from './dto/update-atendimento.dto';
 import { Repository } from 'typeorm';
 import { Atendimento } from './entities/atendimento.entity';
+import { Paciente } from 'src/pacientes/entities/paciente.entity';
 
 @Injectable()
 export class AtendimentosService {
   
   constructor(
     @Inject('ATENDIMENTO_REPOSITORY')
-    private atendimentoRepository: Repository<Atendimento>
+    private atendimentoRepository: Repository<Atendimento>,
+
+    @Inject('PACIENTE_REPOSITORY')
+    private pacienteRepository: Repository<Paciente>
   ){}
 
   create(createAtendimentoDto: CreateAtendimentoDto) {
@@ -81,4 +85,28 @@ export class AtendimentosService {
       .where('atendimento.horario = :data', { data })
       .getRawOne();
   }
+
+  async createConsulta(atendimentoId: number, pacienteId: number) {
+    const atendimento = await this.atendimentoRepository.findOne({
+      where: { id: atendimentoId },
+      relations: ['pacientes'],
+    });
+  
+    if (!atendimento) {
+      throw new Error('Atendimento not found');
+    }
+  
+    const paciente = await this.pacienteRepository.findOne({ where: { id: pacienteId } });
+  
+    if (!paciente) {
+      throw new Error('Paciente not found');
+    }
+  
+    if (!atendimento.pacientes.some(p => p.id === pacienteId)) {
+      atendimento.pacientes.push(paciente);
+      await this.atendimentoRepository.save(atendimento);
+    }
+  
+    return atendimento;
+  }  
 }
