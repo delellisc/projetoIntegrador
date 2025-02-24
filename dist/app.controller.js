@@ -20,10 +20,10 @@ let AppController = class AppController {
         return { message: 'saude123' };
     }
     getAgendamentosProfisisonal() {
-        return { message: 'Página de agendamentos na visão do paciente' };
+        return { id: 20231038060014 };
     }
     getAgendamentosPaciente() {
-        return { message: 'Página de agendamentos na visão do paciente' };
+        return { id: 20231038060001 };
     }
     getPerfil() {
         return { message: 'perfil visualizado' };

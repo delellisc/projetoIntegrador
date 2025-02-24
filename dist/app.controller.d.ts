@@ -6,10 +6,10 @@ export declare class AppController {
         message: string;
     };
     getAgendamentosProfisisonal(): {
-        message: string;
+        id: number;
     };
     getAgendamentosPaciente(): {
-        message: string;
+        id: number;
     };
     getPerfil(): {
         message: string;

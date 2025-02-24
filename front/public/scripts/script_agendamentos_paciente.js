@@ -1,117 +1,4 @@
 /* *********************************************** */
-/* SCRIPTS FETCH */
-/* script fetch atendimentos do paciente por data */
-
-async function buscarPacienteAtendimento(atendimentoId) {
-    try {
-        const response = await fetch(`http://localhost:3000/atendimentos/consultas/${atendimentoId}/${id}`);
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar relação entre paciente e atendimento. Status: ${response.status}`);
-        }
-        
-        const text = await response.text();
-
-        if (!text.trim()) {
-            return false;
-        }
-
-        return JSON.parse(text) ? true : false;
-    } catch (error) {
-        console.error(`Erro ao buscar relação entre paciente e atendimento:`, error);
-        return false;
-    }
-}
-
-// CANCELAR CONSULTA
-async function cancelarConsulta(atendimentoId) {
-    alert(`Cancelando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
-    await fetch(`http://localhost:3000/atendimentos/removerConsulta/${atendimentoId}/${id}`, {
-        method: "DELETE",
-        headers: {
-        "Content-Type": "application/json"
-        },
-    })
-    /* .then(response => response.json())
-    .then(data => console.log(data)) */
-    .catch(error => console.error("Erro:", error));
-}
-
-// CRIAR NOVA CONSULTA
-async function cadastrarConsulta(atendimentoId) {
-    alert(`Cadastrando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
-    await fetch("http://localhost:3000/atendimentos/consultas", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "pacienteId": id,
-            "atendimentoId": atendimentoId
-        })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error("Erro:", error));
-}
-
-async function fetchAtendimentosData(data) {
-    try {
-        const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos.");
-        }
-        return response.json();
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos:", error);
-    }
-}
-
-/* script fetch atendimentos do profissional por data */
-async function fetchAtendimentosProfissionalData(data, id) {
-    try {
-        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos do profissional.");
-        }
-        return response.json();
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos do profissional:", error);
-    }
-}
-
-/* script fetch atendimentos do paciente por data */
-async function fetchAtendimentosHora(horario) {
-    try {
-        const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
-        }
-        const text = await response.text();
-
-        return text ? JSON.parse(text) : {};
-    } catch (error) {
-        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
-    }
-}
-
-/* script fetch pacientes atendidos no dia por um profissional */
-async function fetchPacientesAtendidos(data, profissionalid) {
-    try {
-        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${profissionalid}/pacientes`);
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
-        }
-
-        const text = await response.text();
-        // console.log(`Resposta recebida para ${horario}:`, text);
-
-        return text ? JSON.parse(text) : {};
-    } catch (error) {
-        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
-    }
-}
-
-/* *********************************************** */
 /* SCRIPTS CALENDÁRIO */
 /* script para gerar calendário */
 
@@ -120,7 +7,7 @@ const monthYear = document.getElementById("month-year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
 
-const id = 20231038060001;
+const id = parseInt(document.getElementById("matricula").textContent);
 
 let currentDate = new Date();
 
@@ -170,7 +57,9 @@ async function generateCalendarPaciente(date) {
         }
         else if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()){
             dayElement.classList.add("today");
-            dayElement.style.cursor = "not-allowed";
+            dayElement.addEventListener("click", () => {
+                openModalPaciente(atendimentosHoje);
+            });
         }
         else {
             dayElement.addEventListener("click", () => {
@@ -223,11 +112,16 @@ function openModalPaciente(atendimentos) {
         if (!marcacao){
             btn.innerText = `Marcar Consulta`;
             btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id));
+            btn.style.backgroundColor = "#31615F";
         }
         else {
             btn.innerText = `Cancelar Consulta`;
             btn.addEventListener("click", () => cancelarConsulta(atendimento.atendimento_id));
+            btn.style.backgroundColor = "red";
         }
+        btn.style.borderRadius = "5px";
+        btn.style.color = "white";
+        btn.style.padding = "5px";
         botao.appendChild(btn);
 
         row.appendChild(hora);
@@ -358,4 +252,85 @@ function extractTimeFromDate(dateString) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${hours}:${minutes}`;
+}
+
+/* *********************************************** */
+/* SCRIPTS FETCH */
+/* script fetch atendimentos do paciente por data */
+
+async function buscarPacienteAtendimento(atendimentoId) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/consultas/${atendimentoId}/${id}`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar relação entre paciente e atendimento. Status: ${response.status}`);
+        }
+        
+        const text = await response.text();
+
+        if (!text.trim()) {
+            return false;
+        }
+
+        return JSON.parse(text) ? true : false;
+    } catch (error) {
+        console.error(`Erro ao buscar relação entre paciente e atendimento:`, error);
+        return false;
+    }
+}
+
+// CANCELAR CONSULTA
+async function cancelarConsulta(atendimentoId) {
+    alert(`Cancelando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
+    await fetch(`http://localhost:3000/atendimentos/removerConsulta/${atendimentoId}/${id}`, {
+        method: "DELETE",
+        headers: {
+        "Content-Type": "application/json"
+        },
+    })
+    .catch(error => console.error("Erro:", error));
+    location.reload();
+}
+
+// CRIAR NOVA CONSULTA
+async function cadastrarConsulta(atendimentoId) {
+    alert(`Cadastrando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
+    await fetch("http://localhost:3000/atendimentos/consultas", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "pacienteId": id,
+            "atendimentoId": atendimentoId
+        })
+    })
+    .catch(error => console.error("Erro:", error));
+    location.reload();
+}
+
+async function fetchAtendimentosData(data) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
+}
+
+/* script fetch atendimentos do paciente por data */
+async function fetchAtendimentosHora(horario) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
+        }
+        const text = await response.text();
+
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
+        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
+    }
 }

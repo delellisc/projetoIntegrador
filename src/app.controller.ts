@@ -14,13 +14,13 @@ export class AppController {
   @Get('agendamentos/profissional')
   @Render('pagina_agendamentos_profissional')
   getAgendamentosProfisisonal() {
-    return { message: 'Página de agendamentos na visão do paciente'}
+    return { id: 20231038060014 }
   }
 
   @Get('agendamentos/paciente')
   @Render('pagina_agendamentos_paciente')
   getAgendamentosPaciente() {
-    return { message: 'Página de agendamentos na visão do paciente'}
+    return { id: 20231038060001 }
   }
 
   @Get('perfil')
