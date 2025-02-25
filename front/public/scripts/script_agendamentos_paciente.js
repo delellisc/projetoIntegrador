@@ -1,3 +1,5 @@
+const id = parseInt(document.getElementById("matricula").textContent);
+
 /* *********************************************** */
 /* SCRIPTS CALENDÁRIO */
 /* script para gerar calendário */
@@ -6,8 +8,6 @@ const calendar = document.getElementById("calendar");
 const monthYear = document.getElementById("month-year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
-
-const id = parseInt(document.getElementById("matricula").textContent);
 
 let currentDate = new Date();
 
@@ -48,23 +48,20 @@ async function generateCalendarPaciente(date) {
         today.setHours(0, 0, 0, 0);
 
         let atendimentosHoje = await fetchAtendimentosData(`${year}-${month+1}-${i}`);
-        if (atendimentosHoje[0]) {
+        if (atendimentosHoje.length > 0){
             dayElement.classList.add("has-atendimento");
         }
         if (dayOfWeek === 0 || dayOfWeek === 6 || currentDate < today) {
             dayElement.style.cursor = "not-allowed";
             dayElement.style.opacity = "0.5";
         }
-        else if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()){
-            dayElement.classList.add("today");
+        if (atendimentosHoje.length > 0 && currentDate > today) {
             dayElement.addEventListener("click", () => {
                 openModalPaciente(atendimentosHoje);
             });
         }
-        else {
-            dayElement.addEventListener("click", () => {
-                openModalPaciente(atendimentosHoje);
-            });
+        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()){
+            dayElement.classList.add("today");
         }
         calendar.appendChild(dayElement);
     }
@@ -78,19 +75,23 @@ function openModalPaciente(atendimentos) {
     const atendimentoTable = document.getElementById("tabela-atendimentos");
     document.getElementById("titulo-tabela-atendimentos").innerText = `Atendimentos - ${formatDateWithoutTime(atendimentos[0].atendimento_horario)}`;
 
-    atendimentoTable.innerHTML = `
-        <thead>
-            <tr>
-                <th>Horário</th>
-                <th>Profissional</th>
-                <th>Atendimento ID</th>
-                <th>Registro</th>
-                <th>Especialização</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="atendimento-body">
-        </tbody>
+    atendimentoTable.innerHTML = "";
+
+    const atendimentosTableHeader = document.createElement("thead");
+    const atendimentosTableBody = document.createElement("tbody");
+
+    atendimentoTable.appendChild(atendimentosTableHeader);
+    atendimentoTable.appendChild(atendimentosTableBody);
+
+    atendimentosTableHeader.innerHTML = `
+        <tr>
+            <th>Horário</th>
+            <th>Profissional</th>
+            <th>Atendimento ID</th>
+            <th>Registro</th>
+            <th>Especialização</th>
+            <th></th>
+        </tr>
     `;
 
     atendimentos.forEach(async atendimento => {
@@ -108,7 +109,6 @@ function openModalPaciente(atendimentos) {
         especializacao.innerText = `${atendimento.especializacao_nome}`;
         atendimento_id.innerText = `${atendimento.atendimento_id}`
         let marcacao = await buscarPacienteAtendimento(atendimento.atendimento_id);
-        /* console.log(marcacao); */
         if (!marcacao){
             btn.innerText = `Marcar Consulta`;
             btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id));
@@ -131,7 +131,7 @@ function openModalPaciente(atendimentos) {
         row.appendChild(especializacao);
         row.appendChild(botao);
 
-        atendimentoTable.appendChild(row);
+        atendimentosTableBody.appendChild(row);
     });
 
     modal.style.display = "block";
@@ -167,26 +167,28 @@ generateCalendarPaciente(currentDate);
 /* *********************************************** */
 /* SCRIPTS HISTÓRICO DE ATENDIMENTOS */
 /* script histórico de atendimentos */
-const atendimentosTable = document.getElementById("atendimentos-table");
-const atendimentosTableBody = document.querySelector("#atendimentos-table tbody");
 document.getElementById("fetch-atendimentos-btn").addEventListener("click", () => {
     fetchAtendimentos(id);
 });
 
-async function fetchAtendimentos(id) {
-    try {
-        const response = await fetch(`http://localhost:3000/pacientes/atendimentos/${id}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos.");
-        }
-        const atendimentos = await response.json();
-        renderAtendimentosTable(atendimentos);
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos:", error);
-    }
-}
-
 function renderAtendimentosTable(atendimentos) {
+    const atendimentosTable = document.getElementById("tabela-historico");
+    const atendimentosTableHeader = document.createElement("thead");
+    const atendimentosTableBody = document.createElement("tbody");
+    
+    atendimentosTableHeader.innerHTML = `
+        <tr>
+            <th>Atendimento ID</th>
+            <th>Horário</th>
+            <th>Especialização</th>
+            <th>Profissional</th>
+            <th>Registro</th>
+        </tr>
+    `;
+
+    atendimentosTable.appendChild(atendimentosTableHeader);
+    atendimentosTable.appendChild(atendimentosTableBody);
+    
     atendimentosTableBody.innerHTML = "";
 
     if (atendimentos.length === 0) {
@@ -195,14 +197,23 @@ function renderAtendimentosTable(atendimentos) {
         atendimentos.forEach(atendimento => {
             const row = document.createElement("tr");
 
-            row.innerHTML = `
-                <td>${atendimento.paciente_nome}</td>
-                <td>${new Date(atendimento.paciente_data_nascimento).toLocaleDateString()}</td>
-                <td>${atendimento.atendimento_id}</td>
-                <td>${formatDate(atendimento.atendimento_horario)}</td>
-                <td>${atendimento.profissional_nome}</td>
-                <td>${atendimento.profissional_registro}</td>
-            `;
+            const atendimento_id = document.createElement("td");
+            const horario = document.createElement("td");
+            const especializacao = document.createElement("td");
+            const nome = document.createElement("td");
+            const registro = document.createElement("td");
+            
+            atendimento_id.textContent = `${atendimento.atendimento_id}`;
+            horario.textContent = `${formatDate(atendimento.atendimento_horario)}`;
+            especializacao.textContent = `${atendimento.especializacao_nome}`;
+            nome.textContent = `${atendimento.profissional_nome}`;
+            registro.textContent = `${atendimento.profissional_registro}`;
+
+            row.appendChild(atendimento_id);
+            row.appendChild(horario);
+            row.appendChild(especializacao);
+            row.appendChild(nome);
+            row.appendChild(registro);
 
             atendimentosTableBody.appendChild(row);
         });
@@ -211,7 +222,9 @@ function renderAtendimentosTable(atendimentos) {
     }
 }
 
+/* *********************************************** */
 // FORMATAÇÃO DE DATAS
+// Formatar data no formato dia/mes/ano, hora:min
 function formatDate(dateString) {
     const date = new Date(dateString);
 
@@ -225,6 +238,7 @@ function formatDate(dateString) {
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
 }
 
+// Formatar data no formato dia/mes/ano
 function formatDateWithoutTime(dateString) {
     const date = new Date(dateString);
 
@@ -235,6 +249,7 @@ function formatDateWithoutTime(dateString) {
     return `${day}/${month}/${year}`;
 }
 
+// Formatar data no formato ano-mes-dia
 function removeTimeFromDate(dateString) {
     const date = new Date(dateString);
 
@@ -245,6 +260,7 @@ function removeTimeFromDate(dateString) {
     return `${year}-${month}-${day}`;
 }
 
+// Formatar data no formato hora:min
 function extractTimeFromDate(dateString) {
     const date = new Date(dateString);
 
@@ -256,8 +272,21 @@ function extractTimeFromDate(dateString) {
 
 /* *********************************************** */
 /* SCRIPTS FETCH */
-/* script fetch atendimentos do paciente por data */
+// Fetch todos as consultas de um paciente (relacionamento atendimento-paciente)
+async function fetchAtendimentos(id) {
+    try {
+        const response = await fetch(`http://localhost:3000/pacientes/atendimentos/${id}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        const atendimentos = await response.json();
+        renderAtendimentosTable(atendimentos);
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
+}
 
+// Fetch de uma consulta específica do paciente (relacionamento atendimento-paciente)
 async function buscarPacienteAtendimento(atendimentoId) {
     try {
         const response = await fetch(`http://localhost:3000/atendimentos/consultas/${atendimentoId}/${id}`);
@@ -278,7 +307,7 @@ async function buscarPacienteAtendimento(atendimentoId) {
     }
 }
 
-// CANCELAR CONSULTA
+// Requisição DELETE para cancelar uma consulta
 async function cancelarConsulta(atendimentoId) {
     alert(`Cancelando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
     await fetch(`http://localhost:3000/atendimentos/removerConsulta/${atendimentoId}/${id}`, {
@@ -291,7 +320,7 @@ async function cancelarConsulta(atendimentoId) {
     location.reload();
 }
 
-// CRIAR NOVA CONSULTA
+// Requisição POST para criar uma consulta
 async function cadastrarConsulta(atendimentoId) {
     alert(`Cadastrando consulta no atendimento ${atendimentoId} para matrícula: ${id}`);
     await fetch("http://localhost:3000/atendimentos/consultas", {
@@ -308,6 +337,7 @@ async function cadastrarConsulta(atendimentoId) {
     location.reload();
 }
 
+// Fetch de atendimentos por data
 async function fetchAtendimentosData(data) {
     try {
         const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
@@ -320,7 +350,7 @@ async function fetchAtendimentosData(data) {
     }
 }
 
-/* script fetch atendimentos do paciente por data */
+// Fetch atendimentos em que o paciente foi consultado por data
 async function fetchAtendimentosHora(horario) {
     try {
         const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);

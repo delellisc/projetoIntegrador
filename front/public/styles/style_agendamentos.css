@@ -100,7 +100,7 @@ body {
 }
 
 #tabela-atendimentos,
-#atendimentos-table {
+#tabela-historico {
     width: 100%;
     max-width: 800px;
     margin-top: 20px;
@@ -112,30 +112,29 @@ body {
 
 #tabela-atendimentos th,
 #tabela-atendimentos td,
-#atendimentos-table th,
-#atendimentos-table td {
+#tabela-historico th,
+#tabela-historico td {
     /* padding: 12px 20px; */
     text-align: center;
     font-size: 16px;
-    font-weight: bold;
     border: 1px solid #00000000;
-    border-radius: 10px;
     background-color: #ffffff;
 }
 
 #tabela-atendimentos th,
-#atendimentos-table th {
+#tabela-historico th {
     background-color: #ffffff;
     color: #000000;
     font-size: 18px;
+    font-weight: bold;
 }
 
 #tabela-atendimentos td,
-#atendimentos-table td {
+#tabela-historico td {
     background-color: #ffffff;
 }
 #tabela-atendimentos tr:hover td,
-#atendimentos-table tr:hover td {
+#tabela-historico tr:hover td {
     background-color: #d1f7e3;
 }
 
@@ -198,8 +197,10 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px;
+    max-width: 800px;
     border-radius: 8px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 .close-modal {

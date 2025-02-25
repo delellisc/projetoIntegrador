@@ -1,109 +1,4 @@
-/* *********************************************** */
-/* SCRIPTS FETCH */
-/* script fetch atendimentos do paciente por data */
-async function fetchAtendimentosData(data) {
-    try {
-        const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos.");
-        }
-        return response.json();
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos:", error);
-    }
-}
-
-/* script fetch atendimentos do profissional por data */
-async function fetchAtendimentosProfissionalData(data) {
-    try {
-        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos do profissional.");
-        }
-        return response.json();
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos do profissional:", error);
-    }
-}
-
-/* script fetch atendimentos do paciente por data */
-async function fetchAtendimentosHora(horario) {
-    try {
-        const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
-        }
-
-        const text = await response.text();
-        // console.log(`Resposta recebida para ${horario}:`, text);
-
-        return text ? JSON.parse(text) : {};
-    } catch (error) {
-        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
-    }
-}
-
-/* script fetch pacientes atendidos no dia por um profissional */
-async function fetchPacientesAtendidos(data) {
-    try {
-        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}/pacientes`);
-        if (!response.ok) {
-            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
-        }
-
-        const text = await response.text();
-        // console.log(`Resposta recebida para ${horario}:`, text);
-
-        return text ? JSON.parse(text) : {};
-    } catch (error) {
-        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
-    }
-}
-
-// Remover atendimento
-async function fetchRemoverAtendimento(horario) {
-    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
-    await fetch(`http://localhost:3000/atendimentos/data/${horario}`, {
-        method: "DELETE",
-        headers: {
-        "Content-Type": "application/json"
-        }
-    })
-    .catch(error => console.error("Erro:", error));
-    location.reload();
-}
-
-// Cadastrar novo atendimento
-async function cadastrarAtendimento(horario) {
-    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
-    await fetch("http://localhost:3000/atendimentos", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-        "horario": horario,
-        "status": "confirmado",
-        "profissional": id
-        })
-    })
-    .catch(error => console.error("Erro:", error));
-    location.reload();
-}
-
-// Retornar todos os atendimentos de um profissional
-async function fetchAtendimentos(id) {
-    try {
-        const response = await fetch(`http://localhost:3000/profissionais/atendimentos/${id}`);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar atendimentos.");
-        }
-        const atendimentos = await response.json();
-        renderAtendimentosTable(atendimentos);
-    } catch (error) {
-        console.error("Erro ao buscar atendimentos:", error);
-    }
-}
+const id = parseInt(document.getElementById("matricula").textContent);
 
 /* *********************************************** */
 /* SCRIPTS CALENDÁRIO */
@@ -112,8 +7,6 @@ const calendar = document.getElementById("calendar");
 const monthYear = document.getElementById("month-year");
 const prevMonthBtn = document.getElementById("prev-month");
 const nextMonthBtn = document.getElementById("next-month");
-
-const id = parseInt(document.getElementById("matricula").textContent);
 
 let currentDate = new Date();
 
@@ -209,20 +102,20 @@ async function openModalPacientesAtendidos(data){
     const modal = document.getElementById("modal");
 
     document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes atendidos - ${formatDateWithoutTime(data)}`;
-    atendimentosTable = document.getElementById("tabela-atendimentos");
+    const atendimentosTable = document.getElementById("tabela-atendimentos");
+    const atendimentosTableBody = document.createElement("tbody");
+    const atendimentosTableHeader = document.createElement("thead");
     let pacientes = await fetchPacientesAtendidos(data, id);
     if(pacientes.length > 0){
-        atendimentosTable.innerHTML = ''+
-        '<thead>'+
-        '<tr>'+
-        '    <th>Nome</th>'+
-        '    <th>Matrícula</th>'+
-        '    <th>Atendimento ID</th>'+
-        '</tr>'+
-        '</thead>'+
-        '<tbody id="atendimento-body">'+
-        '</tbody>';
-        atendimentosTableBody = document.getElementById("atendimento-body");
+        atendimentosTable.innerHTML = '';
+        atendimentosTable.appendChild(atendimentosTableHeader);
+        atendimentosTable.appendChild(atendimentosTableBody);
+        atendimentosTableHeader.innerHTML = `
+        <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>Atendimento ID</th>
+        </tr>`;
         for (const paciente of pacientes) { 
             let row = document.createElement("tr");
             let nome = document.createElement("td");
@@ -254,6 +147,8 @@ async function openModalCadastro(data){
 
     document.getElementById("titulo-tabela-atendimentos").innerText = `Tabela de Atendimentos - ${formatDateWithoutTime(data)}`;
     const atendimentosTable = document.getElementById("tabela-atendimentos");
+    atendimentosTable.innerHTML = '';
+
     const header = document.createElement("thead");
     const headerRow = document.createElement("tr");
     
@@ -265,12 +160,9 @@ async function openModalCadastro(data){
     header.appendChild(headerRow);
 
     const tableBody = document.createElement("tbody");
-    tableBody.setAttribute("id", "atendimento-body");
 
     atendimentosTable.appendChild(header);
     atendimentosTable.appendChild(tableBody);
-
-    const atendimentosTableBody = document.getElementById("atendimento-body");
     
     const listaHorarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
     for (const horario of listaHorarios) { 
@@ -312,7 +204,7 @@ async function openModalCadastro(data){
         row.appendChild(status);
         row.appendChild(botao);
 
-        atendimentosTableBody.appendChild(row);
+        tableBody.appendChild(row);
     }
 
     modal.style.display = "block";
@@ -329,34 +221,52 @@ document.querySelector(".close-modal").addEventListener("click", closeModal);
 /* *********************************************** */
 /* SCRIPTS HISTÓRICO DE ATENDIMENTOS */
 // Linhas para exibir tabela de atendimentos quando botão for clicado
-const atendimentosTable = document.getElementById("atendimentos-table");
-const atendimentosTableBody = document.querySelector("#atendimentos-table tbody");
 document.getElementById("fetch-atendimentos-btn").addEventListener("click", () => {
     fetchAtendimentos(id);
 });
 
+// Função para exibir tabela de atendimintos do histórico
 function renderAtendimentosTable(atendimentos) {
-    atendimentosTableBody.innerHTML = "";
+    const atendimentosTable = document.getElementById("tabela-historico");
+    const atendimentosTableHeader = document.createElement("thead");
+    const atendimentosTableBody = document.createElement("tbody");
+
+    atendimentosTable.innerHTML = '';
+
+    atendimentosTable.appendChild(atendimentosTableHeader);
+    atendimentosTable.appendChild(atendimentosTableBody);
+    
+    atendimentosTableHeader.innerHTML = `
+    <tr>
+        <th>Paciente</th>
+        <th>Data Nasc.</th>
+        <th>Atendimento ID</th>
+        <th>Horário</th>
+    </tr>`;
 
     if (atendimentos.length === 0) {
         atendimentosTable.hidden = true;
     } else {
         atendimentos.forEach(atendimento => {
             const row = document.createElement("tr");
+            const paciente_nome = document.createElement("td");
+            const data = document.createElement("td");
+            const atendimento_id = document.createElement("td");
+            const horario = document.createElement("td");
 
-            row.innerHTML = `
-                <td>${atendimento.paciente_nome}</td>
-                <td>${new Date(atendimento.paciente_data_nascimento).toLocaleDateString()}</td>
-                <td>${atendimento.atendimento_id}</td>
-                <td>${formatDate(atendimento.atendimento_horario)}</td>
-                <td>${atendimento.profissional_nome}</td>
-                <td>${atendimento.profissional_registro}</td>
-            `;
+            paciente_nome.textContent = `${atendimento.paciente_nome}`
+            data.textContent = `${formatDateWithoutTime(atendimento.paciente_data_nascimento)}`
+            atendimento_id.textContent = `${atendimento.atendimento_id}`
+            horario.textContent = `${formatDate(atendimento.atendimento_horario)}`
+
+            row.appendChild(paciente_nome);
+            row.appendChild(data);
+            row.appendChild(atendimento_id);
+            row.appendChild(horario);
 
             atendimentosTableBody.appendChild(row);
+            atendimentosTable.hidden = false;
         });
-        
-        atendimentosTable.hidden = false;
     }
 }
 
@@ -406,4 +316,109 @@ function extractTimeFromDate(dateString) {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${hours}:${minutes}`;
+}
+
+/* *********************************************** */
+/* SCRIPTS FETCH */
+/* script fetch atendimentos do paciente por data */
+async function fetchAtendimentosData(data) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/data/${data}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
+}
+
+/* script fetch atendimentos do profissional por data */
+async function fetchAtendimentosProfissionalData(data) {
+    try {
+        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos do profissional.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos do profissional:", error);
+    }
+}
+
+/* script fetch atendimentos do paciente por data */
+async function fetchAtendimentosHora(horario) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/horario/${horario}`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
+        }
+
+        const text = await response.text();
+
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
+        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
+    }
+}
+
+/* script fetch pacientes atendidos no dia por um profissional */
+async function fetchPacientesAtendidos(data) {
+    try {
+        const response = await fetch(`http://localhost:3000/profissionais/agendamentos/${data}/${id}/pacientes`);
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar atendimentos. Status: ${response.status}`);
+        }
+
+        const text = await response.text();
+
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
+        console.error(`Erro ao buscar atendimentos para ${horario}:`, error);
+    }
+}
+
+// Remover atendimento
+async function fetchRemoverAtendimento(horario) {
+    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
+    await fetch(`http://localhost:3000/atendimentos/data/${horario}`, {
+        method: "DELETE",
+        headers: {
+        "Content-Type": "application/json"
+        }
+    })
+    .catch(error => console.error("Erro:", error));
+    location.reload();
+}
+
+// Cadastrar novo atendimento
+async function cadastrarAtendimento(horario) {
+    alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
+    await fetch("http://localhost:3000/atendimentos", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+        "horario": horario,
+        "status": "confirmado",
+        "profissional": id
+        })
+    })
+    .catch(error => console.error("Erro:", error));
+    location.reload();
+}
+
+// Retornar todos os atendimentos de um profissional
+async function fetchAtendimentos(id) {
+    try {
+        const response = await fetch(`http://localhost:3000/profissionais/atendimentos/${id}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar atendimentos.");
+        }
+        const atendimentos = await response.json();
+        renderAtendimentosTable(atendimentos);
+    } catch (error) {
+        console.error("Erro ao buscar atendimentos:", error);
+    }
 }

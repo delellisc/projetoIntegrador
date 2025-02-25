@@ -64,6 +64,7 @@ let AtendimentosService = class AtendimentosService {
             .innerJoin('atendimento.profissional', 'profissional')
             .innerJoin('profissional.especializacao', 'especializacao')
             .where('DATE(atendimento.horario) = :data', { data })
+            .orderBy('atendimento.horario')
             .getRawMany();
     }
     findAtendimentoByHour(data) {
