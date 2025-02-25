@@ -27,13 +27,13 @@ let ProfissionaisService = class ProfissionaisService {
         return this.profissionalRepository.find();
     }
     findOne(id) {
-        return this.profissionalRepository.findOne({ where: { id: id } });
+        return this.profissionalRepository.findOne({ where: { id: String(id) } });
     }
     update(id, updateProfissionaiDto) {
         return this.profissionalRepository.update(id, updateProfissionaiDto);
     }
     async remove(id) {
-        const profissional = await this.profissionalRepository.findOne({ where: { id: id } });
+        const profissional = await this.profissionalRepository.findOne({ where: { id: String(id) } });
         if (profissional) {
             return this.profissionalRepository.remove(profissional);
         }
@@ -58,6 +58,10 @@ let ProfissionaisService = class ProfissionaisService {
             .innerJoin('atendimento.pacientes', 'paciente')
             .where('profissional.id = :id', { id })
             .getRawMany();
+    }
+    async isRegistered(id) {
+        const profissional = await this.profissionalRepository.findOne({ where: { id: String(id) } });
+        return !!profissional;
     }
 };
 exports.ProfissionaisService = ProfissionaisService;

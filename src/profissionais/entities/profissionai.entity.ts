@@ -3,8 +3,8 @@ import { Especializacao } from '../../especializacoes/entities/especializacoe.en
 
 @Entity('profissional')
 export class Profissional {
-  @PrimaryColumn()
-  id: number;
+  @PrimaryColumn({type: 'bigint'})
+  id: string;
 
   @Column()
   nome: string;

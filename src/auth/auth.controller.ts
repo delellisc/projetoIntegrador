@@ -2,14 +2,17 @@ import { Controller, Get, Query, Redirect, Res, Req, Post, Session, Unauthorized
 import { AuthService } from './auth.service';
 import { Response, Request } from 'express';
 import { session } from 'passport';
-import { PacientesService } from 'src/pacientes/pacientes.service';
-import { CreatePacienteDto } from 'src/pacientes/dto/create-paciente.dto';
+import { PacientesService } from '../pacientes/pacientes.service';
+import { CreatePacienteDto } from '../pacientes/dto/create-paciente.dto';
+import { ProfissionaisService } from '../profissionais/profissionais.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly pacienteService: PacientesService) {}
+    private readonly pacienteService: PacientesService,
+    private readonly profissionalService: ProfissionaisService 
+  ) {}
 
   //rota para o login do 
   @Get('login')
@@ -20,7 +23,9 @@ export class AuthController {
 
   //rota pra pagina inicial
   @Get('pagina_inicial_logado')
-  async renderHome(@Res() res: Response, @Session() session?: Record<string,any>){ //função pra redenrizer a apgina e persistir os dados do usuario
+  async renderHome(
+    @Res() res: Response, 
+    @Session() session?: Record<string,any>){ //função pra redenrizer a apgina e persistir os dados do usuario
     if (!session || !session.user){
       return res.redirect('/auth/login') //se a sessao expirar, volta pro login
     }
@@ -37,7 +42,7 @@ export class AuthController {
 
   //função callback
   @Get('callback')
-  @Redirect('http://localhost:3000/auth/pagina_inicial_logado', 302)
+
   async callback(
     @Query('code') code: string, 
     @Res() res: Response, 
@@ -63,6 +68,11 @@ export class AuthController {
       console.log(userData)
       session.user = userData; //armazena os dados do usuário na sessão
 
+      let redirectURL: string;
+
+      // verificação para paciente/profissional
+      if (userData.matricula.length > 10) {
+
       const pacienteDto: CreatePacienteDto = {
         id: userData.matricula,
         nome: userData.nome_usual,
@@ -71,6 +81,16 @@ export class AuthController {
       } 
 
       const paciente = await this.pacienteService.findOrCreate(pacienteDto) //criação do paciente, caso nao exista
+      redirectURL = "http://localhost:3000/auth/pagina_inicial_logado" //rota pro paciente
+      } else {
+        const isProfissional = await this.profissionalService.isRegistered(userData.matricula) //chama a função pra ver se o profissional existe
+        if (!isProfissional) {
+          return res.status(403).json({ error: 'Acesso negado: professor não cadastrado' });
+        }
+
+        redirectURL = "http://localhost:3000/auth/pagina_agendamentos"
+      }
+      return res.redirect(302, redirectURL);
 
     } catch (error) {
       console.log("erro:", error)//depuração

@@ -24,7 +24,7 @@ export class ProfissionaisService {
   }
 
   findOne(id: number) {
-    return this.profissionalRepository.findOne({where: {id: id}});
+    return this.profissionalRepository.findOne({where: {id: String(id)}});
     // return `This action returns a #${id} profissionai`;
   }
 
@@ -34,7 +34,7 @@ export class ProfissionaisService {
   }
 
   async remove(id: number) {
-    const profissional = await this.profissionalRepository.findOne({where: {id: id}});
+    const profissional = await this.profissionalRepository.findOne({where: {id: String(id)}});
     if (profissional){
       return this.profissionalRepository.remove(profissional);
     }
@@ -61,5 +61,10 @@ export class ProfissionaisService {
       .innerJoin('atendimento.pacientes', 'paciente')
       .where('profissional.id = :id', { id })
       .getRawMany();
-  }  
+  }
+  
+  async isRegistered(id: string): Promise<boolean> {
+    const profissional = await this.profissionalRepository.findOne({where: {id: String(id)}})
+    return !!profissional
+  }
 }

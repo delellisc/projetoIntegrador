@@ -16,4 +16,6 @@ export declare class AppController {
     getHistorico(): {
         message: string;
     };
+    getIndex(): {};
+    getAdmin(): {};
 }

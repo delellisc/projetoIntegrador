@@ -1,0 +1,141 @@
+body { 
+    font-family: Arial, sans-serif; 
+    text-align: center; 
+    margin: 50px;
+    background-color: #224745;
+}
+
+/* TÍTULO */
+#titulo1, #titulo2 {
+    color: #E8E9EA;
+}
+
+/* BOTÕES DE LOGIN */
+button { 
+    padding: 10px 20px; 
+    margin: 10px; 
+    font-size: 16px; 
+    cursor: pointer;
+}
+
+#btnSuap, #btnAdmin {
+    padding: 10px 20px;
+    border: none;
+    font-size: 17px;
+    color: #31615F;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+    background: #E8E9EA;
+    box-shadow: 0 0 25px #3BE799;
+}
+#btnSuap:hover, #btnAdmin:hover {
+    box-shadow: 0 0 5px #3BE799,
+              0 0 25px #3BE799,
+              0 0 50px #3BE799,
+              0 0 100px #3BE799;
+}
+    
+/* MODAL LOGIN ADMIN */
+#modal { 
+    color: #31615F;
+    display: none; 
+    position: fixed; 
+    width: 30vh;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background: #E8E9EA; 
+    padding: 20px; 
+    box-shadow: 0 0 10px #3BE799;
+}
+
+#modal h2 {
+    color: #31615F;
+}
+
+.form {
+    --bg-light: #efefef;
+    --bg-dark: #707070;
+    --clr: #31615F;
+    --clr-alpha: #9c9c9c60;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .form .input-span {
+    width: 100%;
+    max-width: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .form input[type="text"],
+  .form input[type="password"] {
+    border-radius: 0.5rem;
+    padding: 1rem 0.75rem;
+    width: 100%;
+    max-width: 25vh;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--clr-alpha);
+    outline: 2px solid var(--bg-dark);
+  }
+
+  .form input[type="text"]:focus,
+  .form input[type="password"]:focus {
+    outline: 2px solid var(--clr);
+  }
+
+  .label {
+    align-self: flex-start;
+    text-align: left;
+    width: 100%;
+    color: var(--clr);
+    font-weight: 600;
+  }
+
+  .form .submit {
+    padding: 1rem 0.75rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 3rem;
+    background-color: var(--bg-dark);
+    color: var(--bg-light);
+    border: none;
+    cursor: pointer;
+    transition: all 300ms;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .form .submit:hover {
+    background-color: var(--clr);
+    color: var(--bg-dark);
+  }
+
+  .span {
+    text-decoration: none;
+    color: var(--bg-dark);
+  }
+
+  .span a {
+    color: var(--clr);
+  }
