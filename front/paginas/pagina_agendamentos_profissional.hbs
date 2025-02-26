@@ -6,6 +6,11 @@
     <title>+Saúde IFRN - Agendamentos</title>
     <link rel="stylesheet" href="/public/styles/style_agendamentos.css">
     <script src="/public/scripts/script_agendamentos_profissional.js" defer></script>
+    <script>
+        window.userSession = {
+            id: {{ id }}
+        };
+    </script>
 </head>
 <body>
     <header class="header">
@@ -19,10 +24,6 @@
             <a href="/perfil">Perfil</a>
         </div>
     </header>
-
-    <p id="matricula">
-        {{ id }}
-    </p>
 
     <div class="container">
         <div class="calendar-wrapper">

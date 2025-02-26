@@ -1,4 +1,4 @@
-const id = parseInt(document.getElementById("matricula").textContent);
+const id = window.userSession.id;
 
 /* *********************************************** */
 /* SCRIPTS CALENDÁRIO */
