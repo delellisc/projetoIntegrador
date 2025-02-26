@@ -46,20 +46,69 @@ export class ProfissionaisService {
     return this.profissionalRepository
       .createQueryBuilder('profissional')
       .select([
-        'profissional.id AS profissional_id',
+/*         'profissional.id AS profissional_id',
         'profissional.nome AS profissional_nome',
         'profissional.registro_profissional AS profissional_registro',
-        'profissional.status AS profissional_status',
+        'profissional.status AS profissional_status', */
         'atendimento.id AS atendimento_id',
         'atendimento.horario AS atendimento_horario',
-        'atendimento.status AS atendimento_status',
-        'paciente.id AS paciente_id',
+        /* 'atendimento.status AS atendimento_status',
+        'paciente.id AS paciente_id', */
         'paciente.nome AS paciente_nome',
         'paciente.data_nascimento AS paciente_data_nascimento',
       ])
       .innerJoin('atendimento', 'atendimento', 'atendimento."profissionalId" = profissional.id')
       .innerJoin('atendimento.pacientes', 'paciente')
       .where('profissional.id = :id', { id })
+      .andWhere('atendimento.horario < CURRENT_TIMESTAMP')
       .getRawMany();
-  }  
+  }
+
+  findAtendimentoByDate(id:number, data: string) {
+    return this.profissionalRepository
+      .createQueryBuilder('profissional')
+      .select([
+        'atendimento.id AS atendimento_id',
+        'atendimento.horario AS atendimento_horario',
+        'atendimento.status AS atendimento_status',
+        'profissional.id AS profissional_id',
+        'profissional.nome AS profissional_nome',
+        'profissional.registro_profissional AS profissional_registro',
+        'profissional.status AS profissional_status',
+        'especializacao.nome AS especializacao_nome',
+      ])
+      .innerJoin('profissional.atendimentos', 'atendimento')
+      .innerJoin('profissional.especializacao', 'especializacao')
+      .where('DATE(atendimento.horario) = :data', { data })
+      .andWhere('profissional.id = :id', { id })
+      .getRawMany();
+  }
+
+  findAtendimentoPacientesByDate(id:number, data: string) {
+    return this.profissionalRepository
+      .createQueryBuilder('profissional')
+      .select([
+        'atendimento.id AS atendimento_id',
+        'atendimento.horario AS atendimento_horario',
+        'atendimento.status AS atendimento_status',
+        'profissional.id AS profissional_id',
+        'profissional.nome AS profissional_nome',
+        'profissional.registro_profissional AS profissional_registro',
+        'profissional.status AS profissional_status',
+        'especializacao.nome AS especializacao_nome',
+        'paciente.nome AS paciente_nome',
+        'paciente.id AS paciente_id'
+      ])
+      .innerJoin('profissional.atendimentos', 'atendimento')
+      .innerJoin('profissional.especializacao', 'especializacao')
+      .innerJoin('atendimento.pacientes', 'paciente')
+      .where('DATE(atendimento.horario) = :data', { data })
+      .andWhere('profissional.id = :id', { id })
+      .getRawMany();
+  }
+  
+  async isRegistered(id: number): Promise<boolean> {
+    const profissional = await this.profissionalRepository.findOne({where: {id: id}})
+    return !!profissional
+  }
 }

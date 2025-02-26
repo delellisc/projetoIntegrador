@@ -12,4 +12,5 @@ export declare class PacientesService {
     update(id: number, updatePacienteDto: UpdatePacienteDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<Paciente>;
     findAtendimentos(id: number): Promise<any[]>;
+    findUpcomingAtendimentos(id: number): Promise<any[]>;
 }

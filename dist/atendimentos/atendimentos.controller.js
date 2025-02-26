@@ -36,6 +36,24 @@ let AtendimentosController = class AtendimentosController {
     remove(id) {
         return this.atendimentosService.remove(+id);
     }
+    removeAtendimentoByDate(horario) {
+        return this.atendimentosService.removeByDate(horario);
+    }
+    findAtendimentoByDate(date) {
+        return this.atendimentosService.findAtendimentoByDate(date);
+    }
+    findAtendimentoByHour(horario) {
+        return this.atendimentosService.findAtendimentoByHour(horario);
+    }
+    createConsulta(body) {
+        return this.atendimentosService.createConsulta(body.atendimentoId, body.pacienteId);
+    }
+    findConsulta(atendimentoId, pacienteId) {
+        return this.atendimentosService.findConsulta(atendimentoId, pacienteId);
+    }
+    removeConsulta(atendimentoId, pacienteId) {
+        return this.atendimentosService.removeConsulta(atendimentoId, pacienteId);
+    }
 };
 exports.AtendimentosController = AtendimentosController;
 __decorate([
@@ -73,6 +91,50 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Delete)('/data/:horario'),
+    __param(0, (0, common_1.Param)('horario')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "removeAtendimentoByDate", null);
+__decorate([
+    (0, common_1.Get)('/data/:date'),
+    __param(0, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findAtendimentoByDate", null);
+__decorate([
+    (0, common_1.Get)('/horario/:horario'),
+    __param(0, (0, common_1.Param)('horario')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findAtendimentoByHour", null);
+__decorate([
+    (0, common_1.Post)('/consultas'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "createConsulta", null);
+__decorate([
+    (0, common_1.Get)('/consultas/:atendimentoId/:pacienteId'),
+    __param(0, (0, common_1.Param)('atendimentoId')),
+    __param(1, (0, common_1.Param)('pacienteId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findConsulta", null);
+__decorate([
+    (0, common_1.Delete)('/removerConsulta/:atendimentoId/:pacienteId'),
+    __param(0, (0, common_1.Param)('atendimentoId')),
+    __param(1, (0, common_1.Param)('pacienteId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "removeConsulta", null);
 exports.AtendimentosController = AtendimentosController = __decorate([
     (0, common_1.Controller)('atendimentos'),
     __metadata("design:paramtypes", [atendimentos_service_1.AtendimentosService])

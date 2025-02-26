@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ".." vira alias para ../public -->
     <link rel="stylesheet" href="/public/styles/style_pagina_inicial_logado.css">
-    
+
     <title>Saúde IFRN</title>
+    <script>
+        window.userSession = {
+            id: {{ id }}
+        };
+    </script>
 </head>
+
 <body>
     <header class="header">
         <div class="class nav-left">
@@ -16,52 +23,29 @@
             <a href="/agendamentos">Agendamentos</a>
         </div>
         <div class="class nav-right">
-            <a href="/historico">Histórico</a>
+            {{!-- <a href="/historico">Histórico</a> --}}
             <a href="/perfil">Perfil</a>
         </div>
     </header>
+
     <div class="container">
-        <div class="class left-column">
+        <div class="left-column">
             <div class="section-consultas">
                 <h3>Consulta(s) Pendente(s)</h3>
-                <div class="consulta-pendente">
-                    <p>Nenhuma consulta pendente.</p>
+                <div id="consulta-pendente">
                 </div>
             </div>
+
             <div class="section-ultimas">
                 <h3>Última(s) Consulta(s)</h3>
                 <div id="consulta-ultimas">
-                    <span id="user-name"><br>
-                    {{#if atendimentos.length}}
-                        <ul>
-                        {{#each atendimentos}}
-                            <li>
-                            <strong>Atendimento:</strong> {{this.id}}<br>
-                            <strong>Profissional:</strong> {{this.profissional}}<br>
-                            <strong>Horário:</strong> {{this.horario}}<br>
-                            </li>
-                        {{/each}}
-                        </ul>
-                    {{else}}
-                        <p>Não há atendimentos recentes.</p>
-                    {{/if}}
-                    </span>
                 </div>
-
             </div>
         </div>
+
         <div class="section-avisos">
             <h3>Avisos</h3>
-            <div class="avisos">
-                <p>{{#if msg1}}{{msg1}}<br>
-                {{/if}}
-                {{#if msg2}}{{msg2}}{{/if}}</p>
-            </div>
-            <div class="avisos">
-                <p>Você não tem novas notificações.</p>
-            </div>
-            <div class="avisos">
-                <p>Você não tem novas notificações.</p>
+            <div id="avisos-container">
             </div>
         </div>
     </div>
@@ -74,4 +58,5 @@
     </footer>
     <script src="/public/scripts/script_paginicial.js"></script>
 </body>
+
 </html>

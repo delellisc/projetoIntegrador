@@ -31,4 +31,41 @@ export class AtendimentosController {
   remove(@Param('id') id: string) {
     return this.atendimentosService.remove(+id);
   }
+
+
+  @Delete('/data/:horario')
+  removeAtendimentoByDate(@Param('horario') horario: string) {
+    return this.atendimentosService.removeByDate(horario);
+  }
+
+
+  @Get('/data/:date')
+  findAtendimentoByDate(@Param('date') date: string){
+    return this.atendimentosService.findAtendimentoByDate(date);
+  }
+
+  @Get('/horario/:horario')
+  findAtendimentoByHour(@Param('horario') horario: string){
+    return this.atendimentosService.findAtendimentoByHour(horario);
+  }
+
+  @Post('/consultas')
+  createConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {
+    return this.atendimentosService.createConsulta(body.atendimentoId, body.pacienteId);
+  }  
+
+  @Get('/consultas/:atendimentoId/:pacienteId')
+  findConsulta(@Param('atendimentoId') atendimentoId: number, @Param('pacienteId') pacienteId: number){
+    return this.atendimentosService.findConsulta(atendimentoId, pacienteId);
+  }
+
+  @Delete('/removerConsulta/:atendimentoId/:pacienteId')
+  removeConsulta(@Param('atendimentoId') atendimentoId: number, @Param('pacienteId') pacienteId: number) {
+    return this.atendimentosService.removeConsulta(atendimentoId, pacienteId);
+  }  
+  
+/*   @Delete('/consultas')
+  removeConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {
+    return this.atendimentosService.removeConsulta(body.atendimentoId, body.pacienteId);
+  }   */
 }

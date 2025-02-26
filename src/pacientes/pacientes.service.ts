@@ -54,20 +54,35 @@ export class PacientesService {
     return this.pacienteRepository
       .createQueryBuilder('paciente')
       .select([
-        'paciente.id AS paciente_id',
-        'paciente.nome AS paciente_nome',
-        'paciente.data_nascimento AS paciente_data_nascimento',
         'atendimento.id AS atendimento_id',
         'atendimento.horario AS atendimento_horario',
-        'atendimento.status AS atendimento_status',
-        'profissional.id AS profissional_id',
         'profissional.nome AS profissional_nome',
         'profissional.registro_profissional AS profissional_registro',
-        'profissional.status AS profissional_status',
+        'especializacao.nome AS especializacao_nome'
       ])
       .innerJoin('paciente.atendimentos', 'atendimento')
       .innerJoin('atendimento.profissional', 'profissional')
+      .innerJoin('profissional.especializacao', 'especializacao')
       .where('paciente.id = :id', { id })
+      .andWhere('atendimento.horario < CURRENT_TIMESTAMP')
+      .getRawMany();
+  }
+
+  findUpcomingAtendimentos(id: number) {
+    return this.pacienteRepository
+      .createQueryBuilder('paciente')
+      .select([
+        'atendimento.id AS atendimento_id',
+        'atendimento.horario AS atendimento_horario',
+        'profissional.nome AS profissional_nome',
+        'profissional.registro_profissional AS profissional_registro',
+        'especializacao.nome AS especializacao_nome'
+      ])
+      .innerJoin('paciente.atendimentos', 'atendimento')
+      .innerJoin('atendimento.profissional', 'profissional')
+      .innerJoin('profissional.especializacao', 'especializacao')
+      .where('paciente.id = :id', { id })
+      .andWhere('atendimento.horario > CURRENT_TIMESTAMP')
       .getRawMany();
   }
 }

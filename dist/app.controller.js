@@ -14,25 +14,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const pacientes_service_1 = require("./pacientes/pacientes.service");
+const profissionais_service_1 = require("./profissionais/profissionais.service");
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 let AppController = class AppController {
-    constructor(appService, pacientesService) {
+    constructor(appService, pacientesService, profissionalService) {
         this.appService = appService;
         this.pacientesService = pacientesService;
+        this.profissionalService = profissionalService;
     }
     async getPaciente(id) {
         const paciente = await this.pacientesService.findOne(id);
         return { paciente };
     }
-    getAgendamentos() {
-        return { message: 'atendimento é bom' };
+    async getAgendamentos(session, res) {
+        if (!session.user) {
+            return res.redirect('/home');
+        }
+        const isProfissional = await this.profissionalService.isRegistered(session.user.matricula);
+        const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente';
+        return res.render(view, { user: session.user, id: session.user.matricula });
     }
-    getPerfil() {
-        return { message: 'perfil visualizado' };
+    getPerfil(session) {
+        if (!session.user) {
+            return { error: 'Usuário não autenticado' };
+        }
+        return { user: session.user, message: 'perfil visualizado' };
     }
-    getHistorico() {
-        return { message: 'aqui está o historico' };
+    getHistorico(session) {
+        if (!session.user) {
+            return { error: 'Usuário não autenticado' };
+        }
+        return { user: session.user, message: 'aqui está o historico' };
+    }
+    getIndex() {
+        return {};
+    }
+    getAdmin() {
+        return {};
     }
 };
 exports.AppController = AppController;
@@ -46,28 +65,46 @@ __decorate([
 ], AppController.prototype, "getPaciente", null);
 __decorate([
     (0, common_1.Get)('agendamentos'),
-    (0, common_1.Render)('pagina_agendamentos'),
+    __param(0, (0, common_1.Session)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
 ], AppController.prototype, "getAgendamentos", null);
 __decorate([
     (0, common_1.Get)('perfil'),
     (0, common_1.Render)('pagina_perfil'),
+    __param(0, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getPerfil", null);
 __decorate([
     (0, common_1.Get)('historico'),
     (0, common_1.Render)('pagina_historico'),
+    __param(0, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getHistorico", null);
+__decorate([
+    (0, common_1.Get)('home'),
+    (0, common_1.Render)('index'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "getHistorico", null);
+], AppController.prototype, "getIndex", null);
+__decorate([
+    (0, common_1.Get)('admin'),
+    (0, common_1.Render)('pagina_admin'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getAdmin", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,
-        pacientes_service_1.PacientesService])
+        pacientes_service_1.PacientesService,
+        profissionais_service_1.ProfissionaisService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

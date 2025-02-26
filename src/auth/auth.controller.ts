@@ -2,14 +2,17 @@ import { Controller, Get, Query, Redirect, Res, Req, Post, Session, Unauthorized
 import { AuthService } from './auth.service';
 import { Response, Request } from 'express';
 import { session } from 'passport';
-import { PacientesService } from 'src/pacientes/pacientes.service';
-import { CreatePacienteDto } from 'src/pacientes/dto/create-paciente.dto';
+import { PacientesService } from '../pacientes/pacientes.service';
+import { CreatePacienteDto } from '../pacientes/dto/create-paciente.dto';
+import { ProfissionaisService } from '../profissionais/profissionais.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly pacienteService: PacientesService) {}
+    private readonly pacienteService: PacientesService,
+    private readonly profissionalService: ProfissionaisService 
+  ) {}
 
   //rota para o login do 
   @Get('login')
@@ -20,22 +23,27 @@ export class AuthController {
 
   //rota pra pagina inicial
   @Get('pagina_inicial_logado')
-  async renderHome(@Res() res: Response, @Session() session?: Record<string,any>){ //função pra redenrizer a apgina e persistir os dados do usuario
+  async renderHome(
+    @Res() res: Response, 
+    @Session() session?: Record<string,any>){ //função pra redenrizer a apgina e persistir os dados do usuario
     if (!session || !session.user){
       return res.redirect('/auth/login') //se a sessao expirar, volta pro login
     }
 
-    const pacienteId = session.user.id
-    const atendimentos = await this.pacienteService.findAtendimentos(pacienteId)
-    const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!' 
-    const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!' 
+    const pacienteId = session.user.matricula
+    /* const atendimentos = await this.pacienteService.findAtendimentos(pacienteId); */
+    const atendimentos = await this.pacienteService.findAtendimentos(pacienteId);
+    // console.log(atendimentos);
+    /* console.log("Atendimentos encontrados:", atendimentos); //debug */
+    /* const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!' 
+    const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!'  */
 
-    return res.render('pagina_inicial_logado', {user: session.user, atendimentos, msg1: msg1, msg2: msg2})
+    return res.render('pagina_inicial_logado', {user: session.user, id: session.user.matricula})
   }
 
-  //troca o codigo pego token 
+  //função callback
   @Get('callback')
-  @Redirect('http://localhost:3000/auth/pagina_inicial_logado', 302)
+
   async callback(
     @Query('code') code: string, 
     @Res() res: Response, 
@@ -61,6 +69,11 @@ export class AuthController {
       console.log(userData)
       session.user = userData; //armazena os dados do usuário na sessão
 
+      let redirectURL: string;
+
+      // verificação para paciente/profissional
+      if (userData.matricula.length > 10) {
+
       const pacienteDto: CreatePacienteDto = {
         id: userData.matricula,
         nome: userData.nome_usual,
@@ -69,6 +82,16 @@ export class AuthController {
       } 
 
       const paciente = await this.pacienteService.findOrCreate(pacienteDto) //criação do paciente, caso nao exista
+      redirectURL = "http://localhost:3000/auth/pagina_inicial_logado" //rota pro paciente
+      } else {
+        const isProfissional = await this.profissionalService.isRegistered(userData.matricula) //chama a função pra ver se o profissional existe
+        if (!isProfissional) {
+          return res.status(403).json({ error: 'Acesso negado: professor não cadastrado' });
+        }
+
+        redirectURL = "http://localhost:3000/auth/pagina_agendamentos"
+      }
+      return res.redirect(302, redirectURL);
 
     } catch (error) {
       console.log("erro:", error)//depuração

@@ -36,4 +36,14 @@ export class ProfissionaisController {
   findAtendimentos(@Param('id') id: string){
     return this.profissionaisService.findAtendimentos(+id);
   }
+
+  @Get('/agendamentos/:data/:id')
+  findAtendimentosByDate(@Param('data') data: string, @Param('id') id: string){
+    return this.profissionaisService.findAtendimentoByDate(+id, data);
+  }
+
+  @Get('/agendamentos/:data/:id/pacientes')
+  findAtendimentosPacientesByDate(@Param('data') data: string, @Param('id') id: string){
+    return this.profissionaisService.findAtendimentoPacientesByDate(+id, data);
+  }
 }
