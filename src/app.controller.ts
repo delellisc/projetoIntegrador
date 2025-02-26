@@ -1,6 +1,7 @@
 import { PacientesService } from './pacientes/pacientes.service';
-import { Controller, Get, Param, Req, Render } from '@nestjs/common';
+import { Controller, Get, Param, Req, Render, Session } from '@nestjs/common';
 import { AppService } from './app.service';
+// import { Session } from 'inspector/promises';
 
 @Controller()
 export class AppController {
@@ -26,8 +27,11 @@ export class AppController {
 
   @Get('perfil')
   @Render('pagina_perfil')
-  getPerfil() {
-    return { message: 'perfil visualizado'}
+  getPerfil(@Session() session: Record<string, any>) {
+    if (!session.user) {
+      return { message: 'usuario nao autenticado'}
+    }
+    return {user: session.user}
   }
   
   @Get('historico')

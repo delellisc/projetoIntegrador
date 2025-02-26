@@ -28,8 +28,11 @@ let AppController = class AppController {
     getAgendamentos() {
         return { message: 'atendimento é bom' };
     }
-    getPerfil() {
-        return { message: 'perfil visualizado' };
+    getPerfil(session) {
+        if (!session.user) {
+            return { message: 'usuario nao autenticado' };
+        }
+        return { user: session.user };
     }
     getHistorico() {
         return { message: 'aqui está o historico' };
@@ -60,8 +63,9 @@ __decorate([
 __decorate([
     (0, common_1.Get)('perfil'),
     (0, common_1.Render)('pagina_perfil'),
+    __param(0, (0, common_1.Session)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getPerfil", null);
 __decorate([

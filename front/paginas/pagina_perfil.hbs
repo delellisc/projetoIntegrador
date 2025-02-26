@@ -24,12 +24,28 @@
         <div class="dados-container">
             <h2>Meus dados</h2>
             <div class="dados-card">
-                <div class="foto-perfil"></div>
-                <div class="info-pessoal"></div>
+                <div class="foto-perfil">
+                    <img src="{{user.url_foto_75x100}}" alt="foto de perfil">
+                </div>
+                <div class="info-pessoal">
+                    <p><strong>Nome:</strong> {{user.nome_usual}}</p>
+                    <p><strong>Matricula:</strong> {{user.matricula}}</p>
+                    <p><strong>Curso:</strong> {{user.vinculo.curso}}</p>
+                    <p><strong>Data de Nascimento:</strong> {{user.data_nascimento}}</p>
+                </div>
             </div>
-            <div class="mais-dados"></div>
-            <div class="mais-dados"></div>
-            <div class="mais-dados"></div>
+            <div class="mais-dados">
+                <p><strong>Email:</strong> {{user.email}}</p>
+                <p><strong>Tipo de Vínculo:</strong> {{user.tipo_vinculo}}</p>
+            </div>
+            <div class="mais-dados">
+                <p><strong>Campus:</strong> {{user.vinculo.campus}}</p>
+                <p><strong>Situacão:</strong> {{user.vinculo.situacao}}</p>
+            </div>
+            <div class="mais-dados">
+                <p><strong>Naturalidade:</strong> {{user.naturalidade}}</p>
+                <p><strong>Tipo Sanguíneo:</strong> {{user.tipo_sanguineo}}</p>
+            </div>
         </div>
     </div>
 
