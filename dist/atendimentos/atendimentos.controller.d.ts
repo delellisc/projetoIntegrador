@@ -18,4 +18,5 @@ export declare class AtendimentosController {
     }): Promise<import("./entities/atendimento.entity").Atendimento>;
     findConsulta(atendimentoId: number, pacienteId: number): Promise<import("./entities/atendimento.entity").Atendimento>;
     removeConsulta(atendimentoId: number, pacienteId: number): Promise<import("./entities/atendimento.entity").Atendimento>;
+    findPacientes(id: number): Promise<import("../pacientes/entities/paciente.entity").Paciente[]>;
 }

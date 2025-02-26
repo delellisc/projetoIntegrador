@@ -145,8 +145,8 @@ tr:hover {
 
 @media (max-width: 768px) {
     .avisos {
-        height: 3vh;
-        margin-bottom: 1.2vh;
+        height: 10vw;
+        margin-bottom: 1.5vw;
     }
 
     #celula-id {
@@ -161,8 +161,9 @@ tr:hover {
     .header {
         flex-direction: column;
         text-align: center;
+        gap: 10px;
     }
-
+    
     .nav-left, .nav-right {
         flex-direction: column;
         gap: 10px;

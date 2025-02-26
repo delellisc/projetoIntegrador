@@ -34,41 +34,16 @@ export class AppController {
     return res.render(view, { user: session.user, id: session.user.matricula });
   }  
 
-
-/*   @Get('agendamentos/profissional')
-  @Render('pagina_agendamentos_profissional')
-  getAgendamentosProfisisonal(@Session() session: Record<string, any>) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    }
-    return { user: session.user, id: 20231038060014 };
-  }
-
-  @Get('agendamentos/paciente')
-  @Render('pagina_agendamentos_paciente')
-  getAgendamentosPaciente(@Session() session: Record<string, any>) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    }
-    return { user: session.user, id: session.user.matricula };
-  } */
-
   @Get('perfil')
   @Render('pagina_perfil')
-  getPerfil(@Session() session: Record<string, any>) {
-    if (!session.user) {
+  getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
+    /* if (!session.user) {
       return { error: 'Usuário não autenticado' };
+    } */
+    if (!session.user) {
+      return res.redirect('/home');
     }
     return { user: session.user, message: 'perfil visualizado' };
-  }
-
-  @Get('historico')
-  @Render('pagina_historico')
-  getHistorico(@Session() session: Record<string, any>) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    }
-    return { user: session.user, message: 'aqui está o historico' };
   }
 
   @Get('home')

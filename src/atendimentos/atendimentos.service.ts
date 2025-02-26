@@ -152,4 +152,12 @@ export class AtendimentosService {
     atendimento.pacientes = atendimento.pacientes.filter(p => p.id !== pacienteId);
     return await this.atendimentoRepository.save(atendimento);
   }    
+
+  async findPacientes(id: number){
+    const atendimento = await this.atendimentoRepository.findOne({where: { id : id}, relations: ['pacientes']});
+    if (!atendimento) {
+      throw new Error('Atendimento not found');
+    }
+    return atendimento.pacientes;
+  }
 }

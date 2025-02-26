@@ -223,17 +223,45 @@ body {
 
 /* Responsividade */
 @media (max-width: 1199px) and (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        /* justify-content: space-between; */
+        padding: 15px;
+    }
+
+    #tabela-atendimentos td, th {
+        font-size: 5px;
+    }
+
     .calendar-wrapper{
         width: 80vw;
     }
 }
 
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
     .calendar-wrapper, #tabela-historico{
         width: 80vw;
     }
 
-    #tabela-atendimentos {
-        width: 50vw;
+    #tabela-atendimentos th,
+    #tabela-atendimentos td{
+        height: 0.5vh;
+        font-size: 1.7vw;
+        padding: 1vw;
+    }
+
+    #tabela-atendimentos button {
+        font-size: 1.7vw;
     }
 }

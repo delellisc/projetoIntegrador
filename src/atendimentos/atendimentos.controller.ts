@@ -63,6 +63,11 @@ export class AtendimentosController {
   removeConsulta(@Param('atendimentoId') atendimentoId: number, @Param('pacienteId') pacienteId: number) {
     return this.atendimentosService.removeConsulta(atendimentoId, pacienteId);
   }  
+
+  @Get('/:id/pacientes')
+  findPacientes(@Param('id') id: number){
+    return this.atendimentosService.findPacientes(id);
+  }
   
 /*   @Delete('/consultas')
   removeConsulta(@Body() body: { atendimentoId: number; pacienteId: number }) {

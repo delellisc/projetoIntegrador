@@ -35,17 +35,11 @@ let AppController = class AppController {
         const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente';
         return res.render(view, { user: session.user, id: session.user.matricula });
     }
-    getPerfil(session) {
+    getPerfil(session, res) {
         if (!session.user) {
-            return { error: 'Usuário não autenticado' };
+            return res.redirect('/home');
         }
         return { user: session.user, message: 'perfil visualizado' };
-    }
-    getHistorico(session) {
-        if (!session.user) {
-            return { error: 'Usuário não autenticado' };
-        }
-        return { user: session.user, message: 'aqui está o historico' };
     }
     getIndex() {
         return {};
@@ -75,18 +69,11 @@ __decorate([
     (0, common_1.Get)('perfil'),
     (0, common_1.Render)('pagina_perfil'),
     __param(0, (0, common_1.Session)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getPerfil", null);
-__decorate([
-    (0, common_1.Get)('historico'),
-    (0, common_1.Render)('pagina_historico'),
-    __param(0, (0, common_1.Session)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getHistorico", null);
 __decorate([
     (0, common_1.Get)('home'),
     (0, common_1.Render)('index'),

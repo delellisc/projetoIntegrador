@@ -155,6 +155,7 @@ async function openModalCadastro(data){
     headerRow.innerHTML =         
     '    <th>Horário</th>'+
     '    <th>Status</th>'+
+    '    <th>Qtd. Pacientes</th>'+
     '    <th></th>';
     
     header.appendChild(headerRow);
@@ -172,6 +173,7 @@ async function openModalCadastro(data){
         let hora = document.createElement("td");
         hora.innerText = horario;
         let status = document.createElement("td");
+        let qtd = document.createElement("td");
         let botao = document.createElement("td");
         let btn = document.createElement("button");
         btn.style.borderRadius = "5px";
@@ -179,6 +181,7 @@ async function openModalCadastro(data){
         btn.style.padding = "5px";
 
         if(disponibilidade.atendimento_id){
+            const pacientes = await fetchPacientesAtendimento(disponibilidade.atendimento_id);
             if(disponibilidade.profissional_id == id){
                 status.innerText = "Confirmado";
                 row.style.color = "#31615F";
@@ -186,6 +189,9 @@ async function openModalCadastro(data){
                 btn.addEventListener("click", () => fetchRemoverAtendimento(`${data} ${horario}`, id));
                 btn.style.backgroundColor = "red";
                 botao.appendChild(btn);
+                qtd.innerText = pacientes.length;
+                qtd.addEventListener("click", () => openModalPacientesAtendimento(pacientes, disponibilidade.atendimento_id));
+                qtd.style.cursor = "pointer";
             }
             else{
                 status.innerText = "Indisponível";
@@ -197,14 +203,63 @@ async function openModalCadastro(data){
             btn.innerText = "Cadastrar Atendimento";
             btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, id))
             btn.style.backgroundColor = "#31615F";
+            /* let input = document.createElement("input");
+            input.setAttribute("type", "number");
+            qtd.appendChild(input); */
             botao.appendChild(btn);
         }
 
         row.appendChild(hora);
         row.appendChild(status);
+        row.appendChild(qtd);
         row.appendChild(botao);
 
         tableBody.appendChild(row);
+    }
+
+    modal.style.display = "block";
+}
+
+// Modal de pacientes atendidos naquele dia pelo profissional
+function openModalPacientesAtendimento(pacientes, atendimentoId){
+    console.log(pacientes);
+    const modal = document.getElementById("modal");
+
+    document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes cadastrados - Atendimento ID: ${atendimentoId}`;
+    const atendimentosTable = document.getElementById("tabela-atendimentos");
+    const atendimentosTableBody = document.createElement("tbody");
+    const atendimentosTableHeader = document.createElement("thead");
+    
+    if(pacientes.length > 0){
+        atendimentosTable.innerHTML = '';
+        atendimentosTable.appendChild(atendimentosTableHeader);
+        atendimentosTable.appendChild(atendimentosTableBody);
+        atendimentosTableHeader.innerHTML = `
+        <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>ID</th>
+        </tr>`;
+        for (const paciente of pacientes) { 
+            let row = document.createElement("tr");
+            let nome = document.createElement("td");
+            let matricula = document.createElement("td");
+            let dataNasc = document.createElement("td");
+            nome.innerText = paciente.nome;
+            matricula.innerText = paciente.id;
+            dataNasc.innerText = paciente.data_nascimento;
+    
+            row.appendChild(nome);
+            row.appendChild(matricula);
+            row.appendChild(dataNasc);
+
+            row.classList.add("table-row-atendimento");
+    
+            atendimentosTableBody.appendChild(row);
+        }
+    }
+    else{
+        atendimentosTable.innerHTML = '<p>Nenhum paciente cadastrado nesse atendimento.</p>';
     }
 
     modal.style.display = "block";
@@ -320,6 +375,19 @@ function extractTimeFromDate(dateString) {
 
 /* *********************************************** */
 /* SCRIPTS FETCH */
+/* script fetch pacientes do atendimento */
+async function fetchPacientesAtendimento(atendimentoId) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/${atendimentoId}/pacientes`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar pacientes do atendimento.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar pacientes do atendimento:", error);
+    }
+}
+
 /* script fetch atendimentos do paciente por data */
 async function fetchAtendimentosData(data) {
     try {

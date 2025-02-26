@@ -46,25 +46,21 @@ let AuthController = class AuthController {
             const token = await this.authService.exchangeCodeForToken(code);
             session.token = token;
             const userData = await this.authService.getUserData(token);
-            console.log(userData);
             session.user = userData;
             let redirectURL;
-            if (userData.matricula.length > 10) {
+            const isProfissional = await this.profissionalService.isRegistered(userData.matricula);
+            if (!isProfissional) {
                 const pacienteDto = {
                     id: userData.matricula,
                     nome: userData.nome_usual,
                     data_nascimento: userData.data_nascimento,
                     contato: userData.email
                 };
-                const paciente = await this.pacienteService.findOrCreate(pacienteDto);
+                await this.pacienteService.findOrCreate(pacienteDto);
                 redirectURL = "http://localhost:3000/auth/pagina_inicial_logado";
             }
             else {
-                const isProfissional = await this.profissionalService.isRegistered(userData.matricula);
-                if (!isProfissional) {
-                    return res.status(403).json({ error: 'Acesso negado: professor não cadastrado' });
-                }
-                redirectURL = "http://localhost:3000/auth/pagina_agendamentos";
+                redirectURL = "http://localhost:3000/agendamentos";
             }
             return res.redirect(302, redirectURL);
         }
