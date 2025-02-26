@@ -10,8 +10,12 @@ export declare class AppController {
     getAgendamentos(): {
         message: string;
     };
-    getPerfil(): {
+    getPerfil(session: Record<string, any>): {
         message: string;
+        user?: undefined;
+    } | {
+        user: any;
+        message?: undefined;
     };
     getHistorico(): {
         message: string;
