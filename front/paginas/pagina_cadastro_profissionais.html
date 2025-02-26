@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+Saúde IFRN</title>
+    <link rel="stylesheet" href="../public/styles/style_cadastro_profissionais.css">
+    <script src="../public/scripts/script_cadastro_profissionais.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-left">
+            <a href="#">+Saúde IFRN</a>
+            <a href="#" style="color:#3BE799">Início</a>
+            <a href="./pagina_agendamentos.html">Agendamentos</a>
+        </div>
+        <div class="nav-right">
+            <a href="./pagina_historico.html">Histórico</a>
+            <a href="./pagina_perfil.html">Perfil</a>
+        </div>
+    </header>
+
+    <!-- Cadastrar Profissional -->
+    <div class="container">
+        <h2>Cadastrar Profissional</h2>
+        <form action="http://localhost:3000/profissionais" method="POST">
+            <label for="matricula">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" required>
+            
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="registro">Registro Profissional:</label>
+            <input type="text" id="registro" name="registro" required>
+
+            <label for="especialidade">Especialidade:</label>
+            <input type="text" id="especialidade" name="especialidade" required>
+
+            <label for="senha">Senha:</label>
+            <input type="text" id="senha" name="senha" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- Listar Todos os Profissionais -->
+    <div class="container">
+        <h2>Listar Profissionais</h2>
+        <button id="listarTodos">Listar Todos</button>
+        <div id="resultado-lista"></div>
+    </div>
+
+    <!-- Listar Profissional por Matrícula -->
+    <div class="container">
+        <h2>Listar Profissional</h2>
+        <form id="formListarProfissional">
+            <label for="matriculaListar">Matrícula:</label>
+            <input type="text" id="matriculaListar" name="matricula" required>
+
+            <button type="submit">Listar</button>
+        </form>
+        <div id="resultado-profissional"></div>
+    </div>
+
+    <!-- Atualizar Profissional -->
+    <div class="container">
+        <h2>Atualizar Profissional</h2>
+        <form id="formAtualizarProfissional">
+            <label for="matriculaAtualizar">Matrícula:</label>
+            <input type="text" id="matriculaAtualizar" name="matricula" required>
+
+            <label for="nomeAtualizar">Nome:</label>
+            <input type="text" id="nomeAtualizar" name="nome" required>
+
+            <label for="registroAtualizar">Registro Profissional:</label>
+            <input type="text" id="registroAtualizar" name="registro" required>
+
+            <label for="especialidadeAtualizar">Especialidade:</label>
+            <input type="text" id="especialidadeAtualizar" name="especialidade" required>
+
+            <label for="senhaAtualizar">Senha:</label>
+            <input type="text" id="senhaAtualizar" name="senha" required>
+
+            <button type="submit">Atualizar</button>
+        </form>
+    </div>
+
+    <!-- Remover Profissional -->
+    <div class="container">
+        <h2>Remover Profissional</h2>
+        <form id="formRemoverProfissional">
+            <label for="matriculaRemover">Matrícula:</label>
+            <input type="text" id="matriculaRemover" name="matricula" required>
+
+            <button type="submit">Remover</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
+        <p>Entre em contato:</p>
+        <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
+        <img src="logo.png" alt="Logo">
+    </footer>
+</body>
+</html>
