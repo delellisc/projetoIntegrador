@@ -2,6 +2,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     background-color: #E8E9EA;
+    background-color: #E8E9EA;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -67,6 +68,7 @@ tr:hover {
 .section-ultimas {
     color: #224745;
     background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
     padding: 20px;
     width: 60vw;
@@ -77,6 +79,7 @@ tr:hover {
 .section-avisos {
     color: #224745;
     background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
     padding: 20px;
     width: 30vw;
@@ -84,6 +87,7 @@ tr:hover {
 }
 
 .avisos {
+    height: 15vh;
     height: 15vh;
     background-color: #e9ecef;
     border-radius: 5px;

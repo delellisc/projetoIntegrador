@@ -26,6 +26,19 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
+    async logout(res, session) {
+        if (session) {
+            session.destroy((erro) => {
+                if (erro) {
+                    return res.status(500).json({ error: "erro ao encerrar a sessão" });
+                }
+                return res.redirect('/home');
+            });
+        }
+        else {
+            return res.redirect('/home');
+        }
+    }
     async renderHome(res, session) {
         if (!session || !session.user) {
             return res.redirect('/auth/login');
@@ -84,6 +97,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "logout", null);
 __decorate([
     (0, common_1.Get)('pagina_inicial_logado'),
     __param(0, (0, common_1.Res)()),
