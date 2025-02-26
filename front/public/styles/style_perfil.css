@@ -11,6 +11,10 @@ body {
 /* container principal */
 .container {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     flex: 1;
     justify-content: space-between;
     padding: 20px;
@@ -39,6 +43,32 @@ body {
     margin: 0 10px;
 }
 
+/* botão de logout*/
+#btnLogout {
+    /* margin-left: 80vh;*/
+    margin-bottom: 3vh; 
+    height: 50px;
+    width: 150px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+    background: #31615F;
+    box-shadow: 0 0 25px #3BE799;
+    cursor: pointer;
+}
+#btnLogout:hover {
+    box-shadow: 0 0 5px #3BE799,
+              0 0 25px #3BE799,
+              0 0 50px #3BE799,
+              0 0 100px #3BE799;
+}
 
 /* *************************** */
 /* divs conteúdo */
