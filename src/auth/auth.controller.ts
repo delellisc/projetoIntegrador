@@ -14,13 +14,28 @@ export class AuthController {
     private readonly profissionalService: ProfissionaisService 
   ) {}
 
-  //rota para o login do 
+  //rota para o login
   @Get('login')
   @Redirect()
   login() {
     return { url: this.authService.getAuthUrl() };
   }
 
+  //rota para o logout
+  @Get('logout') 
+  async logout(@Res() res: Response, @Session() session?: Record<string,any>) {
+    if (session){
+      session.destroy((erro) => {
+        if(erro) {
+          return res.status(500).json({error: "erro ao encerrar a sessão"})
+        }
+        return res.redirect('/home')
+      });
+    } else {
+      return res.redirect('/home')
+    }
+  }
+  
   //rota pra pagina inicial
   @Get('pagina_inicial_logado')
   async renderHome(
