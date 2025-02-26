@@ -10,4 +10,6 @@ export declare class ProfissionaisController {
     update(id: string, updateProfissionaiDto: UpdateProfissionaiDto): Promise<import("typeorm").UpdateResult>;
     remove(id: string): Promise<import("./entities/profissionai.entity").Profissional>;
     findAtendimentos(id: string): Promise<any[]>;
+    findAtendimentosByDate(data: string, id: string): Promise<any[]>;
+    findAtendimentosPacientesByDate(data: string, id: string): Promise<any[]>;
 }

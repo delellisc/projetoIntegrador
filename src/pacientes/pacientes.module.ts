@@ -11,6 +11,9 @@ import { PacientesProviders } from './pacientes.providers';
     ... PacientesProviders,
     PacientesService
   ],
-  exports : [PacientesService]
+  exports: [
+    ... PacientesProviders,
+    PacientesService
+  ],
 })
 export class PacientesModule {}

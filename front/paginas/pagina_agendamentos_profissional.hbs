@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+Saúde IFRN - Agendamentos</title>
+    <link rel="stylesheet" href="/public/styles/style_agendamentos.css">
+    <script src="/public/scripts/script_agendamentos_profissional.js" defer></script>
+    <script>
+        window.userSession = {
+            id: {{ id }}
+        };
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-left">
+            <a href="#">+Saúde IFRN</a>
+            {{!-- <a href="/auth/pagina_inicial_logado">Início</a> --}}
+            <a href="#" style="color:#3BE799">Agendamentos</a>
+        </div>
+        <div class="nav-right">
+            <a href="/perfil">Perfil</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <span id="prev-month" style="cursor:pointer;">⬅</span>
+                <span id="month-year"></span>
+                <span id="next-month" style="cursor:pointer;">➡</span>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+
+
+        <!-- Modal de atendimentos -->
+        <div id="modal" class="modal">
+            <div class="modal-content" id="content-modal">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h2 id="titulo-tabela-atendimentos">Tabela de Atendimentos</h2>
+                <table id="tabela-atendimentos"></table>
+            </div>
+        </div>
+
+        <!-- Histórico -->
+        <h2>Histórico de Atendimentos</h2>
+        <button id="fetch-atendimentos-btn">Carregar Atendimentos</button>
+        <!-- Tabela Histórico -->
+        <table id="tabela-historico" hidden>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
+        <p>Entre em contato:</p>
+        <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
+        <img src="logo.png" alt="Logo">
+    </footer>
+</body>
+</html>

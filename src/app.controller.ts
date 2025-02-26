@@ -1,13 +1,15 @@
 import { PacientesService } from './pacientes/pacientes.service';
-import { Controller, Get, Param, Req, Render, Session } from '@nestjs/common';
+import { ProfissionaisService } from './profissionais/profissionais.service';
+import { Controller, Get, Param, Req, Render, Session, Res } from '@nestjs/common';
 import { AppService } from './app.service';
-// import { Session } from 'inspector/promises';
+import { Response } from 'express';  // Import Response from Express
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly pacientesService: PacientesService
+    private readonly pacientesService: PacientesService,
+    private readonly profissionalService: ProfissionaisService
   ) {}
 
   //funcao para paciente logado
@@ -18,26 +20,30 @@ export class AppController {
     return { paciente };
   }
 
-  
   @Get('agendamentos')
-  @Render('pagina_agendamentos')
-  getAgendamentos() {
-    return { message: 'atendimento é bom'}
-  }
+  async getAgendamentos(@Session() session: Record<string, any>, @Res() res: Response) {
+    // redireciona para página inicial caso não esteja logado
+    if (!session.user) {
+      return res.redirect('/home');
+    }
+  
+    // chama o método "isRegistered" para verificar existência do profissional no banco
+    const isProfissional = await this.profissionalService.isRegistered(session.user.matricula)
+    const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente' ;
+  
+    return res.render(view, { user: session.user, id: session.user.matricula });
+  }  
 
   @Get('perfil')
   @Render('pagina_perfil')
-  getPerfil(@Session() session: Record<string, any>) {
+  getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
+    /* if (!session.user) {
+      return { error: 'Usuário não autenticado' };
+    } */
     if (!session.user) {
-      return { message: 'usuario nao autenticado'}
+      return res.redirect('/home');
     }
-    return {user: session.user}
-  }
-  
-  @Get('historico')
-  @Render('pagina_historico')
-  getHistorico() {
-    return { message: 'aqui está o historico'}
+    return { user: session.user, message: 'perfil visualizado' };
   }
 
   @Get('home')
