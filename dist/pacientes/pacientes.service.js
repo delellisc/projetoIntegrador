@@ -19,6 +19,14 @@ let PacientesService = class PacientesService {
     constructor(pacienteRepository) {
         this.pacienteRepository = pacienteRepository;
     }
+    async findOrCreate(createPacienteDto) {
+        let paciente = await this.pacienteRepository.findOne({ where: { id: createPacienteDto.id } });
+        if (!paciente) {
+            paciente = this.pacienteRepository.create(createPacienteDto);
+            await this.pacienteRepository.save(paciente);
+        }
+        return paciente;
+    }
     create(createPacienteDto) {
         const paciente = this.pacienteRepository.create(createPacienteDto);
         return this.pacienteRepository.save(paciente);

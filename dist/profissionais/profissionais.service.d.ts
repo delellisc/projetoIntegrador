@@ -13,4 +13,5 @@ export declare class ProfissionaisService {
     findAtendimentos(id: number): Promise<any[]>;
     findAtendimentoByDate(id: number, data: string): Promise<any[]>;
     findAtendimentoPacientesByDate(id: number, data: string): Promise<any[]>;
+    isRegistered(id: number): Promise<boolean>;
 }

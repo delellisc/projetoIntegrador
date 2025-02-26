@@ -16,12 +16,12 @@ class CreatePacienteDto {
 exports.CreatePacienteDto = CreatePacienteDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreatePacienteDto.prototype, "nome", void 0);
+    __metadata("design:type", Number)
+], CreatePacienteDto.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreatePacienteDto.prototype, "sexo", void 0);
+], CreatePacienteDto.prototype, "nome", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Date)

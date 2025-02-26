@@ -1,31 +1,85 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { PacientesService } from './pacientes/pacientes.service';
+import { ProfissionaisService } from './profissionais/profissionais.service';
+import { Controller, Get, Param, Req, Render, Session, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Response } from 'express';  // Import Response from Express
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly pacientesService: PacientesService,
+    private readonly profissionalService: ProfissionaisService
+  ) {}
 
-  @Get()
+  //funcao para paciente logado
+  @Get('paciente/:id')
   @Render('pagina_inicial_logado')
-  root() {
-    return { message: 'saude123' };
+  async getPaciente(@Param('id') id: number) {
+    const paciente = await this.pacientesService.findOne(id);
+    return { paciente };
   }
 
-  @Get('agendamentos/profissional')
+  @Get('agendamentos')
+  async getAgendamentos(@Session() session: Record<string, any>, @Res() res: Response) {
+    // redireciona para página inicial caso não esteja logado
+    if (!session.user) {
+      return res.redirect('/home');
+    }
+  
+    // chama o método "isRegistered" para verificar existência do profissional no banco
+    const isProfissional = await this.profissionalService.isRegistered(session.user.matricula)
+    const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente' ;
+  
+    return res.render(view, { user: session.user, id: session.user.matricula });
+  }  
+
+
+/*   @Get('agendamentos/profissional')
   @Render('pagina_agendamentos_profissional')
-  getAgendamentosProfisisonal() {
-    return { id: 20231038060014 }
+  getAgendamentosProfisisonal(@Session() session: Record<string, any>) {
+    if (!session.user) {
+      return { error: 'Usuário não autenticado' };
+    }
+    return { user: session.user, id: 20231038060014 };
   }
 
   @Get('agendamentos/paciente')
   @Render('pagina_agendamentos_paciente')
-  getAgendamentosPaciente() {
-    return { id: 20231038060001 }
-  }
+  getAgendamentosPaciente(@Session() session: Record<string, any>) {
+    if (!session.user) {
+      return { error: 'Usuário não autenticado' };
+    }
+    return { user: session.user, id: session.user.matricula };
+  } */
 
   @Get('perfil')
   @Render('pagina_perfil')
-  getPerfil() {
-    return { message: 'perfil visualizado'}
+  getPerfil(@Session() session: Record<string, any>) {
+    if (!session.user) {
+      return { error: 'Usuário não autenticado' };
+    }
+    return { user: session.user, message: 'perfil visualizado' };
+  }
+
+  @Get('historico')
+  @Render('pagina_historico')
+  getHistorico(@Session() session: Record<string, any>) {
+    if (!session.user) {
+      return { error: 'Usuário não autenticado' };
+    }
+    return { user: session.user, message: 'aqui está o historico' };
+  }
+
+  @Get('home')
+  @Render('index')
+  getIndex(){
+    return {}
+  }
+  
+  @Get('admin')
+  @Render('pagina_admin')
+  getAdmin(){
+    return {}
   }
 }

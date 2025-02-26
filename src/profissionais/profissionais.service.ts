@@ -106,4 +106,9 @@ export class ProfissionaisService {
       .andWhere('profissional.id = :id', { id })
       .getRawMany();
   }
+  
+  async isRegistered(id: number): Promise<boolean> {
+    const profissional = await this.profissionalRepository.findOne({where: {id: id}})
+    return !!profissional
+  }
 }

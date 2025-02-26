@@ -23,6 +23,7 @@ exports.ProfissionaisModule = ProfissionaisModule = __decorate([
             ...profissionais_providers_1.ProfissionaisProviders,
             profissionais_service_1.ProfissionaisService
         ],
+        exports: [profissionais_service_1.ProfissionaisService]
     })
 ], ProfissionaisModule);
 //# sourceMappingURL=profissionais.module.js.map

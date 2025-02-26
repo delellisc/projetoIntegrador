@@ -3,7 +3,7 @@ import { Entity, Column, ManyToMany, PrimaryColumn } from 'typeorm';
 
 @Entity('paciente')
 export class Paciente {
-  @PrimaryColumn({ type: 'bigint' })
+  @PrimaryColumn({type: 'bigint'})
   id: number;
 
   @Column()

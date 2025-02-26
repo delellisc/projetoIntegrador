@@ -2,13 +2,25 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
   );
 
-  app.useStaticAssets(join(__dirname, '../front', 'public'));
+  app.use(
+    session({
+      secret: 'chave',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: false } 
+    }),
+  );
+
+  app.useStaticAssets(join(__dirname, '../front', 'public'), {
+    prefix: '/public/'
+  });
   app.setBaseViewsDir(join(__dirname, '../front', 'paginas'));
   app.setViewEngine('hbs');
   
