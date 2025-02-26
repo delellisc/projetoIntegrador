@@ -43,33 +43,6 @@ body {
     margin: 0 10px;
 }
 
-/* botão de logout*/
-#btnLogout {
-    /* margin-left: 80vh;*/
-    margin-bottom: 3vh; 
-    height: 50px;
-    width: 150px;
-    padding: 10px 20px;
-    border: none;
-    font-size: 20px;
-    color: white;
-    border-radius: 7px;
-    letter-spacing: 4px;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: 0.5s;
-    transition-property: box-shadow;
-    background: #31615F;
-    box-shadow: 0 0 25px #3BE799;
-    cursor: pointer;
-}
-#btnLogout:hover {
-    box-shadow: 0 0 5px #3BE799,
-              0 0 25px #3BE799,
-              0 0 50px #3BE799,
-              0 0 100px #3BE799;
-}
-
 /* *************************** */
 /* divs conteúdo */
 
@@ -109,7 +82,35 @@ body {
     gap: 15px;
     margin-bottom: 15px;
     flex-wrap: wrap;
-    font-size: 2vh;
+    font-size: 20px;
+}
+
+
+/* botão de logout*/
+#btnLogout {
+    /* margin-left: 80vh;*/
+    margin-bottom: 3vh; 
+    height: 50px;
+    width: 150px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+    background: #31615F;
+    box-shadow: 0 0 25px #3BE799;
+    cursor: pointer;
+}
+#btnLogout:hover {
+    box-shadow: 0 0 5px #3BE799,
+              0 0 25px #3BE799,
+              0 0 50px #3BE799,
+              0 0 100px #3BE799;
 }
 
 /* foto de perfil */
@@ -139,13 +140,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 2vh;
+    font-size: 20px;
     color: #31615F;
 }
 
 .info-pessoal p {
     margin-bottom: 10px;
-    font-size: 2vh;
+    font-size: 18px;
 }
 
 .info-pessoal strong {
@@ -162,7 +163,7 @@ body {
     padding-bottom: 1px;
     height: auto;
     margin-bottom: 10px;
-    font-size: 2vh;
+    font-size: 18px;
     color: #31615F;
 }
 
@@ -183,4 +184,183 @@ body {
 .whatsapp {
     display: inline-block;
     margin: 0 10px;
+}
+
+/* tentativa de responsividade */
+
+@media (max-width:860px) {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        width: 100%;
+    }
+    #btnLogout {
+        margin-bottom: 150px;
+    }
+
+    footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+}
+
+
+@media (max-width:768px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 50px;
+        gap: 15px;
+    }
+    
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+@media (max-width:430px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 15px;
+        gap:2px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:414px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:10px;
+        }
+
+    #btnLogout {
+        margin-bottom: 100px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:390px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:10px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:375px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:5px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
 }
