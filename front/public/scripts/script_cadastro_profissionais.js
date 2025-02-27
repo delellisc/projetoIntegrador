@@ -110,6 +110,7 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
         event.target.reset();
     } catch (error) {
         alert(`Não foi possível encontrar o profissional solicitado.`);
+        console.log("Erro ao atualizar profissional: " + error.message);
         /* alert("Erro ao atualizar profissional: " + error.message); */
     } finally {
         botao.disabled = false;
