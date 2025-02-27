@@ -174,19 +174,12 @@ body {
     color: white;
     padding: 20px;
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    /* left: 0; */
     width: 100%;
 }
 
 .footer img {
     width: 100px;
-}
-
-.whatsapp {
-    display: inline-block;
-    margin: 0 10px;
+    border-radius: 8px;
 }
 
 /* modal */

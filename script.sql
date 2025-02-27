@@ -15,6 +15,7 @@ INSERT INTO public.especializacao (nome) VALUES
 ('Psicologia');
 
 INSERT INTO public.paciente (id, nome, data_nascimento, contato) VALUES
+(20231038060019, 'Camilo Santos', '2004-01-07', 'lellis.m@academico.edu.br')
 (20231038060001, 'Charles Leclerc', '1997-10-16', '@charlesleclerc'),
 (20231038060002, 'Max Verstappen', '1997-09-30', '@maxverstappen1'),
 (20231038060003, 'Sebastian Vettel', '1987-07-03', '@sebastianvettel'),

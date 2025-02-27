@@ -109,15 +109,12 @@ tr:hover {
     color: white;
     padding: 20px;
     text-align: center;
+    width: 100%;
 }
 
 .footer img {
     width: 100px;
-}
-
-.whatsapp {
-    display: inline-block;
-    margin: 0 10px;
+    border-radius: 8px;
 }
 
 /* Responsividade */
