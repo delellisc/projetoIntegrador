@@ -65,6 +65,7 @@ export class PacientesService {
       .innerJoin('profissional.especializacao', 'especializacao')
       .where('paciente.id = :id', { id })
       .andWhere('atendimento.horario < CURRENT_TIMESTAMP')
+      .orderBy('atendimento.horario', 'DESC')
       .getRawMany();
   }
 
@@ -83,6 +84,7 @@ export class PacientesService {
       .innerJoin('profissional.especializacao', 'especializacao')
       .where('paciente.id = :id', { id })
       .andWhere('atendimento.horario > CURRENT_TIMESTAMP')
+      .orderBy('atendimento.horario', 'ASC')
       .getRawMany();
   }
 }

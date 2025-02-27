@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         ultimosAtendimentos: ultimosAtendimentos.slice(0, 3),
         proximosAtendimentos: proximosAtendimentos.slice(0, 3),
         mensagens: [
-            "Os atendimentos do dia 05/03 foram adiados devido a manutenção na unidade de saúde.",
+            "Os atendimentos do dia 28/02 foram adiados devido a manutenção na unidade de saúde.",
             "A partir do próximo mês, novos horários estarão disponíveis para agendamento.",
-            "Chegue com pelo menos 15 minutos de antecedência para evitar atrasos no atendimento."
+            /* "Chegue com pelo menos 15 minutos de antecedência para evitar atrasos no atendimento." */
         ]
     };
 

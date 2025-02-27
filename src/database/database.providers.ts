@@ -14,12 +14,6 @@ export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async () => {
-      console.log('Connecting to database with:');
-      console.log(`Host: ${hostname}`);
-      console.log(`Database: ${db}`);
-      console.log(`User: ${user}`);
-      console.log(`Password: ${password}`);
-
       const dataSource = new DataSource({
         type: 'postgres',
         host: hostname,
@@ -28,7 +22,7 @@ export const databaseProviders = [
         password: password,
         database: db,
         entities: [Paciente, Profissional, Atendimento, Especializacao],
-        synchronize: true, // TEMPORARILY enable for testing
+        synchronize: true,
       });
 
       return dataSource.initialize();
