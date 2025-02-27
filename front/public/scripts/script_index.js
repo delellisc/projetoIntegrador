@@ -1,3 +1,5 @@
+/* const { SimpleConsoleLogger } = require("typeorm"); */
+
 function abrirModal() {
     document.getElementById("modal").style.display = "block";
 }
@@ -11,6 +13,8 @@ document.getElementById("adminLogin").addEventListener("submit", function(event)
 
     const login = document.getElementById("login").value
     const senha = document.getElementById("senha").value 
+
+    console.log(login, senha);
 
     if (login === "admin" && senha === "admin") {
         window.location.href = "/admin"

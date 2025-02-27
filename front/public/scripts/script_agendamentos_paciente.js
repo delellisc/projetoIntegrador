@@ -110,19 +110,19 @@ function openModalPaciente(atendimentos) {
         atendimento_id.innerText = `${atendimento.atendimento_id}`
         let pacientes = await fetchPacientesAtendimento(atendimento.atendimento_id);
         let marcacao = await buscarPacienteAtendimento(atendimento.atendimento_id);
-        if (pacientes.length >= atendimento.qtd_pacientes){
-            botao.innerText = 'Não há vagas';
-        }
-        else if (!marcacao){
-            btn.innerText = `Marcar Consulta`;
-            btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id));
-            btn.style.backgroundColor = "#31615F";
-            botao.appendChild(btn);
-        }
-        else {
+        if (!!marcacao){
             btn.innerText = `Cancelar Consulta`;
             btn.addEventListener("click", () => cancelarConsulta(atendimento.atendimento_id));
             btn.style.backgroundColor = "red";
+            botao.appendChild(btn);
+        }
+        else if (pacientes.length >= atendimento.qtd_pacientes){
+            botao.innerText = 'Não há vagas';
+        }
+        else {
+            btn.innerText = `Marcar Consulta`;
+            btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id));
+            btn.style.backgroundColor = "#31615F";
             botao.appendChild(btn);
         }
         btn.style.borderRadius = "5px";

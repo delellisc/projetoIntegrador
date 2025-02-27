@@ -108,7 +108,7 @@ __decorate([
 ], AppController.prototype, "getIndex", null);
 __decorate([
     (0, common_1.Get)('admin'),
-    (0, common_1.Render)('pagina_admin'),
+    (0, common_1.Render)('pagina_cadastro_profissionais'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
