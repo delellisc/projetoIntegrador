@@ -50,9 +50,10 @@ INSERT INTO public.profissional (id, nome, registro_profissional, status, "espec
 (20231038060034, 'Lewis Hamilton', 'CRP-202544', 'ativo', 1);
 
 INSERT INTO public.atendimento (horario, status, "profissionalId") VALUES
+('2025-02-03 08:00:00', 'confirmado', 20191031120011),
 ('2025-02-05 08:00:00', 'confirmado', 20231038060026),
 ('2025-02-05 10:00:00', 'confirmado', 20231038060027),
-('2025-02-12 09:00:00', 'confirmado', 20231038060024),
+('2025-02-12 09:00:00', 'confirmado', 20191031120011),
 ('2025-02-18 11:00:00', 'confirmado', 20231038060025),
 ('2025-02-18 08:00:00', 'confirmado', 20231038060026),
 ('2025-02-25 10:00:00', 'confirmado', 20231038060027),

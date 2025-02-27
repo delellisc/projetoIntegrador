@@ -222,7 +222,6 @@ async function openModalCadastro(data){
 
 // Modal de pacientes atendidos naquele dia pelo profissional
 function openModalPacientesAtendimento(pacientes, atendimentoId){
-    console.log(pacientes);
     const modal = document.getElementById("modal");
 
     document.getElementById("titulo-tabela-atendimentos").innerText = `Pacientes cadastrados - Atendimento ID: ${atendimentoId}`;
@@ -238,20 +237,32 @@ function openModalPacientesAtendimento(pacientes, atendimentoId){
         <tr>
             <th>Nome</th>
             <th>Matrícula</th>
-            <th>ID</th>
+            <th>Data Nasc.</th>
+            <th></th>
         </tr>`;
         for (const paciente of pacientes) { 
             let row = document.createElement("tr");
             let nome = document.createElement("td");
             let matricula = document.createElement("td");
             let dataNasc = document.createElement("td");
+            let botao = document.createElement("td");
             nome.innerText = paciente.nome;
             matricula.innerText = paciente.id;
             dataNasc.innerText = paciente.data_nascimento;
+            let btn = document.createElement("button");
+            btn.innerText = "Remover Paciente";
+            btn.addEventListener("click", () => {
+                cancelarConsulta(atendimentoId, paciente.id);
+                location.reload();
+            });
+            btn.style.backgroundColor = "red";
+            btn.style.color = "white";
+            botao.appendChild(btn);
     
             row.appendChild(nome);
             row.appendChild(matricula);
             row.appendChild(dataNasc);
+            row.appendChild(botao);
 
             row.classList.add("table-row-atendimento");
     
@@ -375,6 +386,19 @@ function extractTimeFromDate(dateString) {
 
 /* *********************************************** */
 /* SCRIPTS FETCH */
+// Requisição DELETE para cancelar uma consulta
+async function cancelarConsulta(atendimentoId, pacienteId) {
+    alert(`Removendo paciente ${pacienteId} do atendimento ${atendimentoId}`);
+    await fetch(`http://localhost:3000/atendimentos/removerConsulta/${atendimentoId}/${pacienteId}`, {
+        method: "DELETE",
+        headers: {
+        "Content-Type": "application/json"
+        },
+    })
+    .catch(error => console.error("Erro:", error));
+    location.reload();
+}
+
 /* script fetch pacientes do atendimento */
 async function fetchPacientesAtendimento(atendimentoId) {
     try {
