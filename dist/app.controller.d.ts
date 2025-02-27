@@ -11,6 +11,15 @@ export declare class AppController {
         paciente: import("./pacientes/entities/paciente.entity").Paciente;
     }>;
     getAgendamentos(session: Record<string, any>, res: Response): Promise<void>;
+    getAgendamentosPaciente(session: Record<string, any>): {
+        error: string;
+        user?: undefined;
+        id?: undefined;
+    } | {
+        user: any;
+        id: any;
+        error?: undefined;
+    };
     getPerfil(session: Record<string, any>, res: Response): Promise<void>;
     getIndex(): {};
     getAdmin(): {};

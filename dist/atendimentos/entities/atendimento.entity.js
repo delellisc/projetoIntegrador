@@ -29,6 +29,10 @@ __decorate([
     __metadata("design:type", String)
 ], Atendimento.prototype, "status", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Atendimento.prototype, "qtd_pacientes", void 0);
+__decorate([
     (0, typeorm_1.ManyToMany)(() => paciente_entity_1.Paciente, (paciente) => paciente.atendimentos),
     (0, typeorm_1.JoinTable)({ name: "consultas" }),
     __metadata("design:type", Array)

@@ -67,6 +67,7 @@ export class AtendimentosService {
           'profissional.registro_profissional AS profissional_registro',
           'profissional.status AS profissional_status',
           'especializacao.nome AS especializacao_nome',
+          'atendimento.qtd_pacientes AS qtd_pacientes'
         ])
         .innerJoin('atendimento.profissional', 'profissional')
         .innerJoin('profissional.especializacao', 'especializacao')
@@ -80,7 +81,8 @@ export class AtendimentosService {
       .createQueryBuilder('atendimento')
       .select([
         'atendimento.id AS atendimento_id',
-        'profissional.id AS profissional_id'
+        'profissional.id AS profissional_id',
+        'atendimento.qtd_pacientes AS qtd_pacientes'
       ])
       .innerJoin('atendimento.profissional', 'profissional')
       .where('atendimento.horario = :data', { data })

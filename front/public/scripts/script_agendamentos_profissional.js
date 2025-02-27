@@ -189,7 +189,7 @@ async function openModalCadastro(data){
                 btn.addEventListener("click", () => fetchRemoverAtendimento(`${data} ${horario}`, id));
                 btn.style.backgroundColor = "red";
                 botao.appendChild(btn);
-                qtd.innerText = pacientes.length;
+                qtd.innerText = `${pacientes.length}/${disponibilidade.qtd_pacientes}`;
                 qtd.addEventListener("click", () => openModalPacientesAtendimento(pacientes, disponibilidade.atendimento_id));
                 qtd.style.cursor = "pointer";
             }
@@ -201,11 +201,11 @@ async function openModalCadastro(data){
         else{
             status.innerText = "Disponível";
             btn.innerText = "Cadastrar Atendimento";
-            btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, id))
+            btn.addEventListener("click", () => cadastrarAtendimento(`${data} ${horario}`, input.value))
             btn.style.backgroundColor = "#31615F";
-            /* let input = document.createElement("input");
+            let input = document.createElement("input");
             input.setAttribute("type", "number");
-            qtd.appendChild(input); */
+            qtd.appendChild(input);
             botao.appendChild(btn);
         }
 
@@ -251,10 +251,7 @@ function openModalPacientesAtendimento(pacientes, atendimentoId){
             dataNasc.innerText = paciente.data_nascimento;
             let btn = document.createElement("button");
             btn.innerText = "Remover Paciente";
-            btn.addEventListener("click", () => {
-                cancelarConsulta(atendimentoId, paciente.id);
-                location.reload();
-            });
+            btn.addEventListener("click", () => cancelarConsulta(atendimentoId, paciente.id));
             btn.style.backgroundColor = "red";
             btn.style.color = "white";
             botao.appendChild(btn);
@@ -396,7 +393,9 @@ async function cancelarConsulta(atendimentoId, pacienteId) {
         },
     })
     .catch(error => console.error("Erro:", error));
-    location.reload();
+    const pacientes = await fetchPacientesAtendimento(atendimentoId);
+    openModalPacientesAtendimento(pacientes, atendimentoId)
+    /* location.reload(); */
 }
 
 /* script fetch pacientes do atendimento */
@@ -484,7 +483,7 @@ async function fetchRemoverAtendimento(horario) {
 }
 
 // Cadastrar novo atendimento
-async function cadastrarAtendimento(horario) {
+async function cadastrarAtendimento(horario, qtdPacientes) {
     alert(`Cadastrando atendimento para ${horario} | Matrícula: ${id}`);
     await fetch("http://localhost:3000/atendimentos", {
         method: "POST",
@@ -494,7 +493,8 @@ async function cadastrarAtendimento(horario) {
         body: JSON.stringify({
         "horario": horario,
         "status": "confirmado",
-        "profissional": id
+        "profissional": id,
+        "qtd_pacientes": qtdPacientes
         })
     })
     .catch(error => console.error("Erro:", error));

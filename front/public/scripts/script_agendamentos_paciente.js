@@ -108,21 +108,26 @@ function openModalPaciente(atendimentos) {
         registro.innerText = `${atendimento.profissional_registro}`;
         especializacao.innerText = `${atendimento.especializacao_nome}`;
         atendimento_id.innerText = `${atendimento.atendimento_id}`
+        let pacientes = await fetchPacientesAtendimento(atendimento.atendimento_id);
         let marcacao = await buscarPacienteAtendimento(atendimento.atendimento_id);
-        if (!marcacao){
+        if (pacientes.length >= atendimento.qtd_pacientes){
+            botao.innerText = 'Não há mais vagas';
+        }
+        else if (!marcacao){
             btn.innerText = `Marcar Consulta`;
             btn.addEventListener("click", () => cadastrarConsulta(atendimento.atendimento_id));
             btn.style.backgroundColor = "#31615F";
+            botao.appendChild(btn);
         }
         else {
             btn.innerText = `Cancelar Consulta`;
             btn.addEventListener("click", () => cancelarConsulta(atendimento.atendimento_id));
             btn.style.backgroundColor = "red";
+            botao.appendChild(btn);
         }
         btn.style.borderRadius = "5px";
         btn.style.color = "white";
         btn.style.padding = "5px";
-        botao.appendChild(btn);
 
         row.appendChild(hora);
         row.appendChild(nome);
@@ -272,6 +277,19 @@ function extractTimeFromDate(dateString) {
 
 /* *********************************************** */
 /* SCRIPTS FETCH */
+/* script fetch pacientes do atendimento */
+async function fetchPacientesAtendimento(atendimentoId) {
+    try {
+        const response = await fetch(`http://localhost:3000/atendimentos/${atendimentoId}/pacientes`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar pacientes do atendimento.");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao buscar pacientes do atendimento:", error);
+    }
+}
+
 // Fetch todos as consultas de um paciente (relacionamento atendimento-paciente)
 async function fetchAtendimentos(id) {
     try {

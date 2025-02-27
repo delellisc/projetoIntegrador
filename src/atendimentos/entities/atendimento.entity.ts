@@ -13,6 +13,9 @@ export class Atendimento {
   @Column()
   status: string;
 
+  @Column()
+  qtd_pacientes: number;
+
   @ManyToMany(() => Paciente, (paciente) => paciente.atendimentos)
   @JoinTable({name: "consultas"})
   pacientes: Paciente[];

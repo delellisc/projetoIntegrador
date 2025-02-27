@@ -41,7 +41,7 @@ export class AppController {
       return { error: 'Usuário não autenticado' };
     }
     return { user: session.user, id: session.user.matricula };
-  } */
+  }
 
   @Get('perfil')
   async getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
@@ -65,17 +65,6 @@ export class AppController {
   
     return res.render(view, { user: userObject, userProf: userProf});
   }  
-  /* @Get('perfil')
-  @Render('pagina_perfil')
-  getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    } 
-    if (!session.user) {
-      return res.redirect('/home');
-    }
-    return { user: session.user, message: 'perfil visualizado' };
-  } */
 
   @Get('home')
   @Render('index')

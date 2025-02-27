@@ -35,6 +35,12 @@ let AppController = class AppController {
         const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente';
         return res.render(view, { user: session.user, id: session.user.matricula });
     }
+    getAgendamentosPaciente(session) {
+        if (!session.user) {
+            return { error: 'Usuário não autenticado' };
+        }
+        return { user: session.user, id: session.user.matricula };
+    }
     async getPerfil(session, res) {
         if (!session.user) {
             return res.redirect('/home');
@@ -77,6 +83,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "getAgendamentos", null);
+__decorate([
+    (0, common_1.Get)('agendamentos/paciente'),
+    (0, common_1.Render)('pagina_agendamentos_paciente'),
+    __param(0, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getAgendamentosPaciente", null);
 __decorate([
     (0, common_1.Get)('perfil'),
     __param(0, (0, common_1.Session)()),
