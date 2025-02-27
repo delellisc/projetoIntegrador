@@ -103,6 +103,11 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
     const matricula = document.getElementById("matriculaAtualizar").value;
 
     const dados = obterDadosFormulario(event.target);
+    const dadosFiltrados = Object.fromEntries(
+        Object.entries(dados).filter(([_, value]) => value !== 0)
+    );
+      
+    console.log(dadosFiltrados);
 
     try {
         await fazerRequisicao(`http://localhost:3000/profissionais/${matricula}`, "PATCH", dados);
@@ -110,6 +115,7 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
         event.target.reset();
     } catch (error) {
         alert(`Não foi possível encontrar o profissional solicitado.`);
+        console.log("Erro ao atualizar profissional: " + error.message);
         /* alert("Erro ao atualizar profissional: " + error.message); */
     } finally {
         botao.disabled = false;
@@ -168,6 +174,7 @@ async function preencherEspecialidades() {
             option.textContent = especialidade.nome;
             select.appendChild(option);
         });
+        select.value = '';
     });
 }
 
