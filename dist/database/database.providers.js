@@ -15,11 +15,6 @@ exports.databaseProviders = [
     {
         provide: 'DATA_SOURCE',
         useFactory: async () => {
-            console.log('Connecting to database with:');
-            console.log(`Host: ${hostname}`);
-            console.log(`Database: ${db}`);
-            console.log(`User: ${user}`);
-            console.log(`Password: ${password}`);
             const dataSource = new typeorm_1.DataSource({
                 type: 'postgres',
                 host: hostname,

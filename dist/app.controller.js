@@ -35,11 +35,23 @@ let AppController = class AppController {
         const view = isProfissional ? 'pagina_agendamentos_profissional' : 'pagina_agendamentos_paciente';
         return res.render(view, { user: session.user, id: session.user.matricula });
     }
-    getPerfil(session, res) {
+    async getPerfil(session, res) {
         if (!session.user) {
             return res.redirect('/home');
         }
-        return { user: session.user, message: 'perfil visualizado' };
+        const isProfissional = await this.profissionalService.isRegistered(session.user.matricula);
+        var view = '';
+        var userObject = session.user;
+        var userProf = {};
+        if (isProfissional) {
+            view = 'pagina_perfil_profissional';
+            userProf = await this.profissionalService.findOne(session.user.matricula);
+        }
+        else {
+            view = 'pagina_perfil_paciente';
+        }
+        ;
+        return res.render(view, { user: userObject, userProf: userProf });
     }
     getIndex() {
         return {};
@@ -67,12 +79,11 @@ __decorate([
 ], AppController.prototype, "getAgendamentos", null);
 __decorate([
     (0, common_1.Get)('perfil'),
-    (0, common_1.Render)('pagina_perfil'),
     __param(0, (0, common_1.Session)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AppController.prototype, "getPerfil", null);
 __decorate([
     (0, common_1.Get)('home'),

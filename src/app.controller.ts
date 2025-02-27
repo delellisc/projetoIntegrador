@@ -35,16 +35,38 @@ export class AppController {
   }  
 
   @Get('perfil')
+  async getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
+    // redireciona para página inicial caso não esteja logado
+    if (!session.user) {
+      return res.redirect('/home');
+    }
+  
+    // chama o método "isRegistered" para verificar existência do profissional no banco
+    const isProfissional = await this.profissionalService.isRegistered(session.user.matricula)
+    var view = '';
+    var userObject = session.user;
+    var userProf = {};
+    if(isProfissional){
+      view = 'pagina_perfil_profissional';
+      userProf = await this.profissionalService.findOne(session.user.matricula);
+    }
+    else {
+      view = 'pagina_perfil_paciente';
+    };
+  
+    return res.render(view, { user: userObject, userProf: userProf});
+  }  
+  /* @Get('perfil')
   @Render('pagina_perfil')
   getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
-    /* if (!session.user) {
+    if (!session.user) {
       return { error: 'Usuário não autenticado' };
-    } */
+    } 
     if (!session.user) {
       return res.redirect('/home');
     }
     return { user: session.user, message: 'perfil visualizado' };
-  }
+  } */
 
   @Get('home')
   @Render('index')

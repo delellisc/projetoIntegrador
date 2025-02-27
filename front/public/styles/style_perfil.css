@@ -225,14 +225,20 @@ body {
         flex-direction: column;
     }
 
-    header {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
     .container {
-        padding: 50px;
-        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
     }
     
     #btnLogout {
