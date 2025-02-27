@@ -215,12 +215,6 @@ body {
     font-size: 24px;
 }
 
-#fetch-atendimentos-btn{
-    border-radius: 10px;
-    background-color: #3BE799;
-    color: white;
-}
-
 input {
     padding: 8px;
     margin-top: 5px;
@@ -236,6 +230,29 @@ input {
     -moz-appearance: textfield;
 }
 
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 10vw;
+    height: 30px;
+}
+
+button:hover {
+    background-color: #31615F;
+}
+
+#fetch-atendimentos-btn{
+    border-radius: 10px;
+    background-color: #3BE799;
+    color: white;
+    width: 18vw;
+    height: 35px;
+}
+
 /* Responsividade */
 @media (max-width: 1199px) and (min-width: 768px) {
     .header {
@@ -245,7 +262,11 @@ input {
     }
 
     #tabela-atendimentos td, th {
-        font-size: 5px;
+        font-size: 1.7vw;
+    }
+
+    #tabela-atendimentos button {
+        font-size: 1.7vw;
     }
 
     .calendar-wrapper{

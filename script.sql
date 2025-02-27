@@ -1,3 +1,5 @@
+/* o script abaixo so funciona se o usuario 20231038060019 for cadastrado no banco de dados anteriormente */
+
 BEGIN;
 
 INSERT INTO public.especializacao (nome) VALUES

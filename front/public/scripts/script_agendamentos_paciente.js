@@ -111,7 +111,7 @@ function openModalPaciente(atendimentos) {
         let pacientes = await fetchPacientesAtendimento(atendimento.atendimento_id);
         let marcacao = await buscarPacienteAtendimento(atendimento.atendimento_id);
         if (pacientes.length >= atendimento.qtd_pacientes){
-            botao.innerText = 'Não há mais vagas';
+            botao.innerText = 'Não há vagas';
         }
         else if (!marcacao){
             btn.innerText = `Marcar Consulta`;
