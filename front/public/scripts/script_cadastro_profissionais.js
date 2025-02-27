@@ -89,7 +89,8 @@ document.getElementById("formListarProfissional").addEventListener("submit", asy
                 <p>Nome: ${profissional.nome}</p>
                 <p>Registro Profissional: ${profissional.registro_profissional}</p>`;
     } catch (error) {
-        document.getElementById("resultado-profissional").innerHTML = `<p>${error.message}</p>`;
+        document.getElementById("resultado-profissional").innerHTML = `<p>Não foi possível encontrar o profissional solicitado.</p>`;
+        /* document.getElementById("resultado-profissional").innerHTML = `<p>${error.message}</p>`; */
     }
 });
 
@@ -108,7 +109,8 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
         alert("Profissional atualizado com sucesso!");
         event.target.reset();
     } catch (error) {
-        alert("Erro ao atualizar profissional: " + error.message);
+        alert(`Não foi possível encontrar o profissional solicitado.`);
+        /* alert("Erro ao atualizar profissional: " + error.message); */
     } finally {
         botao.disabled = false;
         botao.textContent = "Atualizar";
@@ -128,7 +130,8 @@ document.getElementById("formRemoverProfissional").addEventListener("submit", as
         alert("Profissional removido com sucesso!");
         event.target.reset();
     } catch (error) {
-        alert("Erro ao remover profissional: " + error.message);
+        alert(`Não foi possível encontrar o profissional solicitado.`);
+        /* alert("Erro ao remover profissional: " + error.message); */
     } finally {
         botao.disabled = false;
         botao.textContent = "Remover";
