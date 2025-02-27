@@ -19,6 +19,14 @@ let PacientesService = class PacientesService {
     constructor(pacienteRepository) {
         this.pacienteRepository = pacienteRepository;
     }
+    async findOrCreate(createPacienteDto) {
+        let paciente = await this.pacienteRepository.findOne({ where: { id: createPacienteDto.id } });
+        if (!paciente) {
+            paciente = this.pacienteRepository.create(createPacienteDto);
+            await this.pacienteRepository.save(paciente);
+        }
+        return paciente;
+    }
     create(createPacienteDto) {
         const paciente = this.pacienteRepository.create(createPacienteDto);
         return this.pacienteRepository.save(paciente);
@@ -38,6 +46,42 @@ let PacientesService = class PacientesService {
             return this.pacienteRepository.remove(paciente);
         }
         return null;
+    }
+    findAtendimentos(id) {
+        return this.pacienteRepository
+            .createQueryBuilder('paciente')
+            .select([
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'especializacao.nome AS especializacao_nome'
+        ])
+            .innerJoin('paciente.atendimentos', 'atendimento')
+            .innerJoin('atendimento.profissional', 'profissional')
+            .innerJoin('profissional.especializacao', 'especializacao')
+            .where('paciente.id = :id', { id })
+            .andWhere('atendimento.horario < CURRENT_TIMESTAMP')
+            .orderBy('atendimento.horario', 'DESC')
+            .getRawMany();
+    }
+    findUpcomingAtendimentos(id) {
+        return this.pacienteRepository
+            .createQueryBuilder('paciente')
+            .select([
+            'atendimento.id AS atendimento_id',
+            'atendimento.horario AS atendimento_horario',
+            'profissional.nome AS profissional_nome',
+            'profissional.registro_profissional AS profissional_registro',
+            'especializacao.nome AS especializacao_nome'
+        ])
+            .innerJoin('paciente.atendimentos', 'atendimento')
+            .innerJoin('atendimento.profissional', 'profissional')
+            .innerJoin('profissional.especializacao', 'especializacao')
+            .where('paciente.id = :id', { id })
+            .andWhere('atendimento.horario > CURRENT_TIMESTAMP')
+            .orderBy('atendimento.horario', 'ASC')
+            .getRawMany();
     }
 };
 exports.PacientesService = PacientesService;

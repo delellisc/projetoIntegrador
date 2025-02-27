@@ -20,7 +20,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Especializacao.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Especializacao.prototype, "nome", void 0);
 __decorate([

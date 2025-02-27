@@ -31,4 +31,14 @@ export class PacientesController {
   remove(@Param('id') id: string) {
     return this.pacientesService.remove(+id);
   }
+
+  @Get('/atendimentos/:id')
+  findAtendimentos(@Param('id') id: number){
+    return this.pacientesService.findAtendimentos(id);
+  }
+
+  @Get('/atendimentosPendentes/:id')
+  findAtendimentosPendentes(@Param('id') id: number){
+    return this.pacientesService.findUpcomingAtendimentos(id);
+  }
 }

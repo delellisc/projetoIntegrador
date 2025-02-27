@@ -4,6 +4,7 @@ export declare class Atendimento {
     id: number;
     horario: Date;
     status: string;
+    qtd_pacientes: number;
     pacientes: Paciente[];
     profissional: Profissional;
 }

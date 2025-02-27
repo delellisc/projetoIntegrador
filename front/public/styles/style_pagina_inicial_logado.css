@@ -1,12 +1,12 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: #f0f0f0;
+    background-color: #E8E9EA;
+    background-color: #E8E9EA;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
-
 
 /* *************************** */
 /* container principal */
@@ -16,7 +16,6 @@ body {
     justify-content: space-between;
     padding: 20px;
 }
-
 
 /* *************************** */
 /* cabeçalho */
@@ -28,7 +27,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 .nav-right, .nav-left {
@@ -41,75 +39,63 @@ body {
     margin: 0 10px;
 }
 
-
 /* *************************** */
-/* divs */
-/* div consultas */
-.section-consultas {
-    color: #224745;
-    background-color: rgb(175, 20, 20);
+/* Tabela de Consultas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
     border-radius: 8px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 0.1vh;
-    width: 60vh;
-    margin-bottom: 20px;
-    height: 25%;
+    overflow: hidden;
 }
 
-.consulta-pendente {
-    height: 100px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+th, td {
+    padding: 15px;
+    text-align: left;
 }
 
+th {
+    background-color: #31615F;
+    color: white;
+}
+
+tr:hover {
+    background-color: #d1f7e3;
+}
 
 /* div ultimas consultas */
+.section-consultas,
 .section-ultimas {
     color: #224745;
-    background-color: rgb(11, 224, 39);
+    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 0.1vh;
-    width: 60vh;
+    padding: 20px;
+    width: 60vw;
     margin-bottom: 20px;
-    height: 25%;
-}
-
-.consulta-ultimas {
-    height: 100px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* div avisos */
 .section-avisos {
     color: #224745;
-    background-color: rgb(40, 8, 99);
+    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 0.1vh;
-    width: 30%;
+    padding: 20px;
+    width: 30vw;
     margin-bottom: 20px;
-    height: 55vh;
 }
 
 .avisos {
-    height: 100px;
+    height: 15vh;
+    height: 15vh;
     background-color: #e9ecef;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 6vh;
+    padding: 2vh;
 }
 
 .avisos:last-child {
@@ -132,4 +118,62 @@ body {
 .whatsapp {
     display: inline-block;
     margin: 0 10px;
+}
+
+/* Responsividade */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .avisos {
+        height: 5vh;
+        margin-bottom: 2vh;
+    }
+
+    .container {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px;
+    }
+
+    .nav-left, .nav-right {
+        gap: 15px;
+    }
+
+    .section-avisos, .section-consultas, .section-ultimas, table {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .avisos {
+        height: 10vw;
+        margin-bottom: 1.5vw;
+    }
+
+    #celula-id {
+        display: none;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section-consultas, .section-ultimas, .section-avisos, table {
+        width: 80vw;
+    }
 }
