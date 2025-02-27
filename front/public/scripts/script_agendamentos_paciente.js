@@ -87,7 +87,7 @@ function openModalPaciente(atendimentos) {
         <tr>
             <th>Horário</th>
             <th>Profissional</th>
-            <th>Atendimento ID</th>
+            <th>ID</th>
             <th>Registro</th>
             <th>Especialização</th>
             <th></th>
@@ -178,7 +178,7 @@ function renderAtendimentosTable(atendimentos) {
     
     atendimentosTableHeader.innerHTML = `
         <tr>
-            <th>Atendimento ID</th>
+            <th>ID</th>
             <th>Horário</th>
             <th>Especialização</th>
             <th>Profissional</th>

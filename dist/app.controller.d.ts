@@ -11,24 +11,7 @@ export declare class AppController {
         paciente: import("./pacientes/entities/paciente.entity").Paciente;
     }>;
     getAgendamentos(session: Record<string, any>, res: Response): Promise<void>;
-    getPerfil(session: Record<string, any>): {
-        error: string;
-        user?: undefined;
-        message?: undefined;
-    } | {
-        user: any;
-        message: string;
-        error?: undefined;
-    };
-    getHistorico(session: Record<string, any>): {
-        error: string;
-        user?: undefined;
-        message?: undefined;
-    } | {
-        user: any;
-        message: string;
-        error?: undefined;
-    };
+    getPerfil(session: Record<string, any>, res: Response): Promise<void>;
     getIndex(): {};
     getAdmin(): {};
 }

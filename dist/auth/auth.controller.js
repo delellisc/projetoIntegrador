@@ -26,15 +26,26 @@ let AuthController = class AuthController {
     login() {
         return { url: this.authService.getAuthUrl() };
     }
+    async logout(res, session) {
+        if (session) {
+            session.destroy((erro) => {
+                if (erro) {
+                    return res.status(500).json({ error: "erro ao encerrar a sessão" });
+                }
+                return res.redirect('/home');
+            });
+        }
+        else {
+            return res.redirect('/home');
+        }
+    }
     async renderHome(res, session) {
         if (!session || !session.user) {
             return res.redirect('/auth/login');
         }
         const pacienteId = session.user.matricula;
         const atendimentos = await this.pacienteService.findAtendimentos(pacienteId);
-        const msg1 = 'Campanha de vacinação do dia 08/06 ao dia 18/06!!';
-        const msg2 = 'Procure a unidade de saúde do seu bairro para se vacinar!';
-        return res.render('pagina_inicial_logado', { user: session.user, atendimentos, msg1: msg1, msg2: msg2 });
+        return res.render('pagina_inicial_logado', { user: session.user, id: session.user.matricula });
     }
     async callback(code, res, session) {
         if (!code) {
@@ -48,25 +59,21 @@ let AuthController = class AuthController {
             const token = await this.authService.exchangeCodeForToken(code);
             session.token = token;
             const userData = await this.authService.getUserData(token);
-            console.log(userData);
             session.user = userData;
             let redirectURL;
-            if (userData.matricula.length > 10) {
+            const isProfissional = await this.profissionalService.isRegistered(userData.matricula);
+            if (!isProfissional) {
                 const pacienteDto = {
                     id: userData.matricula,
                     nome: userData.nome_usual,
                     data_nascimento: userData.data_nascimento,
                     contato: userData.email
                 };
-                const paciente = await this.pacienteService.findOrCreate(pacienteDto);
+                await this.pacienteService.findOrCreate(pacienteDto);
                 redirectURL = "http://localhost:3000/auth/pagina_inicial_logado";
             }
             else {
-                const isProfissional = await this.profissionalService.isRegistered(userData.matricula);
-                if (!isProfissional) {
-                    return res.status(403).json({ error: 'Acesso negado: professor não cadastrado' });
-                }
-                redirectURL = "http://localhost:3000/auth/pagina_agendamentos";
+                redirectURL = "http://localhost:3000/agendamentos";
             }
             return res.redirect(302, redirectURL);
         }
@@ -90,6 +97,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Session)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "logout", null);
 __decorate([
     (0, common_1.Get)('pagina_inicial_logado'),
     __param(0, (0, common_1.Res)()),

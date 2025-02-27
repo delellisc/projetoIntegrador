@@ -10,6 +10,7 @@ export declare class AuthController {
     login(): {
         url: string;
     };
+    logout(res: Response, session?: Record<string, any>): Promise<void>;
     renderHome(res: Response, session?: Record<string, any>): Promise<void>;
     callback(code: string, res: Response, session?: Record<string, any>): Promise<void | Response<any, Record<string, any>>>;
     getUser(session: Record<string, any>): any;

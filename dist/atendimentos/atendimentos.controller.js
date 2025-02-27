@@ -54,6 +54,9 @@ let AtendimentosController = class AtendimentosController {
     removeConsulta(atendimentoId, pacienteId) {
         return this.atendimentosService.removeConsulta(atendimentoId, pacienteId);
     }
+    findPacientes(id) {
+        return this.atendimentosService.findPacientes(id);
+    }
 };
 exports.AtendimentosController = AtendimentosController;
 __decorate([
@@ -135,6 +138,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], AtendimentosController.prototype, "removeConsulta", null);
+__decorate([
+    (0, common_1.Get)('/:id/pacientes'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AtendimentosController.prototype, "findPacientes", null);
 exports.AtendimentosController = AtendimentosController = __decorate([
     (0, common_1.Controller)('atendimentos'),
     __metadata("design:paramtypes", [atendimentos_service_1.AtendimentosService])

@@ -10,4 +10,5 @@ export declare class PacientesController {
     update(id: string, updatePacienteDto: UpdatePacienteDto): Promise<import("typeorm").UpdateResult>;
     remove(id: string): Promise<import("./entities/paciente.entity").Paciente>;
     findAtendimentos(id: number): Promise<any[]>;
+    findAtendimentosPendentes(id: number): Promise<any[]>;
 }

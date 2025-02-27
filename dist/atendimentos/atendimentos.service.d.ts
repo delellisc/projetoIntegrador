@@ -18,4 +18,5 @@ export declare class AtendimentosService {
     createConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
     findConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
     removeConsulta(atendimentoId: number, pacienteId: number): Promise<Atendimento>;
+    findPacientes(id: number): Promise<Paciente[]>;
 }

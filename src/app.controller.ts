@@ -34,16 +34,6 @@ export class AppController {
     return res.render(view, { user: session.user, id: session.user.matricula });
   }  
 
-
-/*   @Get('agendamentos/profissional')
-  @Render('pagina_agendamentos_profissional')
-  getAgendamentosProfisisonal(@Session() session: Record<string, any>) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    }
-    return { user: session.user, id: 20231038060014 };
-  }
-
   @Get('agendamentos/paciente')
   @Render('pagina_agendamentos_paciente')
   getAgendamentosPaciente(@Session() session: Record<string, any>) {
@@ -54,22 +44,38 @@ export class AppController {
   } */
 
   @Get('perfil')
+  async getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
+    // redireciona para página inicial caso não esteja logado
+    if (!session.user) {
+      return res.redirect('/home');
+    }
+  
+    // chama o método "isRegistered" para verificar existência do profissional no banco
+    const isProfissional = await this.profissionalService.isRegistered(session.user.matricula)
+    var view = '';
+    var userObject = session.user;
+    var userProf = {};
+    if(isProfissional){
+      view = 'pagina_perfil_profissional';
+      userProf = await this.profissionalService.findOne(session.user.matricula);
+    }
+    else {
+      view = 'pagina_perfil_paciente';
+    };
+  
+    return res.render(view, { user: userObject, userProf: userProf});
+  }  
+  /* @Get('perfil')
   @Render('pagina_perfil')
-  getPerfil(@Session() session: Record<string, any>) {
+  getPerfil(@Session() session: Record<string, any>, @Res() res: Response) {
     if (!session.user) {
       return { error: 'Usuário não autenticado' };
+    } 
+    if (!session.user) {
+      return res.redirect('/home');
     }
     return { user: session.user, message: 'perfil visualizado' };
-  }
-
-  @Get('historico')
-  @Render('pagina_historico')
-  getHistorico(@Session() session: Record<string, any>) {
-    if (!session.user) {
-      return { error: 'Usuário não autenticado' };
-    }
-    return { user: session.user, message: 'aqui está o historico' };
-  }
+  } */
 
   @Get('home')
   @Render('index')
