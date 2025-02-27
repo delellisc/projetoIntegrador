@@ -57,6 +57,21 @@ document.querySelector("form[action='http://localhost:3000/profissionais']").add
     }
 });
 
+// Listar todos os profissionais
+document.getElementById("listarTodos").addEventListener("click", async () => {
+    try {
+        const profissionais = await fazerRequisicao("http://localhost:3000/profissionais");
+        let html = "<ul>";
+        profissionais.forEach(prof => {
+            html += `<li>${prof.id} - ${prof.nome} - ${prof.registro_profissional}</li>`;
+        });
+        html += "</ul>";
+        document.getElementById("resultado-lista").innerHTML = html;
+    } catch (error) {
+        document.getElementById("resultado-lista").innerHTML = `<p>${error.message}</p>`;
+    }
+});
+
 // Listar profissional por matrícula
 document.getElementById("formListarProfissional").addEventListener("submit", async (event) => {
     event.preventDefault();
