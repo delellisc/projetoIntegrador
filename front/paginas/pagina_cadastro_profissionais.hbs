@@ -12,11 +12,6 @@
         <div class="nav-left">
             <a href="#">+Saúde IFRN</a>
             <a href="#" style="color:#3BE799">Início</a>
-            <a href="./pagina_agendamentos.html">Agendamentos</a>
-        </div>
-        <div class="nav-right">
-            <a href="./pagina_historico.html">Histórico</a>
-            <a href="./pagina_perfil.html">Perfil</a>
         </div>
     </header>
 
@@ -52,7 +47,7 @@
         <h2>Listar Profissional</h2>
         <form id="formListarProfissional">
             <label for="matriculaListar">Matrícula:</label>
-            <input type="text" id="matriculaListar" name="matricula" required>
+            <input type="text" id="matriculaListar" name="matricula" placeholder="Ex: 20231038060021" required>
 
             <button type="submit">Listar</button>
         </form>
@@ -64,19 +59,19 @@
         <h2>Atualizar Profissional</h2>
         <form id="formAtualizarProfissional">
             <label for="matriculaAtualizar">Matrícula:</label>
-            <input type="text" id="matriculaAtualizar" name="matricula" required>
+            <input type="text" id="matriculaAtualizar" name="matricula" placeholder="Ex: 20231038060021" required>
 
             <label for="nomeAtualizar">Nome:</label>
-            <input type="text" id="nomeAtualizar" name="nome" required>
+            <input type="text" id="nomeAtualizar" name="nome" placeholder="Ex: Elezio Soares">
 
             <label for="registroAtualizar">Registro Profissional:</label>
-            <input type="text" id="registroAtualizar" name="registro" required>
+            <input type="text" id="registroAtualizar" name="registro" placeholder="Ex: CRP-123456">
 
             <label for="especializacao">Especialização:</label>
             <select id="especializacao" name="especializacao" required></select>
 
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" required>
+            <input type="text" id="status" name="status" placeholder="Ex: Ativo">
 
             <button type="submit">Atualizar</button>
         </form>
@@ -87,7 +82,7 @@
         <h2>Remover Profissional</h2>
         <form id="formRemoverProfissional">
             <label for="matriculaRemover">Matrícula:</label>
-            <input type="text" id="matriculaRemover" name="matricula" required>
+            <input type="text" id="matriculaRemover" name="matricula" placeholder="Ex: 20231038060021" required>
 
             <button type="submit">Remover</button>
         </form>
