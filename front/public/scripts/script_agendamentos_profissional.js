@@ -120,13 +120,16 @@ async function openModalPacientesAtendidos(data){
             let row = document.createElement("tr");
             let nome = document.createElement("td");
             let matricula = document.createElement("td");
+            let contato = document.createElement("td");
             let atendimento = document.createElement("td");
             nome.innerText = paciente.paciente_nome;
             matricula.innerText = paciente.paciente_id;
+            contato.innerText = paciente.contato;
             atendimento.innerText = paciente.atendimento_id;
     
             row.appendChild(nome);
             row.appendChild(matricula);
+            /* row.appendChild(contato); */
             row.appendChild(atendimento);
 
             row.classList.add("table-row-atendimento");
@@ -237,7 +240,7 @@ function openModalPacientesAtendimento(pacientes, atendimentoId){
         <tr>
             <th>Nome</th>
             <th>Matrícula</th>
-            <th>Data Nasc.</th>
+            <th>Contato</th>
             <th></th>
         </tr>`;
         for (const paciente of pacientes) { 
@@ -248,7 +251,7 @@ function openModalPacientesAtendimento(pacientes, atendimentoId){
             let botao = document.createElement("td");
             nome.innerText = paciente.nome;
             matricula.innerText = paciente.id;
-            dataNasc.innerText = paciente.data_nascimento;
+            dataNasc.innerText = paciente.contato;
             let btn = document.createElement("button");
             btn.innerText = "Remover Paciente";
             btn.addEventListener("click", () => cancelarConsulta(atendimentoId, paciente.id));

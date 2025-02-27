@@ -302,6 +302,9 @@ button:hover {
     }
 
     #tabela-atendimentos button {
+        height: 5vw;
+        width: 15vw;
+        padding: 1vw;
         font-size: 1.7vw;
     }
 }
