@@ -44,6 +44,7 @@ document.querySelector("form[action='http://localhost:3000/profissionais']").add
     botao.textContent = "Enviando...";
 
     const dados = obterDadosFormulario(event.target);
+    console.log(dados)
 
     try {
         await fazerRequisicao("http://localhost:3000/profissionais", "POST", dados);
