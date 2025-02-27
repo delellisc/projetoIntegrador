@@ -3,14 +3,11 @@ import { Entity, Column, ManyToMany, PrimaryColumn } from 'typeorm';
 
 @Entity('paciente')
 export class Paciente {
-  @PrimaryColumn()
+  @PrimaryColumn({type: 'bigint'})
   id: number;
 
   @Column()
   nome: string;
-  
-  @Column()
-  sexo: string;
 
   @Column({ type: 'date' })
   data_nascimento: Date;

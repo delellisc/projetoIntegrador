@@ -1,0 +1,372 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* *************************** */
+/* container principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* *************************** */
+/* cabeçalho */
+.header {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.nav-right, .nav-left {
+    display: flex;
+    gap: 20px;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* *************************** */
+/* divs conteúdo */
+
+/* container principal */
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap; 
+}
+
+/* outras divs*/
+.dados-container {
+    background: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* titulo */
+.dados-container h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* card de dados */
+.dados-card {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    font-size: 20px;
+}
+
+
+/* botão de logout*/
+#btnLogout {
+    /* margin-left: 80vh;*/
+    margin-bottom: 3vh; 
+    height: 50px;
+    width: 150px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+    background: #31615F;
+    box-shadow: 0 0 25px #3BE799;
+    cursor: pointer;
+}
+#btnLogout:hover {
+    box-shadow: 0 0 5px #3BE799,
+              0 0 25px #3BE799,
+              0 0 50px #3BE799,
+              0 0 100px #3BE799;
+}
+
+/* foto de perfil */
+.foto-perfil {
+    width: 200px;
+    height: 200px;
+    background: #D9D9D9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.foto-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* informações pessoais */
+.info-pessoal {
+    flex: 1;
+    background: #D9D9D9;
+    border-radius: 10px;
+    min-height: 100px;
+    padding-top: 1px;
+    padding-left: 10px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 20px;
+    color: #31615F;
+}
+
+.info-pessoal p {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.info-pessoal strong {
+    color: #31615F;
+}
+
+/* dados extras */
+.mais-dados {
+    background: #D9D9D9;
+    border-radius: 10px;
+    min-height: 40px;
+    padding-top: 1px;
+    padding-left: 10px;
+    padding-bottom: 1px;
+    height: auto;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #31615F;
+}
+
+
+/* *************************** */
+/* footer */
+.footer {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer img {
+    width: 100px;
+}
+
+.whatsapp {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* tentativa de responsividade */
+
+@media (max-width:860px) {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        width: 100%;
+    }
+    #btnLogout {
+        margin-bottom: 150px;
+    }
+
+    footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+}
+
+
+@media (max-width:768px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+@media (max-width:430px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 15px;
+        gap:2px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:414px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:10px;
+        }
+
+    #btnLogout {
+        margin-bottom: 100px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:390px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:10px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}
+
+@media (max-width:375px) {
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+        gap:5px;
+        }
+
+    #btnLogout {
+        margin-bottom: 120px;
+    }
+
+    footer {
+        width: 100%;
+        position: realtive;
+        bottom: 0;
+    }
+}

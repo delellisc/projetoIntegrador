@@ -1,0 +1,267 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* *************************** */
+/* calendario */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.calendar-wrapper {
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 20px;
+    width: 800px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.calendar-day-name {
+    font-weight: bold;
+    text-align: center;
+    padding: 0px;
+    color: black;
+}
+
+.calendar-day {
+    width: auto;
+    height: 40px;
+    background-color: #E8E9EA;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.has-atendimento {
+    background-color: #31615F;
+    color: white;
+    cursor: pointer;
+}
+
+.today {
+    background-color: #3BE799;
+    color: white;
+}
+
+/* histórico */
+.user-id-input {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.user-id-input input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+}
+
+#fetch-atendimentos-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3BE799;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Tabelas */
+#tabela-atendimentos,
+#tabela-historico {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    background-color: #00000000;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    /* border-spacing: 0 10px; */
+}
+
+#tabela-atendimentos th,
+#tabela-atendimentos td,
+#tabela-historico th,
+#tabela-historico td {
+    /* padding: 12px 20px; */
+    /* text-align: center; */
+    font-size: 16px;
+    border: 1px solid #00000000;
+    background-color: #ffffff;
+    padding: 15px;
+    text-align: left;
+    height: 2vh;
+}
+
+#tabela-atendimentos th,
+#tabela-historico th {
+    background-color: #31615F;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#tabela-atendimentos td,
+#tabela-historico td {
+    background-color: #ffffff;
+}
+#tabela-atendimentos tr:hover td,
+#tabela-historico tr:hover td {
+    background-color: #d1f7e3;
+}
+
+/* *************************** */
+/* cabeçalho */
+.header {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.nav-right, .nav-left {
+    display: flex;
+    gap: 20px;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+/* *************************** */
+/* footer */
+.footer {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer img {
+    width: 100px;
+}
+
+.whatsapp {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.close-modal {
+    float: right;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+#fetch-atendimentos-btn{
+    border-radius: 10px;
+    background-color: #3BE799;
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        /* justify-content: space-between; */
+        padding: 15px;
+    }
+
+    #tabela-atendimentos td, th {
+        font-size: 5px;
+    }
+
+    .calendar-wrapper{
+        width: 80vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .calendar-wrapper, #tabela-historico{
+        width: 80vw;
+    }
+
+    #tabela-atendimentos th,
+    #tabela-atendimentos td{
+        height: 0.5vh;
+        font-size: 1.7vw;
+        padding: 1vw;
+    }
+
+    #tabela-atendimentos button {
+        font-size: 1.7vw;
+    }
+}

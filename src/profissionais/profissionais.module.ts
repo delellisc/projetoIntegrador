@@ -11,5 +11,6 @@ import { ProfissionaisProviders } from './profissionais.providers';
     ...ProfissionaisProviders,
     ProfissionaisService
   ],
+  exports: [ProfissionaisService]
 })
 export class ProfissionaisModule {}

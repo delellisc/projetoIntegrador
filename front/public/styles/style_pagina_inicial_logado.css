@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #E8E9EA;
+    background-color: #E8E9EA;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* *************************** */
+/* container principal */
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* *************************** */
+/* cabeçalho */
+.header {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-right, .nav-left {
+    display: flex;
+    gap: 20px;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* *************************** */
+/* Tabela de Consultas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #31615F;
+    color: white;
+}
+
+tr:hover {
+    background-color: #d1f7e3;
+}
+
+/* div ultimas consultas */
+.section-consultas,
+.section-ultimas {
+    color: #224745;
+    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 20px;
+    width: 60vw;
+    margin-bottom: 20px;
+}
+
+/* div avisos */
+.section-avisos {
+    color: #224745;
+    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 20px;
+    width: 30vw;
+    margin-bottom: 20px;
+}
+
+.avisos {
+    height: 15vh;
+    height: 15vh;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6vh;
+    padding: 2vh;
+}
+
+.avisos:last-child {
+    margin-bottom: 0;
+}
+
+/* *************************** */
+/* footer */
+.footer {
+    background-color: #31615F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer img {
+    width: 100px;
+}
+
+.whatsapp {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* Responsividade */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .avisos {
+        height: 5vh;
+        margin-bottom: 2vh;
+    }
+
+    .container {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px;
+    }
+
+    .nav-left, .nav-right {
+        gap: 15px;
+    }
+
+    .section-avisos, .section-consultas, .section-ultimas, table {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .avisos {
+        height: 10vw;
+        margin-bottom: 1.5vw;
+    }
+
+    #celula-id {
+        display: none;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section-consultas, .section-ultimas, .section-avisos, table {
+        width: 80vw;
+    }
+}

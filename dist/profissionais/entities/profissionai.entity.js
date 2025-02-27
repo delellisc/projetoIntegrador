@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profissional = void 0;
 const typeorm_1 = require("typeorm");
 const especializacoe_entity_1 = require("../../especializacoes/entities/especializacoe.entity");
+const atendimento_entity_1 = require("../../atendimentos/entities/atendimento.entity");
 let Profissional = class Profissional {
 };
 exports.Profissional = Profissional;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryColumn)({ type: 'bigint' }),
     __metadata("design:type", Number)
 ], Profissional.prototype, "id", void 0);
 __decorate([
@@ -35,6 +36,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => especializacoe_entity_1.Especializacao, (especializacao) => especializacao.profissionais),
     __metadata("design:type", especializacoe_entity_1.Especializacao)
 ], Profissional.prototype, "especializacao", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => atendimento_entity_1.Atendimento, (atendimento) => atendimento.profissional),
+    __metadata("design:type", Array)
+], Profissional.prototype, "atendimentos", void 0);
 exports.Profissional = Profissional = __decorate([
     (0, typeorm_1.Entity)('profissional')
 ], Profissional);

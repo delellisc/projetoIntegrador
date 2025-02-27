@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ".." vira alias para ../public -->
+    <link rel="stylesheet" href="/public/styles/style_pagina_inicial_logado.css">
+
+    <title>Saúde IFRN</title>
+    <script>
+        window.userSession = {
+            id: {{ id }}
+        };
+    </script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="class nav-left">
+            <a href="#">+Saúde IFRN</a>
+            <a href="#" style="color:#3BE799">Início</a>
+            <a href="/agendamentos">Agendamentos</a>
+        </div>
+        <div class="class nav-right">
+            <a href="/perfil">Perfil</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="left-column">
+            <div class="section-consultas">
+                <h3>Consulta(s) Pendente(s)</h3>
+                <div id="consulta-pendente">
+                </div>
+            </div>
+
+            <div class="section-ultimas">
+                <h3>Última(s) Consulta(s)</h3>
+                <div id="consulta-ultimas">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-avisos">
+            <h3>Avisos</h3>
+            <div id="avisos-container">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
+        <p>Entre em contato:</p>
+        <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
+        <img src="#" alt="Logo">
+    </footer>
+    <script src="/public/scripts/script_paginicial.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+Saúde IFRN</title>
+    <!-- ".." vira alias para ../public -->
+    <link rel="stylesheet" href="/public/styles/style_perfil.css">
+</head>
+<body>
+    <header class="header">
+        <div class="class nav-left">
+            <a href="#">+Saúde IFRN</a>
+            <a href="/auth/pagina_inicial_logado">Início</a>
+            <a href="/agendamentos">Agendamentos</a>
+        </div>
+        <div class="class nav-right">
+            <a href="#"style="color:#3BE799">Perfil</a>
+        </div>
+    </header>
+     
+    {{!-- botão de logout --}}
+
+    <div class="container">
+        <div class="dados-container">
+            <h2>Meus dados</h2>
+            <div class="dados-card">
+                <div class="foto-perfil">
+                    <img src="{{user.url_foto_75x100}}" alt="foto de perfil">
+                </div>
+                <div class="info-pessoal">
+                    <p><strong>Nome:</strong> {{user.nome_usual}}</p>
+                    <p><strong>Matricula:</strong> {{user.matricula}}</p>
+                    <p><strong>Curso:</strong> {{user.vinculo.curso}}</p>
+                    <p><strong>Data de Nascimento:</strong> {{user.data_nascimento}}</p>
+                </div>
+            </div>
+            <div class="mais-dados">
+                <p><strong>Email:</strong> {{user.email}}</p>
+                <p><strong>Tipo de Vínculo:</strong> {{user.tipo_vinculo}}</p>
+            </div>
+            <div class="mais-dados">
+                <p><strong>Campus:</strong> {{user.vinculo.campus}}</p>
+                <p><strong>Situacão:</strong> {{user.vinculo.situacao}}</p>
+            </div>
+            <div class="mais-dados">
+                <p><strong>Naturalidade:</strong> {{user.naturalidade}}</p>
+                <p><strong>Tipo Sanguíneo:</strong> {{user.tipo_sanguineo}}</p>
+            </div>
+        </div>
+        <div class="botao">
+            <button id="btnLogout">SAIR</button>
+        </div>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="foot-content">
+            <p>© 2025 +Saúde IFRN. Todos os direitos reservados.</p>
+            <p>Entre em contato:</p>
+        </div>
+        <div class="contato">
+            <a href="https://wa.me/1234567890" class="whatsapp">WhatsApp</a>
+            <img src="logo.png" alt="Logo">
+        </div>
+    </footer>
+    <script src="/public/scripts/script_perfil.js"></script>
+</body>
+</html>

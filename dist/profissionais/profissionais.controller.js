@@ -36,6 +36,15 @@ let ProfissionaisController = class ProfissionaisController {
     remove(id) {
         return this.profissionaisService.remove(+id);
     }
+    findAtendimentos(id) {
+        return this.profissionaisService.findAtendimentos(+id);
+    }
+    findAtendimentosByDate(data, id) {
+        return this.profissionaisService.findAtendimentoByDate(+id, data);
+    }
+    findAtendimentosPacientesByDate(data, id) {
+        return this.profissionaisService.findAtendimentoPacientesByDate(+id, data);
+    }
 };
 exports.ProfissionaisController = ProfissionaisController;
 __decorate([
@@ -73,6 +82,29 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProfissionaisController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('/atendimentos/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ProfissionaisController.prototype, "findAtendimentos", null);
+__decorate([
+    (0, common_1.Get)('/agendamentos/:data/:id'),
+    __param(0, (0, common_1.Param)('data')),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], ProfissionaisController.prototype, "findAtendimentosByDate", null);
+__decorate([
+    (0, common_1.Get)('/agendamentos/:data/:id/pacientes'),
+    __param(0, (0, common_1.Param)('data')),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], ProfissionaisController.prototype, "findAtendimentosPacientesByDate", null);
 exports.ProfissionaisController = ProfissionaisController = __decorate([
     (0, common_1.Controller)('profissionais'),
     __metadata("design:paramtypes", [profissionais_service_1.ProfissionaisService])

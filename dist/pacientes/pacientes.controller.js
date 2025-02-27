@@ -36,6 +36,12 @@ let PacientesController = class PacientesController {
     remove(id) {
         return this.pacientesService.remove(+id);
     }
+    findAtendimentos(id) {
+        return this.pacientesService.findAtendimentos(id);
+    }
+    findAtendimentosPendentes(id) {
+        return this.pacientesService.findUpcomingAtendimentos(id);
+    }
 };
 exports.PacientesController = PacientesController;
 __decorate([
@@ -73,6 +79,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PacientesController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('/atendimentos/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], PacientesController.prototype, "findAtendimentos", null);
+__decorate([
+    (0, common_1.Get)('/atendimentosPendentes/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], PacientesController.prototype, "findAtendimentosPendentes", null);
 exports.PacientesController = PacientesController = __decorate([
     (0, common_1.Controller)('pacientes'),
     __metadata("design:paramtypes", [pacientes_service_1.PacientesService])
