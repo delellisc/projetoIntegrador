@@ -5,7 +5,7 @@ export declare class EspecializacoesController {
     private readonly especializacoesService;
     constructor(especializacoesService: EspecializacoesService);
     create(createEspecializacoeDto: CreateEspecializacoeDto): string;
-    findAll(): string;
+    findAll(): Promise<import("./entities/especializacoe.entity").Especializacao[]>;
     findOne(id: string): string;
     update(id: string, updateEspecializacoeDto: UpdateEspecializacoeDto): string;
     remove(id: string): string;

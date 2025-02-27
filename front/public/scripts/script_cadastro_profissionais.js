@@ -6,7 +6,7 @@ async function fazerRequisicao(url = "http://localhost:3000/profissionais", meto
     if (dados) config.body = JSON.stringify(dados);
 
     const resposta = await fetch(url, config);
-    
+
     if (!resposta.ok) {
         const mensagemErro = await resposta.text();
         throw new Error(`Erro ${resposta.status}: ${mensagemErro}`);
@@ -44,6 +44,7 @@ document.querySelector("form[action='http://localhost:3000/profissionais']").add
     botao.textContent = "Enviando...";
 
     const dados = obterDadosFormulario(event.target);
+    dados.status = 'ativo';
     console.log(dados)
 
     try {
@@ -133,3 +134,38 @@ document.getElementById("formRemoverProfissional").addEventListener("submit", as
         botao.textContent = "Remover";
     }
 });
+
+
+async function obterEspecialidades() {
+    resposta = await fetch('http://localhost:3000/especializacoes');
+
+    if (!resposta.ok) {
+        const mensagemErro = await resposta.text();
+        throw new Error(`Erro ${resposta.status}: ${mensagemErro}`);
+    }
+
+    if (resposta.status === 204) {
+        return null;
+    }
+
+    var res = await resposta.json();
+    /* console.log(res); */
+
+    return res;
+}
+
+async function preencherEspecialidades() {
+    const especialidades = await obterEspecialidades();
+    document.querySelectorAll("select[name='especializacao']").forEach(select => {
+        select.innerHTML = "";
+         especialidades.forEach(especialidade => {
+            console.log(especialidade);
+            const option = document.createElement("option");
+            option.value = especialidade.id;
+            option.textContent = especialidade.nome;
+            select.appendChild(option);
+        });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", preencherEspecialidades);

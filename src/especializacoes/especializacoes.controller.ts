@@ -12,7 +12,7 @@ export class EspecializacoesController {
     return this.especializacoesService.create(createEspecializacoeDto);
   }
 
-  @Get()
+  @Get('')
   findAll() {
     return this.especializacoesService.findAll();
   }

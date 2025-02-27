@@ -10,13 +10,19 @@ exports.EspecializacoesModule = void 0;
 const common_1 = require("@nestjs/common");
 const especializacoes_service_1 = require("./especializacoes.service");
 const especializacoes_controller_1 = require("./especializacoes.controller");
+const database_module_1 = require("../database/database.module");
+const especializacoes_providers_1 = require("./especializacoes.providers");
 let EspecializacoesModule = class EspecializacoesModule {
 };
 exports.EspecializacoesModule = EspecializacoesModule;
 exports.EspecializacoesModule = EspecializacoesModule = __decorate([
     (0, common_1.Module)({
+        imports: [database_module_1.DatabaseModule],
         controllers: [especializacoes_controller_1.EspecializacoesController],
-        providers: [especializacoes_service_1.EspecializacoesService],
+        providers: [
+            ...especializacoes_providers_1.EspecializacoessProviders,
+            especializacoes_service_1.EspecializacoesService,
+        ],
     })
 ], EspecializacoesModule);
 //# sourceMappingURL=especializacoes.module.js.map

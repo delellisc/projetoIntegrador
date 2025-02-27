@@ -1,0 +1,1 @@
+{"version":3,"file":"especializacoes.providers.js","sourceRoot":"","sources":["../../src/especializacoes/especializacoes.providers.ts"],"names":[],"mappings":";;;AACA,4EAAkE;AAErD,QAAA,yBAAyB,GAAG;IACrC;QACI,OAAO,EAAE,2BAA2B;QACpC,UAAU,EAAE,CAAC,UAAsB,EAAE,EAAE,CAAC,UAAU,CAAC,aAAa,CAAC,sCAAc,CAAC;QAChF,MAAM,EAAE,CAAC,aAAa,CAAC;KAC1B;CACJ,CAAC"}
