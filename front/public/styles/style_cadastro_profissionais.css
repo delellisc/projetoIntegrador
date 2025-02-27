@@ -72,6 +72,7 @@ button {
     margin-top: 15px;
     cursor: pointer;
     border-radius: 4px;
+    width: 100%;
 }
 
 button:hover {
@@ -80,6 +81,10 @@ button:hover {
 
 #resultado-lista, #resultado-profissional {
     margin: 5px;
+}
+
+li {
+    list-style-type: none;
 }
 
 /* *************************** */
