@@ -1,4 +1,4 @@
-async function fazerRequisicao(url, metodo = "GET", dados = null) {
+async function fazerRequisicao(url = "http://localhost:3000/profissionais", metodo = "GET", dados = null) {
     const config = {
         method: metodo,
         headers: { "Content-Type": "application/json" }
@@ -6,9 +6,34 @@ async function fazerRequisicao(url, metodo = "GET", dados = null) {
     if (dados) config.body = JSON.stringify(dados);
 
     const resposta = await fetch(url, config);
-    if (!resposta.ok) throw new Error(`Erro ${resposta.status}: ${resposta.statusText}`);
+    
+    if (!resposta.ok) {
+        const mensagemErro = await resposta.text();
+        throw new Error(`Erro ${resposta.status}: ${mensagemErro}`);
+    }
 
-    return resposta.json();;
+    if (resposta.status === 204) {
+        return null;
+    }
+
+    return resposta.json();
+}
+
+// Função do formulário para JSON
+function obterDadosFormulario(form) {
+    const formData = new FormData(form);
+    const dados = Object.fromEntries(formData.entries());
+
+    // Converter números e booleanos
+    for (const chave in dados) {
+        if (!isNaN(dados[chave])) {
+            dados[chave] = Number(dados[chave]);
+        } else if (dados[chave].toLowerCase() === "true" || dados[chave].toLowerCase() === "false") {
+            dados[chave] = dados[chave].toLowerCase() === "true";
+        }
+    }
+
+    return dados;
 }
 
 // Cadastrar profissional
@@ -16,9 +41,9 @@ document.querySelector("form[action='http://localhost:3000/profissionais']").add
     event.preventDefault();
     const botao = event.target.querySelector("button[type='submit']");
     botao.disabled = true;
+    botao.textContent = "Enviando...";
 
-    const formData = new FormData(event.target);
-    const dados = Object.fromEntries(formData.entries());
+    const dados = obterDadosFormulario(event.target);
 
     try {
         await fazerRequisicao("http://localhost:3000/profissionais", "POST", dados);
@@ -28,21 +53,7 @@ document.querySelector("form[action='http://localhost:3000/profissionais']").add
         alert("Erro ao cadastrar profissional: " + error.message);
     } finally {
         botao.disabled = false;
-    }
-});
-
-// Listar todos os profissionais
-document.getElementById("listarTodos").addEventListener("click", async () => {
-    try {
-        const profissionais = await fazerRequisicao("http://localhost:3000/profissionais");
-        let html = "<ul>";
-        profissionais.forEach(prof => {
-            html += `<li>${prof.id} - ${prof.nome} - ${prof.registro_profissional}</li>`;
-        });
-        html += "</ul>";
-        document.getElementById("resultado-lista").innerHTML = html;
-    } catch (error) {
-        document.getElementById("resultado-lista").innerHTML = `<p>${error.message}</p>`;
+        botao.textContent = "Cadastrar";
     }
 });
 
@@ -53,11 +64,13 @@ document.getElementById("formListarProfissional").addEventListener("submit", asy
 
     try {
         const profissional = await fazerRequisicao(`http://localhost:3000/profissionais/${matricula}`);
-        console.log(profissional);
+        if (!profissional) {
+            throw new Error("Profissional não encontrado.");
+        }
         document.getElementById("resultado-profissional").innerHTML = `
                 <p>Matrícula: ${profissional.id}</p>
                 <p>Nome: ${profissional.nome}</p>
-                <p>Especialidade: ${profissional.registro_profissional}</p>`;
+                <p>Registro Profissional: ${profissional.registro_profissional}</p>`;
     } catch (error) {
         document.getElementById("resultado-profissional").innerHTML = `<p>${error.message}</p>`;
     }
@@ -68,10 +81,10 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
     event.preventDefault();
     const botao = event.target.querySelector("button[type='submit']");
     botao.disabled = true;
+    botao.textContent = "Atualizando...";
     const matricula = document.getElementById("matriculaAtualizar").value;
 
-    const formData = new FormData(event.target);
-    const dados = Object.fromEntries(formData.entries());
+    const dados = obterDadosFormulario(event.target);
 
     try {
         await fazerRequisicao(`http://localhost:3000/profissionais/${matricula}`, "PATCH", dados);
@@ -81,6 +94,7 @@ document.getElementById("formAtualizarProfissional").addEventListener("submit", 
         alert("Erro ao atualizar profissional: " + error.message);
     } finally {
         botao.disabled = false;
+        botao.textContent = "Atualizar";
     }
 });
 
@@ -89,6 +103,7 @@ document.getElementById("formRemoverProfissional").addEventListener("submit", as
     event.preventDefault();
     const botao = event.target.querySelector("button[type='submit']");
     botao.disabled = true;
+    botao.textContent = "Removendo...";
     const matricula = document.getElementById("matriculaRemover").value;
 
     try {
@@ -99,5 +114,6 @@ document.getElementById("formRemoverProfissional").addEventListener("submit", as
         alert("Erro ao remover profissional: " + error.message);
     } finally {
         botao.disabled = false;
+        botao.textContent = "Remover";
     }
 });
